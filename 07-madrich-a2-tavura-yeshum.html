@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>תעבורה, TCP/UDP ושכבות היישום — מדריך לימוד · תקשוב יישומי כיתה יא׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="madrich-engine.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="crumbs">
+      <a href="https://moti-lerner-proyektim.github.io/" id="mdCrHub">לומדים בעצמי</a> ‹
+      <a href="./" id="mdCrCourse">תקשוב יישומי</a> ‹
+      <a href="07-protocolim-vemodelim.html" id="mdCrUnit">פרוטוקולים ומודלים</a> ‹ <span id="mdCrHere">תעבורה, TCP/UDP ושכבות היישום</span>
+    </div>
+    <div class="site-name" id="mdSite">תקשוב יישומי · כיתה יא׳</div>
+  </div>
+
+  <main class="md-shell">
+    <header class="md-hero">
+      <div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg></div>
+      <div>
+        <div class="num" id="mdNum">חלק א׳ · מדריך 2 מתוך 3 · מדריך לימוד אינטראקטיבי</div>
+        <h1 id="mdTitle">תעבורה, TCP/UDP ושכבות היישום</h1>
+        <p id="mdDesc">שכבת התעבורה ופורטים, TCP מול UDP, שכבות שיחה וייצוג, שכבת היישום, וטבלת פורטים.</p>
+      </div>
+    </header>
+
+    <div class="md-progress" id="mdProgress" aria-hidden="true"></div>
+    <div class="md-progress-label"><span id="mdProgressText"></span><span class="md-tts-wrap"><span id="mdTtsBox" class="md-tts-wrap"></span><button id="mdRestart" type="button">להתחיל מחדש</button></span></div>
+
+    <div class="md-log" id="mdLog" aria-live="polite"></div>
+
+    <div class="md-cmds" id="mdCmds" aria-label="פקודות"></div>
+    <div class="md-input">
+      <textarea id="mdText" rows="1" placeholder="כתוב כאן תשובה או פקודה… (Enter לשליחה)" aria-label="תשובה או פקודה"></textarea>
+      <button id="mdSend" type="button">שליחה</button>
+    </div>
+    <div class="md-note" id="mdNote">ההתקדמות נשמרת רק בדפדפן שלך · לא נאסף שום מידע</div>
+  </main>
+
+<script>
+window.MADRICH = {
+ "title": "תעבורה, TCP/UDP ושכבות היישום",
+ "persona": "אדריכל הרשת",
+ "story": "בנינו את היסודות והשלד של תוכנית האב (שכבות 1–3). עכשיו נמשיך לקומות הבאות: הצנרת שמבטיחה שהמים יגיעו בשלמותם ליעד (שכבה 4), ועד הדירה עצמה שבה המשתמש חי ופועל (שכבות 5–7).",
+ "desc": "שכבת התעבורה ופורטים, TCP מול UDP, שכבות שיחה וייצוג, שכבת היישום, וטבלת פורטים.",
+ "num": "חלק א׳ · מדריך 2 מתוך 3",
+ "emoji": "📐",
+ "next": {
+  "href": "07-madrich-a3-tcpip-encapsulation.html",
+  "title": "מדריך 3: מודל TCP/IP, השוואה ו-Encapsulation",
+  "teaser": "המודל המעשי בן 4 השכבות, ההשוואה ל-OSI, ואיך מייל \"נארז\" בדרך ברשת."
+ },
+ "stages": [
+  {
+   "title": "שכבה 4 — שכבת התעבורה (Transport)",
+   "open": {
+    "q": "במחשב פתוחים דפדפן, תוכנת מייל ומשחק אונליין — כולם עם <strong>אותה כתובת IP<\/strong>. איך המחשב יודע לאיזו תוכנה להעביר כל חבילה שמגיעה?",
+    "model": "לפי <strong>מספר הפורט<\/strong>. ה-IP מזהה את המחשב, והפורט מזהה את <strong>התוכנה<\/strong> בתוכו — כל תוכנה מאזינה בפורט משלה."
+   },
+   "explain": [
+    "<p>שכבת התעבורה היא הראשונה שמפעילה תקשורת <strong>קצה-לקצה<\/strong> (End-to-End) — ממחשב למחשב, לא מצומת לצומת.<\/p><p>שלושה תפקידים:<\/p><ol><li><strong>חלוקה למקטעים (Segments)<\/strong> ומספרי סידור — כדי להרכיב מחדש בצד המקבל.<\/li><li><strong>זיהוי יישומים בפורטים (Ports)<\/strong> — 0 עד 65535; כך כמה תוכנות עובדות במקביל על אותו מחשב.<\/li><li><strong>בקרת זרימה ושגיאות<\/strong> — בקשת שידור חוזר אם משהו אבד, וויסות הקצב.<\/li><\/ol>"
+   ],
+   "visual": "<div class=\"md-flow\"><b>IP = הבניין<\/b><i>←<\/i><b>פורט = מספר הדירה<\/b><i>←<\/i><b>התוכנה הנכונה<\/b><\/div>",
+   "example": "פורט הוא כמו מספר דלת בבניין דירות — ה-IP מזהה את הבניין, והפורט את הדירה (התוכנה): דפדפן, מייל או משחק, כולם באותו מחשב.",
+   "again": "<p>חשוב על <strong>משלוח רהיטים בחלקים<\/strong>: מפרקים את הרהיט לחלקים ממוספרים (מקטעים + מספרי סידור), כותבים על כל ארגז לאיזו דירה (פורט), ואם ארגז אבד — מבקשים לשלוח אותו שוב (בקרת שגיאות).<\/p>",
+   "simple": "<p>שכבה 4 = <strong>מחלקת לחלקים<\/strong>, <strong>ממספרת<\/strong>, ומעבירה ל<strong>תוכנה הנכונה<\/strong> לפי <strong>פורט<\/strong>.<\/p>",
+   "check": {
+    "q": "מה הטווח של מספרי פורטים?",
+    "options": [
+     {
+      "t": "0 עד 65535",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "0 עד 255",
+      "ok": false,
+      "fb": "זה הטווח של אוקטטה בכתובת IPv4, לא של פורט."
+     },
+     {
+      "t": "1 עד 1024 בלבד",
+      "ok": false,
+      "fb": "אלה רק הפורטים ה\"מוכרים\" (Well-known); הטווח המלא גדול בהרבה."
+     }
+    ],
+    "hint": "מספר גדול — 16 סיביות.",
+    "why": "פורטים הם בטווח 0–65535."
+   },
+   "summary": [
+    "שכבה 4 — תקשורת קצה-לקצה",
+    "חלוקה למקטעים (Segments) עם מספרי סידור",
+    "פורטים 0–65535 מזהים את היישום",
+    "בקרת זרימה ושגיאות"
+   ],
+   "homework": [
+    "מנה את שלושת התפקידים של שכבת התעבורה.",
+    "הסבר במילים שלך מה ההבדל בין כתובת IP לבין פורט."
+   ]
+  },
+  {
+   "title": "TCP מול UDP — שני סגנונות משלוח",
+   "open": {
+    "q": "שני חברים משחקים משחק אונליין תחרותי בזמן אמת. עדיף פרוטוקול <strong>מהיר שלפעמים מפספס<\/strong> (UDP), או <strong>איטי ומדויק לחלוטין<\/strong> (TCP)? למה?",
+    "model": "עדיף <strong>UDP<\/strong> — במשחק בזמן אמת עיכוב מזיק יותר מאובדן קטן. עדיף לקבל את המצב העדכני מהר מאשר לחכות לשידור חוזר של משהו שכבר לא רלוונטי."
+   },
+   "explain": [
+    "<table><tr><th><\/th><th><strong>TCP<\/strong><\/th><th><strong>UDP<\/strong><\/th><\/tr><tr><td>גישה<\/td><td>מבוסס חיבור (Connection-Oriented)<\/td><td>חסר חיבור (Connectionless)<\/td><\/tr><tr><td>אמינות<\/td><td>גבוהה — מוודא הגעה וסדר<\/td><td>נמוכה — שולח בלי לחכות לאישור<\/td><\/tr><tr><td>פתיחה<\/td><td>Three-Way Handshake: <code>SYN<\/code> ← <code>SYN-ACK<\/code> ← <code>ACK<\/code><\/td><td>אין<\/td><\/tr><tr><td>מהירות<\/td><td>איטי יותר (תקורה)<\/td><td>מהיר, פחות עומס<\/td><\/tr><tr><td>שימושים<\/td><td>HTTP, FTP, SMTP<\/td><td>וידאו, VoIP, משחקים, DNS<\/td><\/tr><\/table>"
+   ],
+   "example": "TCP הוא כמו מכתב רשום עם אישור מסירה — יודעים בוודאות שהגיע, אבל לוקח זמן. UDP הוא כמו שידור רדיו חי — אם רגע לא נשמע, אף אחד לא עוצר לחזור עליו.",
+   "again": "<p>Three-Way Handshake הוא כמו תחילת שיחת טלפון: \"הלו, שומע?\" (SYN) — \"כן, שומע, אתה שומע אותי?\" (SYN-ACK) — \"כן!\" (ACK). רק אז מדברים. UDP פשוט מתחיל לדבר.<\/p>",
+   "simple": "<p><strong>TCP<\/strong> = בטוח, מסודר, איטי יותר (אתרים, קבצים, מייל). <strong>UDP<\/strong> = מהיר, בלי בדיקות (וידאו, משחקים, שיחות).<\/p>",
+   "check": {
+    "q": "מה הסדר של ה-Three-Way Handshake ב-TCP?",
+    "options": [
+     {
+      "t": "<code>SYN<\/code> ← <code>SYN-ACK<\/code> ← <code>ACK<\/code>",
+      "ok": true,
+      "fb": "נכון — בקשה, אישור + בקשה, אישור."
+     },
+     {
+      "t": "<code>ACK<\/code> ← <code>SYN<\/code> ← <code>SYN-ACK<\/code>",
+      "ok": false,
+      "fb": "לא מתחילים באישור — קודם צריך בקשה (SYN)."
+     },
+     {
+      "t": "<code>SYN<\/code> ← <code>ACK<\/code> ← <code>SYN<\/code>",
+      "ok": false,
+      "fb": "הצד השני עונה ב-SYN-ACK, ולא רק ב-ACK."
+     }
+    ],
+    "hint": "קודם \"רוצה להתחבר?\", ואז \"כן, וגם אני רוצה\", ואז \"סגור\".",
+    "why": "Handshake: SYN, אחריו SYN-ACK, ולבסוף ACK."
+   },
+   "summary": [
+    "<strong>TCP<\/strong> — מבוסס חיבור, אמין, Handshake (SYN, SYN-ACK, ACK), איטי יותר; HTTP, FTP, SMTP",
+    "<strong>UDP<\/strong> — בלי חיבור, מהיר, בלי אישורים; וידאו, VoIP, משחקים, DNS"
+   ],
+   "homework": [
+    "השווה בין TCP ל-UDP בארבעה היבטים.",
+    "הסבר את ה-Three-Way Handshake ותן לו דוגמה מהחיים."
+   ]
+  },
+  {
+   "title": "שכבות 5–6 — שיחה (Session) וייצוג (Presentation)",
+   "open": {
+    "q": "כששולחים תמונה בוואטסאפ, היא <strong>\"נדחסת\"<\/strong> וקטנה מהמקור. לאיזו שכבה לדעתך שייך התפקיד של דחיסת המידע?",
+    "model": "ל<strong>שכבת הייצוג<\/strong> (6) — היא אחראית על תרגום, <strong>הצפנה ודחיסה<\/strong> של הנתונים."
+   },
+   "explain": [
+    "<p><strong>שכבה 5 — שיחה (Session):<\/strong> יוצרת, מנהלת וסוגרת \"שיחות\" בין מחשבים.<\/p><table><tr><th>בקרת דיאלוג<\/th><th>מה זה<\/th><\/tr><tr><td>Simplex<\/td><td>חד-כיווני<\/td><\/tr><tr><td>Half-Duplex<\/td><td>דו-כיווני לסירוגין<\/td><\/tr><tr><td>Full-Duplex<\/td><td>דו-כיווני בו-זמנית<\/td><\/tr><\/table><p><strong>סנכרון<\/strong> — נקודות ציון (Checkpoints) לחידוש שיחה אחרי תקלה. פרוטוקולים: SIP, RPC, NetBIOS.<\/p>",
+    "<p><strong>שכבה 6 — ייצוג (Presentation):<\/strong> ה\"מתורגמן הדיגיטלי\" — דואגת שהנתונים יהיו קריאים לשכבת היישום.<\/p><ul><li>🔤 <strong>תרגום<\/strong> קידודי תווים — ASCII, UTF-8<\/li><li>🔐 <strong>הצפנה<\/strong> — SSL/TLS<\/li><li>🗜️ <strong>דחיסה<\/strong> — JPEG, ZIP, MP3, לחיסכון ברוחב פס<\/li><\/ul>"
+   ],
+   "example": "שכבת השיחה היא כמו מזכירה שמנהלת יומן שיחות — פותחת, שומרת נקודת ציון אם נותק, וסוגרת. שכבת הייצוג היא כמו מתרגם סימולטני בכנס — לא יוצר תוכן, רק דואג שכולם יבינו.",
+   "again": "<p>שכבה 5 עונה על <strong>\"מתי ואיך מדברים?\"<\/strong> (פתיחה, תורות, סגירה). שכבה 6 עונה על <strong>\"באיזו צורה המידע נראה?\"<\/strong> (שפה, מנעול, גודל).<\/p>",
+   "simple": "<p>שכבה 5 = <strong>מנהלת את השיחה<\/strong>. שכבה 6 = <strong>מתרגמת, מצפינה ודוחסת<\/strong>.<\/p>",
+   "check": {
+    "q": "שיחת וידאו שבה שני הצדדים מדברים ושומעים באותו זמן היא:",
+    "options": [
+     {
+      "t": "Full-Duplex",
+      "ok": true,
+      "fb": "נכון — דו-כיווני בו-זמנית."
+     },
+     {
+      "t": "Half-Duplex",
+      "ok": false,
+      "fb": "Half-Duplex הוא דו-כיווני לסירוגין, כמו מכשיר קשר."
+     },
+     {
+      "t": "Simplex",
+      "ok": false,
+      "fb": "Simplex הוא חד-כיווני, כמו שידור טלוויזיה."
+     }
+    ],
+    "hint": "שני הכיוונים — בו-זמנית.",
+    "why": "Full-Duplex מאפשר תקשורת בשני הכיוונים בו-זמנית."
+   },
+   "summary": [
+    "<strong>שכבה 5 — שיחה<\/strong>: יצירה, ניהול וסגירה; Simplex/Half-Duplex/Full-Duplex; Checkpoints; SIP, RPC, NetBIOS",
+    "<strong>שכבה 6 — ייצוג<\/strong>: תרגום (ASCII, UTF-8), הצפנה (SSL/TLS), דחיסה (JPEG, ZIP, MP3)"
+   ],
+   "homework": [
+    "הסבר את ההבדל בין Simplex, Half-Duplex ו-Full-Duplex, עם דוגמה לכל אחד.",
+    "מנה את שלושת התפקידים של שכבת הייצוג."
+   ]
+  },
+  {
+   "title": "שכבה 7 — שכבת היישום (Application)",
+   "open": {
+    "q": "כשהמחשב מתחבר ל-Wi-Fi חדש ומקבל כתובת IP <strong>אוטומטית<\/strong>, בלי שהקלדת כלום — איזה פרוטוקול אחראי לזה?",
+    "model": "<strong>DHCP<\/strong> — פרוטוקול בשכבת היישום שמחלק כתובות IP אוטומטית."
+   },
+   "explain": [
+    "<p>בניגוד לשמה, שכבה 7 <strong>אינה התוכנות עצמן<\/strong> (כמו הדפדפן) — היא מספקת <strong>שירותי רשת<\/strong> לאפליקציות. חמישה תחומים:<\/p><table><tr><th>תחום<\/th><th>פרוטוקולים<\/th><\/tr><tr><td>🌐 גלישה<\/td><td>HTTP/HTTPS<\/td><\/tr><tr><td>📁 העברת קבצים<\/td><td>FTP, SFTP/SCP (מאובטחים)<\/td><\/tr><tr><td>🖥️ ניהול מרחוק<\/td><td>SSH, Telnet<\/td><\/tr><tr><td>✉️ דואר<\/td><td>SMTP (שליחה), POP3/IMAP (קבלה)<\/td><\/tr><tr><td>⚙️ תשתית<\/td><td>DNS (שם ← IP), DHCP (כתובות אוטומטיות)<\/td><\/tr><\/table>"
+   ],
+   "example": "כשמקלידים כתובת אתר, שכבת היישום מפעילה HTTP \"מאחורי הקלעים\" — היא לא הדפדפן עצמו, אלא השירות שהדפדפן משתמש בו, כמו שירותי דואר שאתה משתמש בהם בלי לדעת איך הדוור מגיע.",
+   "again": "<p>הדפדפן הוא <strong>הלקוח במסעדה<\/strong>, ושכבת היישום היא <strong>התפריט<\/strong> — רשימת השירותים שאפשר להזמין (HTTP, SMTP, DNS...). הלקוח לא מבשל — הוא בוחר מהתפריט.<\/p>",
+   "simple": "<p>שכבה 7 = <strong>השירותים<\/strong> שהאפליקציות משתמשות בהם: HTTP לאתרים, SMTP למייל, DNS לשמות, DHCP לכתובות.<\/p>",
+   "check": {
+    "q": "איזה פרוטוקול משמש <strong>לשליחת<\/strong> דואר אלקטרוני?",
+    "options": [
+     {
+      "t": "SMTP",
+      "ok": true,
+      "fb": "נכון — SMTP לשליחה."
+     },
+     {
+      "t": "IMAP",
+      "ok": false,
+      "fb": "IMAP משמש לקבלה וסנכרון של דואר."
+     },
+     {
+      "t": "POP3",
+      "ok": false,
+      "fb": "POP3 משמש למשיכת דואר מהשרת."
+     },
+     {
+      "t": "DHCP",
+      "ok": false,
+      "fb": "DHCP מחלק כתובות IP."
+     }
+    ],
+    "hint": "S = Send... (Simple Mail Transfer Protocol)",
+    "why": "SMTP שולח דואר; POP3 ו-IMAP משמשים לקבלתו."
+   },
+   "summary": [
+    "שכבה 7 — שירותי רשת לאפליקציות (לא התוכנות עצמן)",
+    "גלישה: HTTP/HTTPS · קבצים: FTP, SFTP/SCP · מרחוק: SSH, Telnet",
+    "דואר: SMTP (שליחה), POP3/IMAP (קבלה) · תשתית: DNS, DHCP"
+   ],
+   "homework": [
+    "מנה את חמשת תחומי השירות של שכבת היישום עם פרוטוקול לכל אחד.",
+    "מה ההבדל בין SMTP לבין IMAP?"
+   ]
+  },
+  {
+   "title": "לוח בקרה: פורטים ופרוטוקולים מרכזיים",
+   "open": {
+    "q": "אתה גולש לאתר עם <strong>מנעול<\/strong> בשורת הכתובת (HTTPS). לאיזה <strong>מספר פורט<\/strong> הדפדפן מתחבר?",
+    "model": "<strong>פורט 443<\/strong> — הפורט של HTTPS, תעבורת אינטרנט מוצפנת."
+   },
+   "explain": [
+    "<table><tr><th>פורט<\/th><th>פרוטוקול<\/th><th>שימוש<\/th><\/tr><tr><td><code>20/21<\/code><\/td><td>FTP<\/td><td>העברת קבצים<\/td><\/tr><tr><td><code>22<\/code><\/td><td>SSH<\/td><td>שליטה מרחוק מאובטחת<\/td><\/tr><tr><td><code>23<\/code><\/td><td>Telnet<\/td><td>שליטה מרחוק — לא מאובטח<\/td><\/tr><tr><td><code>25<\/code><\/td><td>SMTP<\/td><td>שליחת דואר<\/td><\/tr><tr><td><code>53<\/code><\/td><td>DNS<\/td><td>שם ← כתובת IP<\/td><\/tr><tr><td><code>67/68<\/code><\/td><td>DHCP<\/td><td>כתובות IP אוטומטיות<\/td><\/tr><tr><td><code>80<\/code><\/td><td>HTTP<\/td><td>אינטרנט לא מוצפן<\/td><\/tr><tr><td><code>110<\/code><\/td><td>POP3<\/td><td>משיכת דואר<\/td><\/tr><tr><td><code>143<\/code><\/td><td>IMAP<\/td><td>סנכרון דואר<\/td><\/tr><tr><td><code>443<\/code><\/td><td>HTTPS<\/td><td>אינטרנט מוצפן<\/td><\/tr><\/table>"
+   ],
+   "example": "מספרי פורטים הם כמו ערוצי טלוויזיה קבועים — כל תוכנה יודעת איזה \"ערוץ\" לחפש כדי לקבל את השירות הנכון, כמו שערוץ החדשות תמיד באותו מספר.",
+   "again": "<p>טריקים לזכירה: <strong>80<\/strong> הוא הגלישה הרגילה, ו-<strong>443<\/strong> הוא הגלישה עם המנעול. <strong>22<\/strong> (SSH) בטוח ו-<strong>23<\/strong> (Telnet) לא — \"22 נעול, 23 פתוח\". <strong>25<\/strong> שולח מייל, <strong>110/143<\/strong> מקבלים.<\/p>",
+   "simple": "<p>80 = אתר. 443 = אתר מאובטח. 22 = SSH. 25 = שליחת מייל. 53 = DNS.<\/p>",
+   "check": {
+    "q": "מנהל רשת רוצה לחסום רק גלישה <strong>לא מוצפנת<\/strong>. איזה פורט יחסום?",
+    "options": [
+     {
+      "t": "<code>80<\/code>",
+      "ok": true,
+      "fb": "נכון — HTTP, תעבורה לא מוצפנת."
+     },
+     {
+      "t": "<code>443<\/code>",
+      "ok": false,
+      "fb": "443 הוא HTTPS — המוצפן. חסימתו תחסום גלישה מאובטחת."
+     },
+     {
+      "t": "<code>53<\/code>",
+      "ok": false,
+      "fb": "53 הוא DNS — חסימתו תשבש את כל הגלישה."
+     },
+     {
+      "t": "<code>22<\/code>",
+      "ok": false,
+      "fb": "22 הוא SSH — לא קשור לגלישה."
+     }
+    ],
+    "hint": "HTTP בלי S.",
+    "why": "פורט 80 משמש ל-HTTP, גלישה לא מוצפנת."
+   },
+   "summary": [
+    "20/21 FTP · 22 SSH · 23 Telnet · 25 SMTP · 53 DNS",
+    "67/68 DHCP · 80 HTTP · 110 POP3 · 143 IMAP · 443 HTTPS"
+   ],
+   "homework": [
+    "כתוב מהזיכרון את מספרי הפורטים של HTTP, HTTPS, SSH, SMTP ו-DNS.",
+    "למה חשוב שלכל שירות יהיה פורט קבוע ומוסכם?"
+   ]
+  }
+ ],
+ "unitTitle": "פרוטוקולים ומודלים",
+ "id": "y11-07-2"
+};
+</script>
+<script src="madrich-engine.js"></script>
+</body>
+</html>

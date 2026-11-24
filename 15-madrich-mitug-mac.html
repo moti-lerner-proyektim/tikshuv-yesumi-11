@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>עקרונות המיתוג ותפקידה של כתובת ה-MAC — מדריך לימוד · תקשוב יישומי כיתה יא׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="madrich-engine.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="crumbs">
+      <a href="https://moti-lerner-proyektim.github.io/" id="mdCrHub">לומדים בעצמי</a> ‹
+      <a href="./" id="mdCrCourse">תקשוב יישומי</a> ‹
+      <a href="15-hakamat-atar-web-dns.html" id="mdCrUnit">עקרונות המיתוג וכתובת ה-MAC</a> ‹ <span id="mdCrHere">עקרונות המיתוג ותפקידה של כתובת ה-MAC</span>
+    </div>
+    <div class="site-name" id="mdSite">תקשוב יישומי · כיתה יא׳</div>
+  </div>
+
+  <main class="md-shell">
+    <header class="md-hero">
+      <div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5L6.5 17M12 11.5l5.5 5.5"/></svg></div>
+      <div>
+        <div class="num" id="mdNum">מדריך יחיד · מדריך לימוד אינטראקטיבי</div>
+        <h1 id="mdTitle">עקרונות המיתוג ותפקידה של כתובת ה-MAC</h1>
+        <p id="mdDesc">מבנה כתובת MAC, Unicast/Broadcast/Multicast, טבלת CAM, למידה, העברה והצפה, Aging, ו-Duplex.</p>
+      </div>
+    </header>
+
+    <div class="md-progress" id="mdProgress" aria-hidden="true"></div>
+    <div class="md-progress-label"><span id="mdProgressText"></span><span class="md-tts-wrap"><span id="mdTtsBox" class="md-tts-wrap"></span><button id="mdRestart" type="button">להתחיל מחדש</button></span></div>
+
+    <div class="md-log" id="mdLog" aria-live="polite"></div>
+
+    <div class="md-cmds" id="mdCmds" aria-label="פקודות"></div>
+    <div class="md-input">
+      <textarea id="mdText" rows="1" placeholder="כתוב כאן תשובה או פקודה… (Enter לשליחה)" aria-label="תשובה או פקודה"></textarea>
+      <button id="mdSend" type="button">שליחה</button>
+    </div>
+    <div class="md-note" id="mdNote">ההתקדמות נשמרת רק בדפדפן שלך · לא נאסף שום מידע</div>
+  </main>
+
+<script>
+window.MADRICH = {
+ "title": "עקרונות המיתוג ותפקידה של כתובת ה-MAC",
+ "persona": "דניאל, טכנאי חדר הבקרה של הרשת",
+ "story": "אני עובד בחדר הבקרה (NOC) של ספקית אינטרנט, ומנטר בזמן אמת עשרות מתגים ברחבי העיר. בוא תצטרף אליי למשמרת: נראה מה קורה בתוך מתג ברגע שמסגרת נכנסת אליו — מזיהוי השולח ועד ההחלטה לאן לשלוח הלאה.",
+ "desc": "מבנה כתובת MAC, Unicast/Broadcast/Multicast, טבלת CAM, למידה, העברה והצפה, Aging, ו-Duplex.",
+ "num": "מדריך יחיד",
+ "emoji": "🔀",
+ "next": null,
+ "finalReview": [
+  "מבנה כתובת MAC",
+  "סוגי תעבורה",
+  "טבלת ה-CAM",
+  "אלגוריתם הלמידה",
+  "העברה, הצפה וסינון",
+  "Aging ומחזור העיבוד",
+  "Duplex, Auto-Negotiation ו-Auto-MDIX"
+ ],
+ "stages": [
+  {
+   "title": "אנטומיה של כתובת MAC",
+   "open": {
+    "q": "3 הבתים הראשונים בכתובת MAC נקבעים מראש לכל יצרן. מה לדעתך התפקיד של <strong>3 הבתים הנותרים<\/strong>?",
+    "model": "לזהות את <strong>המכשיר הספציפי<\/strong> — כל יצרן ממספר בהם את הכרטיסים שלו, כך שלכל כרטיס כתובת ייחודית."
+   },
+   "explain": [
+    "<p><strong>כתובת MAC<\/strong> (Media Access Control) — מזהה פיזי וייחודי באורך <strong>48 סיביות<\/strong>, שמוטבע בכרטיס הרשת (NIC) ושייך ל<strong>שכבת הקו<\/strong> (2).<\/p><p>מוצגת כ-<strong>12 ספרות הקסדצימליות<\/strong> ב-6 בתים: <code>AA:BB:CC:DD:EE:FF<\/code><\/p><table><tr><th>חלק<\/th><th>בתים<\/th><th>מזהה<\/th><\/tr><tr><td><strong>OUI<\/strong><\/td><td><code>AA:BB:CC<\/code><\/td><td>היצרן<\/td><\/tr><tr><td>מזהה המכשיר<\/td><td><code>DD:EE:FF<\/code><\/td><td>הכרטיס הספציפי<\/td><\/tr><\/table>",
+    "<p>נקבעת ע\"י היצרן ונשמרת ב-ROM, אבל <strong>אפשר לשנות אותה בתוכנה<\/strong> אם צריך. צפייה בכתובת: <code>ipconfig /all<\/code> ב-Windows, <code>ip link<\/code> בלינוקס.<\/p>"
+   ],
+   "example": "כתובת MAC היא כמו מספר תעודת זהות — לכל מכשיר אחת משלו, והיא נשארת איתו, בניגוד לכתובת IP שמשתנה בכל רשת.",
+   "again": "<p>זכור 3 מספרים: <strong>48<\/strong> סיביות = <strong>6<\/strong> בתים = <strong>12<\/strong> ספרות Hex. חצי ראשון — <strong>מי ייצר<\/strong>, חצי שני — <strong>איזה כרטיס<\/strong>.<\/p>",
+   "simple": "<p>MAC = <strong>12 תווים<\/strong>. 6 ראשונים = יצרן, 6 אחרונים = הכרטיס.<\/p>",
+   "check": {
+    "q": "מה מזהה ה-OUI בכתובת MAC?",
+    "options": [
+     {
+      "t": "את יצרן כרטיס הרשת",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "את הרשת שהמכשיר מחובר אליה",
+      "ok": false,
+      "fb": "MAC לא תלויה ברשת."
+     },
+     {
+      "t": "את הפורט במתג",
+      "ok": false,
+      "fb": "הפורט נרשם בטבלת המתג, לא בכתובת."
+     }
+    ],
+    "hint": "O = Organization.",
+    "why": "ה-OUI (3 הבתים הראשונים) מזהה את היצרן."
+   },
+   "summary": [
+    "MAC — 48 סיביות, 12 ספרות Hex, 6 בתים; שכבה 2",
+    "OUI (3 בתים) — יצרן · 3 בתים — מכשיר",
+    "נשמרת ב-ROM, ניתנת לשינוי בתוכנה"
+   ],
+   "homework": [
+    "ממה בנויה כתובת MAC?",
+    "מצא את כתובת ה-MAC של המחשב שלך, וזהה בה את ה-OUI."
+   ]
+  },
+  {
+   "title": "סוגי תעבורה: Unicast, Broadcast, Multicast",
+   "open": {
+    "q": "מגיעה מסגרת עם MAC יעד <code>FF:FF:FF:FF:FF:FF<\/code>. לאיזה סוג תעבורה היא שייכת, ולמי תגיע?",
+    "model": "<strong>Broadcast<\/strong> — היא תגיע <strong>לכל התחנות<\/strong> ברשת המקומית."
+   },
+   "explain": [
+    "<table><tr><th>סוג<\/th><th>כיוון<\/th><th>MAC יעד<\/th><th>דוגמה<\/th><\/tr><tr><td><strong>Unicast<\/strong><\/td><td>אחד ← אחד<\/td><td>כתובת מדויקת, למשל <code>00:1A:2B:3C:4D:5E<\/code><\/td><td>גלישה, הורדת קובץ<\/td><\/tr><tr><td><strong>Broadcast<\/strong><\/td><td>אחד ← כולם<\/td><td><code>FF:FF:FF:FF:FF:FF<\/code><\/td><td>ARP, DHCP<\/td><\/tr><tr><td><strong>Multicast<\/strong><\/td><td>אחד ← קבוצה<\/td><td>מתחילה ב-<code>01:00:5E<\/code><\/td><td>שידורי וידאו/אודיו, עדכונים קבוצתיים<\/td><\/tr><\/table>"
+   ],
+   "example": "שיחה אישית עם חבר (Unicast), כריזה בבית הספר שכולם שומעים (Broadcast), והודעה בקבוצת וואטסאפ שרק חבריה מקבלים (Multicast).",
+   "again": "<p>הסתכל על <strong>כתובת היעד<\/strong>: כולה F — לכולם. מתחילה ב-01:00:5E — לקבוצה. כל השאר — לאחד.<\/p>",
+   "simple": "<p>Uni = <strong>אחד<\/strong>. Broad = <strong>כולם<\/strong>. Multi = <strong>קבוצה<\/strong>.<\/p>",
+   "check": {
+    "q": "מסגרת שכתובת היעד שלה מתחילה ב-<code>01:00:5E<\/code> היא:",
+    "options": [
+     {
+      "t": "Multicast",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "Broadcast",
+      "ok": false,
+      "fb": "Broadcast היא FF:FF:FF:FF:FF:FF."
+     },
+     {
+      "t": "Unicast",
+      "ok": false,
+      "fb": "Unicast היא כתובת של מכשיר אחד."
+     }
+    ],
+    "hint": "קבוצה.",
+    "why": "כתובות Multicast מתחילות ב-01:00:5E."
+   },
+   "summary": [
+    "Unicast — אחד לאחד, MAC מדויקת",
+    "Broadcast — לכולם, FF:FF:FF:FF:FF:FF (ARP, DHCP)",
+    "Multicast — לקבוצה, מתחילה ב-01:00:5E (וידאו)"
+   ],
+   "homework": [
+    "השווה בין שלושת סוגי התעבורה.",
+    "תן דוגמה מהרשת לכל סוג."
+   ]
+  },
+  {
+   "title": "טבלת ה-MAC של המתג (CAM Table)",
+   "open": {
+    "q": "למה חשוב להבדיל בין רשומה <strong>דינמית<\/strong> (נלמדת ועלולה להימחק) לרשומה <strong>סטטית<\/strong> (ידנית וקבועה)?",
+    "model": "דינמית <strong>מתעדכנת לבד<\/strong> כשהרשת משתנה. סטטית מתאימה למכשירים <strong>קריטיים<\/strong> (שרת, נתב) — היא לא נמחקת ולא ניתנת \"לזיוף\" בקלות."
+   },
+   "explain": [
+    "<p>המתג בונה טבלה פנימית — <strong>CAM Table<\/strong> (Content Addressable Memory) — שממפה <strong>איזו MAC מחוברת לאיזה פורט<\/strong>.<\/p><table><tr><th>MAC<\/th><th>פורט<\/th><th>סוג<\/th><th>גיל<\/th><\/tr><tr><td><code>00:1A:2B:3C:4D:5E<\/code><\/td><td>Fa0/1<\/td><td>דינמית<\/td><td>45 שנ׳<\/td><\/tr><tr><td><code>AA:BB:CC:11:22:33<\/code><\/td><td>Fa0/24<\/td><td>סטטית<\/td><td>—<\/td><\/tr><\/table><ul><li><strong>דינמית<\/strong> — נלמדת אוטומטית מהתעבורה, ונמחקת אם לא בשימוש<\/li><li><strong>סטטית<\/strong> — מוגדרת ידנית ע\"י מנהל הרשת, קבועה<\/li><\/ul>"
+   ],
+   "example": "כמו פנקס של שוער בבניין: הוא זוכר איזה דייר גר באיזו דירה, כדי להפנות מבקרים ישר — במקום לדפוק על כל הדלתות.",
+   "again": "<p>הטבלה היא בסך הכול <strong>\"MAC ← פורט\"<\/strong>. בזכותה המתג חכם יותר מרכזת (Hub), ששולחת הכול לכולם.<\/p>",
+   "simple": "<p>CAM = <strong>רשימה: איזו MAC באיזה פורט<\/strong>. דינמית — לבד. סטטית — ידנית.<\/p>",
+   "check": {
+    "q": "מה ממפה טבלת ה-CAM?",
+    "options": [
+     {
+      "t": "כתובת MAC לפורט פיזי במתג",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "כתובת IP לכתובת MAC",
+      "ok": false,
+      "fb": "זה התפקיד של טבלת ARP."
+     },
+     {
+      "t": "שם דומיין לכתובת IP",
+      "ok": false,
+      "fb": "זה DNS."
+     }
+    ],
+    "hint": "מה המתג צריך לדעת כדי להעביר מסגרת?",
+    "why": "טבלת ה-CAM ממפה MAC לפורט."
+   },
+   "summary": [
+    "CAM Table — MAC ← פורט",
+    "דינמית — נלמדת, נמחקת · סטטית — ידנית, קבועה",
+    "רשומה: MAC, פורט, סוג, גיל"
+   ],
+   "homework": [
+    "מה ההבדל בין טבלת CAM לטבלת ARP?",
+    "מתי תגדיר רשומה סטטית?"
+   ]
+  },
+  {
+   "title": "אלגוריתם הלמידה (Learning)",
+   "open": {
+    "q": "המתג לומד רק מ<strong>כתובת המקור<\/strong> של כל מסגרת. איך הוא בונה עם הזמן מפה של <strong>כל<\/strong> המכשירים?",
+    "model": "כי <strong>כל מכשיר משדר משהו<\/strong> בשלב כלשהו. בכל פעם שמכשיר שולח מסגרת, המתג רואה את ה-MAC שלו ואת הפורט — וכך הטבלה מתמלאת."
+   },
+   "explain": [
+    "<p>הלמידה נעשית <strong>רק לפי כתובת המקור<\/strong> (Source MAC) של מסגרת נכנסת:<\/p><table><tr><th>מצב<\/th><th>מה המתג עושה<\/th><\/tr><tr><td>ה-MAC <strong>לא<\/strong> בטבלה<\/td><td>מוסיף רשומה חדשה: MAC ← הפורט שממנו הגיעה<\/td><\/tr><tr><td>ה-MAC <strong>כבר<\/strong> בטבלה<\/td><td>מאפס את מונה הזמן (Aging Timer) ל-<strong>300 שניות<\/strong> (5 דקות)<\/td><\/tr><\/table>"
+   ],
+   "visual": "<div class=\"md-flow\"><b>מסגרת נכנסת<\/b><i>←<\/i><b>קורא MAC מקור<\/b><i>←<\/i><b>חדש? מוסיף<\/b><i>←<\/i><b>קיים? מאפס טיימר<\/b><\/div>",
+   "example": "כמו שוער חדש שלומד דיירים לפי מי שיוצא מכל דלת: רואה מישהו יוצא מדירה 4 — רושם. רואה אותו שוב — רק מרענן את הרישום.",
+   "again": "<p>הכלל: <strong>\"מאיפה באת — שם אתה גר\"<\/strong>. המתג לא צריך לשאול אף אחד — הוא פשוט מסתכל מאיזה פורט הגיעה כל מסגרת.<\/p>",
+   "simple": "<p>לומד מ<strong>המקור<\/strong>: חדש ← רושם, מוכר ← מרענן ל-300 שניות.<\/p>",
+   "check": {
+    "q": "לפי איזו כתובת המתג <strong>לומד<\/strong>?",
+    "options": [
+     {
+      "t": "כתובת ה-MAC של המקור",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "כתובת ה-MAC של היעד",
+      "ok": false,
+      "fb": "היעד משמש להחלטת ההעברה, לא ללמידה."
+     },
+     {
+      "t": "כתובת ה-IP של המקור",
+      "ok": false,
+      "fb": "מתג שכבה 2 עובד עם MAC."
+     }
+    ],
+    "hint": "מאיפה באת...",
+    "why": "הלמידה מתבצעת רק לפי Source MAC."
+   },
+   "summary": [
+    "למידה — רק לפי MAC המקור",
+    "לא קיים ← רשומה חדשה (MAC ← פורט)",
+    "קיים ← איפוס טיימר ל-300 שניות"
+   ],
+   "homework": [
+    "תאר את אלגוריתם הלמידה של המתג.",
+    "למה הלמידה נעשית מהמקור ולא מהיעד?"
+   ]
+  },
+  {
+   "title": "העברה, הצפה וסינון",
+   "open": {
+    "q": "מתי לדעתך המתג \"מוותר\" ושולח מסגרת <strong>לכל הפורטים<\/strong> במקום לפורט אחד?",
+    "model": "כשהוא <strong>לא מכיר<\/strong> את MAC היעד (היא לא בטבלה), או כשהיעד הוא <strong>Broadcast<\/strong>."
+   },
+   "explain": [
+    "<p>החלטת השליחה נעשית <strong>רק לפי כתובת היעד<\/strong> (Destination MAC):<\/p><table><tr><th>מצב<\/th><th>פעולה<\/th><\/tr><tr><td>היעד בטבלה, בפורט אחר<\/td><td><strong>העברה (Forwarding)<\/strong> — רק לפורט הזה<\/td><\/tr><tr><td>היעד לא בטבלה, או Broadcast<\/td><td><strong>הצפה (Flooding)<\/strong> — לכל הפורטים חוץ מהפורט שממנו הגיעה<\/td><\/tr><tr><td>היעד באותו פורט שממנו הגיעה<\/td><td><strong>סינון (Filtering)<\/strong> — זורק; המסגרת כבר הגיעה ליעדה<\/td><\/tr><\/table>"
+   ],
+   "example": "דוור שיודע לאיזו תיבה להכניס (העברה); לא מכיר את הנמען — שם עותק בכל התיבות (הצפה); שני הצדדים באותה תיבה — לא טורח בכלל (סינון).",
+   "again": "<p><strong>למידה ← מקור<\/strong>. <strong>שליחה ← יעד<\/strong>. ואחרי הצפה, כשהיעד יענה — המתג ילמד גם אותו, ובפעם הבאה כבר יעביר ישירות.<\/p>",
+   "simple": "<p>מכיר ← <strong>לפורט אחד<\/strong>. לא מכיר ← <strong>לכולם<\/strong>. אותו פורט ← <strong>זורק<\/strong>.<\/p>",
+   "check": {
+    "q": "מסגרת מגיעה ליעד שאינו בטבלה. מה המתג עושה?",
+    "options": [
+     {
+      "t": "מציף אותה לכל הפורטים חוץ מפורט המקור",
+      "ok": true,
+      "fb": "נכון — Flooding."
+     },
+     {
+      "t": "זורק אותה",
+      "ok": false,
+      "fb": "זריקה היא סינון — כשהיעד באותו פורט."
+     },
+     {
+      "t": "שולח אותה לנתב",
+      "ok": false,
+      "fb": "מתג לא \"שולח לנתב\" כשהוא לא מכיר יעד — הוא מציף."
+     }
+    ],
+    "hint": "לא יודע לאן — אז...",
+    "why": "יעד לא מוכר ← הצפה לכל הפורטים חוץ מהמקור."
+   },
+   "summary": [
+    "שליחה — לפי MAC היעד",
+    "Forwarding — יעד מוכר בפורט אחר",
+    "Flooding — יעד לא מוכר או Broadcast (חוץ מפורט המקור)",
+    "Filtering — יעד באותו פורט; זורקים"
+   ],
+   "homework": [
+    "הסבר את ההבדל בין Forwarding, Flooding ו-Filtering.",
+    "למה אחרי הצפה אחת המתג כבר יודע לאן לשלוח?"
+   ]
+  },
+  {
+   "title": "Aging ומחזור העיבוד המלא",
+   "open": {
+    "q": "למה חשוב שהמתג ימחק רשומות ישנות, ולא ישמור אותן לנצח?",
+    "model": "כי מכשירים <strong>מתנתקים ועוברים פורט<\/strong>. רשומה ישנה תשלח מסגרות לפורט הלא נכון, והטבלה גם תתמלא."
+   },
+   "explain": [
+    "<p><strong>Aging<\/strong> — לכל רשומה דינמית יש מונה שמתחיל ב-<strong>300 שניות<\/strong>: מגיעה מסגרת מאותה MAC ← המונה מתאפס; המונה מגיע ל-0 ← הרשומה נמחקת.<\/p>",
+    "<p><strong>מחזור העיבוד המלא<\/strong> — בכל מסגרת, שני נתיבים במקביל:<\/p><table><tr><th>נתיב<\/th><th>לפי<\/th><th>שלבים<\/th><\/tr><tr><td><strong>למידה<\/strong><\/td><td>MAC מקור<\/td><td>קיים? אפס טיימר · לא קיים? הוסף<\/td><\/tr><tr><td><strong>החלטה<\/strong><\/td><td>MAC יעד<\/td><td>אותו פורט? סינון · בפורט אחר? העברה · לא ידוע/Broadcast? הצפה<\/td><\/tr><\/table>"
+   ],
+   "example": "כמו רשימת \"נוכחים כרגע\" בכיתה: תלמיד שלא הגיע כמה שיעורים נמחק ממנה, וכשהוא חוזר — נרשם מחדש מייד.",
+   "again": "<p>חשוב על כל מסגרת כעל <strong>שתי שאלות<\/strong>: \"ממי זה?\" (מעדכן את הזיכרון) ו\"למי זה?\" (מחליט לאן). שתיהן נענות בכל מסגרת.<\/p>",
+   "simple": "<p>אין תעבורה 300 שניות ← <strong>נמחק<\/strong>. בכל מסגרת: <strong>לומדים מהמקור, שולחים לפי היעד<\/strong>.<\/p>",
+   "check": {
+    "q": "מה קורה לרשומה דינמית שלא נראתה <strong>300 שניות<\/strong>?",
+    "options": [
+     {
+      "t": "היא נמחקת מהטבלה",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "היא הופכת לסטטית",
+      "ok": false,
+      "fb": "רשומה לא הופכת לסטטית לבד."
+     },
+     {
+      "t": "המתג שולח Broadcast כדי לבדוק אותה",
+      "ok": false,
+      "fb": "אין בדיקה כזו — היא פשוט נמחקת."
+     }
+    ],
+    "hint": "Aging = הזדקנות.",
+    "why": "כשמונה ה-Aging מגיע ל-0, הרשומה נמחקת."
+   },
+   "summary": [
+    "Aging — טיימר 300 שניות; מתאפס עם תעבורה; 0 ← מחיקה",
+    "מחזור: למידה לפי מקור + החלטה לפי יעד",
+    "החלטה: סינון / העברה / הצפה"
+   ],
+   "homework": [
+    "תאר את מחזור העיבוד המלא של המתג.",
+    "מה יקרה אם תעביר מחשב לפורט אחר במתג?"
+   ]
+  },
+  {
+   "title": "Duplex, Auto-Negotiation ו-Auto-MDIX",
+   "open": {
+    "q": "מתג תומך ב-1000 Mbps, והמחשב רק ב-100 Mbps. באיזו מהירות יתחברו?",
+    "model": "<strong>100 Mbps<\/strong> — המהירות המשותפת הגבוהה ביותר ששניהם תומכים בה."
+   },
+   "explain": [
+    "<table><tr><th><\/th><th>מה זה<\/th><\/tr><tr><td><strong>Half-Duplex<\/strong><\/td><td>שולחים <strong>או<\/strong> מקבלים בכל רגע (כמו מכשיר קשר); סכנת התנגשויות<\/td><\/tr><tr><td><strong>Full-Duplex<\/strong><\/td><td>שולחים <strong>ו<\/strong>מקבלים במקביל (כמו טלפון); ניצול מלא של רוחב הפס<\/td><\/tr><tr><td><strong>Auto-Negotiation<\/strong><\/td><td>בחיבור, שני הצדדים מסכימים על המהירות המשותפת הגבוהה ביותר (10/100/1000) ועל ה-Duplex הטוב ביותר<\/td><\/tr><tr><td><strong>Auto-MDIX<\/strong><\/td><td>מזהה את סוג הכבל ומתאים לבד את פיני השידור (TX) והקבלה (RX) — כבל ישר עובד לכל חיבור<\/td><\/tr><\/table>"
+   ],
+   "example": "Full-Duplex — שיחת טלפון; Half-Duplex — מכשיר קשר עם \"עבור\". Auto-Negotiation — דקה של תיאום בתחילת השיחה כדי ששני הצדדים ישמעו טוב.",
+   "again": "<p>Auto-Negotiation עונה על <strong>\"כמה מהר ובאיזה כיוון?\"<\/strong>. Auto-MDIX עונה על <strong>\"איזה כבל?\"<\/strong> — וחוסך את הכבל המוצלב.<\/p>",
+   "simple": "<p>Full = <strong>שני הכיוונים יחד<\/strong>. Auto-Negotiation = <strong>מסכימים על מהירות<\/strong>. Auto-MDIX = <strong>כל כבל עובד<\/strong>.<\/p>",
+   "check": {
+    "q": "מה עושה Auto-MDIX?",
+    "options": [
+     {
+      "t": "מתאים אוטומטית את פיני השידור והקבלה, כך שכבל ישר עובד גם בין מכשירים זהים",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "בוחר את המהירות המשותפת",
+      "ok": false,
+      "fb": "זה Auto-Negotiation."
+     },
+     {
+      "t": "מונע התנגשויות ב-Half-Duplex",
+      "ok": false,
+      "fb": "Auto-MDIX לא קשור למצב ה-Duplex."
+     }
+    ],
+    "hint": "MDIX — קשור לכבלים.",
+    "why": "Auto-MDIX מחליף TX ו-RX לבד, ומייתר את הכבל המוצלב."
+   },
+   "summary": [
+    "Half-Duplex — כיוון אחד בכל רגע, התנגשויות · Full-Duplex — שני הכיוונים",
+    "Auto-Negotiation — מהירות ו-Duplex משותפים הגבוהים ביותר",
+    "Auto-MDIX — התאמת TX/RX אוטומטית; כבל ישר לכל חיבור"
+   ],
+   "homework": [
+    "השווה בין Half-Duplex ל-Full-Duplex.",
+    "הסבר את ההבדל בין Auto-Negotiation ל-Auto-MDIX."
+   ]
+  }
+ ],
+ "unitTitle": "עקרונות המיתוג וכתובת ה-MAC",
+ "id": "y11-15-1"
+};
+</script>
+<script src="madrich-engine.js"></script>
+</body>
+</html>

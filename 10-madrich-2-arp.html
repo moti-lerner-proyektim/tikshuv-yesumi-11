@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פרוטוקול ARP — מנגנון הפעולה — מדריך לימוד · תקשוב יישומי כיתה יא׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="madrich-engine.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="crumbs">
+      <a href="https://moti-lerner-proyektim.github.io/" id="mdCrHub">לומדים בעצמי</a> ‹
+      <a href="./" id="mdCrCourse">תקשוב יישומי</a> ‹
+      <a href="10-arp-dhcp.html" id="mdCrUnit">פרוטוקול ARP ופרוטוקול DHCP</a> ‹ <span id="mdCrHere">פרוטוקול ARP — מנגנון הפעולה</span>
+    </div>
+    <div class="site-name" id="mdSite">תקשוב יישומי · כיתה יא׳</div>
+  </div>
+
+  <main class="md-shell">
+    <header class="md-hero">
+      <div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg></div>
+      <div>
+        <div class="num" id="mdNum">מדריך 2 מתוך 3 · מדריך לימוד אינטראקטיבי</div>
+        <h1 id="mdTitle">פרוטוקול ARP — מנגנון הפעולה</h1>
+        <p id="mdDesc">למה צריך ARP, בקשה ב-Broadcast ותשובה ב-Unicast, טבלת ARP Cache, ומבנה חבילת ARP.</p>
+      </div>
+    </header>
+
+    <div class="md-progress" id="mdProgress" aria-hidden="true"></div>
+    <div class="md-progress-label"><span id="mdProgressText"></span><span class="md-tts-wrap"><span id="mdTtsBox" class="md-tts-wrap"></span><button id="mdRestart" type="button">להתחיל מחדש</button></span></div>
+
+    <div class="md-log" id="mdLog" aria-live="polite"></div>
+
+    <div class="md-cmds" id="mdCmds" aria-label="פקודות"></div>
+    <div class="md-input">
+      <textarea id="mdText" rows="1" placeholder="כתוב כאן תשובה או פקודה… (Enter לשליחה)" aria-label="תשובה או פקודה"></textarea>
+      <button id="mdSend" type="button">שליחה</button>
+    </div>
+    <div class="md-note" id="mdNote">ההתקדמות נשמרת רק בדפדפן שלך · לא נאסף שום מידע</div>
+  </main>
+
+<script>
+window.MADRICH = {
+ "title": "פרוטוקול ARP — מנגנון הפעולה",
+ "persona": "מאיה, מהנדסת רשת ב\"לינקאפ\"",
+ "story": "המחשב החדש קיבל כתובת IP מ-DHCP. אבל גיליתי שחסרה עוד חוליה: כתובת IP לבדה לא מספיקה כדי לשלוח מידע ברשת המקומית. אראה לך איך המחשב \"מוצא\" את השכן הפיזי שלו.",
+ "desc": "למה צריך ARP, בקשה ב-Broadcast ותשובה ב-Unicast, טבלת ARP Cache, ומבנה חבילת ARP.",
+ "num": "מדריך 2 מתוך 3",
+ "emoji": "🔎",
+ "next": {
+  "href": "10-madrich-3-avtacha.html",
+  "title": "מדריך 3: אבטחה, כלי ניהול והשוואה מסכמת",
+  "teaser": "ARP Spoofing, פקודות arp, השוואת DHCP ו-ARP, ופירמידת הרשת המקומית."
+ },
+ "stages": [
+  {
+   "title": "החוליה החסרה — ממזהה לוגי לכתובת פיזית",
+   "open": {
+    "q": "מחשב יודע את <strong>כתובת ה-IP<\/strong> של השכן שלו ברשת, אבל לא את ה-<strong>MAC<\/strong>. איך הוא ידע לאיזה כרטיס רשת לשלוח?",
+    "model": "הוא צריך <strong>לשאול<\/strong> — לברר מי מחזיק בכתובת ה-IP הזו ומה ה-MAC שלו. זה בדיוק התפקיד של ARP."
+   },
+   "explain": [
+    "<p>ה-IP שהמכשיר קיבל מ-DHCP הוא <strong>זהות לוגית<\/strong>. אבל בתוך הרשת המקומית, המתג מעביר מסגרות לפי <strong>MAC<\/strong>.<\/p><p><strong>ARP<\/strong> (Address Resolution Protocol) הוא הגשר: מתרגם <strong>IP (שכבה 3)<\/strong> ל-<strong>MAC (שכבה 2)<\/strong>, כדי שהנתונים יגיעו לכרטיס הרשת הנכון.<\/p>"
+   ],
+   "visual": "<div class=\"md-flow\"><b>IP ידוע — <code>192.168.1.7<\/code><\/b><i>←<\/i><b>ARP<\/b><i>←<\/i><b>MAC — <code>AA:BB:CC:11:22:33<\/code><\/b><\/div>",
+   "example": "כמו משלוח לכתובת רחוב (IP): השליח צריך לדעת גם איזו דלת בדיוק (MAC) כדי למסור את החבילה ליד הנכונה, ולא רק את שם הרחוב.",
+   "again": "<p>תחשוב על <strong>הודעה בכיתה<\/strong>: אתה יודע שאתה רוצה למסור פתק ל\"תלמיד מספר 7 ברשימה\" (IP), אבל צריך לדעת <strong>מי מהיושבים<\/strong> זה (MAC) כדי להעביר לו ביד.<\/p>",
+   "simple": "<p>יש IP, חסר MAC — <strong>ARP משלים את החסר<\/strong>.<\/p>",
+   "check": {
+    "q": "בין אילו שתי כתובות ARP מתרגם?",
+    "options": [
+     {
+      "t": "מ-IP (שכבה 3) ל-MAC (שכבה 2)",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "משם דומיין לכתובת IP",
+      "ok": false,
+      "fb": "זה התפקיד של DNS."
+     },
+     {
+      "t": "מ-MAC ל-IP",
+      "ok": false,
+      "fb": "הכיוון של ARP הוא מ-IP ידוע ל-MAC."
+     }
+    ],
+    "hint": "מה ידוע ומה חסר?",
+    "why": "ARP מוצא את ה-MAC שמתאים ל-IP ידוע."
+   },
+   "summary": [
+    "IP לבדו לא מספיק — ברשת המקומית שולחים לפי MAC",
+    "ARP מתרגם IP (שכבה 3) ל-MAC (שכבה 2)"
+   ],
+   "homework": [
+    "למה ARP נחוץ אחרי שהמכשיר כבר קיבל IP?",
+    "הסבר את תפקיד ARP במילים שלך, עם דוגמה מהחיים."
+   ]
+  },
+  {
+   "title": "מנגנון הפעולה — בקשה ותשובה",
+   "open": {
+    "q": "למה חשוב שהשאלה \"למי שייך ה-IP הזה?\" תישלח <strong>לכולם<\/strong>, אבל התשובה תחזור <strong>רק למי ששאל<\/strong>?",
+    "model": "את השאלה שולחים לכולם כי <strong>לא יודעים מי בעל הכתובת<\/strong>. את התשובה שולחים רק לשואל כדי <strong>לא להעמיס<\/strong> על כל הרשת."
+   },
+   "explain": [
+    "<table><tr><th>שלב<\/th><th>סוג<\/th><th>מה נאמר<\/th><\/tr><tr><td>1. <strong>בקשת ARP<\/strong><\/td><td><strong>Broadcast<\/strong> — לכולם (MAC <code>FF:FF:FF:FF:FF:FF<\/code>)<\/td><td>\"למי שייכת כתובת ה-IP <code>192.168.1.7<\/code>?\"<\/td><\/tr><tr><td>2. <strong>תגובת ARP<\/strong><\/td><td><strong>Unicast<\/strong> — רק לשואל<\/td><td>\"זה אני, הנה ה-MAC שלי\"<\/td><\/tr><\/table><p>כל שאר המכשירים שומעים את השאלה, רואים שהכתובת לא שלהם — ומתעלמים.<\/p>"
+   ],
+   "visual": "<div class=\"md-flow\"><b>שאלה לכולם (Broadcast)<\/b><i>←<\/i><b>רק בעל הכתובת עונה (Unicast)<\/b><\/div>",
+   "example": "כמו לצעוק בכיתה מלאה \"מי כאן דני?\" — כולם שומעים (Broadcast), אבל רק דני עונה לך ישירות \"זה אני!\" (Unicast), ולא כל הכיתה יחד.",
+   "again": "<p>זכור: <strong>שאלה = לכולם<\/strong>, <strong>תשובה = לאחד<\/strong>. אם גם התשובה הייתה לכולם, בכל שאלה הרשת הייתה מוצפת פעמיים.<\/p>",
+   "simple": "<p>שואלים <strong>את כולם<\/strong>, עונה <strong>רק אחד<\/strong> — ורק לשואל.<\/p>",
+   "check": {
+    "q": "איך נשלחת <strong>תגובת<\/strong> ARP?",
+    "options": [
+     {
+      "t": "Unicast — ישירות רק למי ששאל",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "Broadcast — לכל הרשת",
+      "ok": false,
+      "fb": "הבקשה נשלחת ב-Broadcast; התגובה רק לשואל."
+     },
+     {
+      "t": "היא לא נשלחת — השואל מנחש",
+      "ok": false,
+      "fb": "בעל הכתובת עונה עם ה-MAC שלו."
+     }
+    ],
+    "hint": "מי צריך את התשובה?",
+    "why": "התגובה נשלחת ב-Unicast רק לשואל, כדי לא להעמיס על הרשת."
+   },
+   "summary": [
+    "בקשת ARP — Broadcast לכולם: \"למי שייך ה-IP?\"",
+    "תגובת ARP — Unicast לשואל: \"זה אני, הנה ה-MAC\"",
+    "שאר המכשירים מתעלמים"
+   ],
+   "homework": [
+    "תאר את שני שלבי ARP ואת סוג השליחה בכל אחד.",
+    "למה התגובה לא נשלחת ב-Broadcast?"
+   ]
+  },
+  {
+   "title": "ARP Cache — ספר הטלפונים של הרשת",
+   "open": {
+    "q": "למה חשוב שרשומות ב-ARP Cache <strong>יימחקו אוטומטית<\/strong> אחרי זמן מה, ולא יישארו לתמיד?",
+    "model": "כי הרשת <strong>משתנה<\/strong> — מכשיר יכול להתנתק, להחליף כרטיס רשת או לקבל IP אחר. רשומה ישנה תשלח מידע ל<strong>MAC הלא נכון<\/strong>."
+   },
+   "explain": [
+    "<p>כדי לא לשאול שוב ושוב, כל מכשיר שומר את התרגומים שכבר מצא ב<strong>טבלת ARP Cache<\/strong>:<\/p><table><tr><th>סוג רשומה<\/th><th>איך נוצרת<\/th><th>מתי נמחקת<\/th><\/tr><tr><td><strong>דינמית<\/strong><\/td><td>אוטומטית, אחרי בקשת ARP מוצלחת<\/td><td>אוטומטית, אחרי זמן קצוב (TTL)<\/td><\/tr><tr><td><strong>סטטית<\/strong><\/td><td>ידנית, על ידי מנהל הרשת<\/td><td>לא נמחקת אוטומטית<\/td><\/tr><\/table><p>בכל רשומה: <strong>כתובת IP<\/strong>, <strong>כתובת MAC<\/strong> ו<strong>סוג<\/strong>.<\/p>"
+   ],
+   "example": "כמו אנשי הקשר בטלפון: מספר חדש נשמר אחרי השיחה הראשונה (דינמית). אנשי קשר חשובים במיוחד שומרים ידנית, כדי שהטלפון לא \"ישכח\" אותם (סטטית).",
+   "again": "<p>ה-Cache חוסך <strong>Broadcast<\/strong>. בלעדיו, כל מסגרת הייתה מתחילה בצעקה לכל הרשת. איתו — שואלים פעם אחת, וזוכרים לזמן מה.<\/p>",
+   "simple": "<p>ARP Cache = <strong>זיכרון של תרגומים<\/strong>. דינמי — נמחק לבד. סטטי — נשאר.<\/p>",
+   "check": {
+    "q": "מה היתרון המרכזי של ARP Cache?",
+    "options": [
+     {
+      "t": "מונע בקשות ARP חוזרות ומפחית עומס Broadcast",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "מצפין את התקשורת ברשת",
+      "ok": false,
+      "fb": "ARP Cache לא קשור להצפנה."
+     },
+     {
+      "t": "מקצה כתובות IP למכשירים חדשים",
+      "ok": false,
+      "fb": "זה התפקיד של DHCP."
+     }
+    ],
+    "hint": "Cache = זיכרון מטמון.",
+    "why": "ה-Cache שומר תרגומים, וכך חוסך שאלות Broadcast חוזרות."
+   },
+   "summary": [
+    "ARP Cache — טבלת תרגומי IP ← MAC שכבר נמצאו",
+    "דינמית — אוטומטית, נמחקת אחרי TTL",
+    "סטטית — ידנית, קבועה",
+    "חוסך בקשות ומפחית Broadcast"
+   ],
+   "homework": [
+    "מה ההבדל בין רשומה דינמית לרשומה סטטית ב-ARP Cache?",
+    "למה רשומות דינמיות נמחקות אחרי זמן מה?"
+   ]
+  },
+  {
+   "title": "אנטומיית חבילת ARP",
+   "open": {
+    "q": "בבקשת ARP, שדה <strong>ה-MAC של היעד<\/strong> מלא באפסים. למה לדעתך?",
+    "model": "כי <strong>זה בדיוק מה שמנסים לגלות<\/strong> — השולח עוד לא יודע את ה-MAC של היעד."
+   },
+   "explain": [
+    "<p>חבילת ARP היא <strong>28 בייטים<\/strong>, עם שדות קבועים:<\/p><table><tr><th>שדה<\/th><th>ערך טיפוסי<\/th><\/tr><tr><td><strong>Hardware Type<\/strong><\/td><td>Ethernet = <code>1<\/code><\/td><\/tr><tr><td><strong>Protocol Type<\/strong><\/td><td>IPv4 = <code>0x0800<\/code><\/td><\/tr><tr><td><strong>Hardware / Protocol Size<\/strong><\/td><td>6 בייטים (MAC) / 4 בייטים (IPv4)<\/td><\/tr><tr><td><strong>Opcode<\/strong><\/td><td>בקשה = <code>1<\/code> · תשובה = <code>2<\/code><\/td><\/tr><tr><td><strong>Payload<\/strong><\/td><td>MAC ו-IP של השולח ושל היעד (MAC יעד = אפסים בבקשה)<\/td><\/tr><\/table>"
+   ],
+   "example": "כמו טופס בקשה רשמי: השדות תמיד באותו סדר (סוג הבקשה, גודל השדות, הפרטים), כך שכל מערכת יודעת איפה למצוא כל פרט — בלי לנחש.",
+   "again": "<p>שים לב ש-6 ו-4 <strong>מוכרים לך<\/strong>: MAC היא 48 סיביות = 6 בייטים, ו-IPv4 היא 32 סיביות = 4 בייטים. ה-Opcode פשוט: <strong>1 = שואל, 2 = עונה<\/strong>.<\/p>",
+   "simple": "<p>חבילת ARP = <strong>28 בייטים<\/strong>. Opcode <strong>1 = בקשה<\/strong>, <strong>2 = תשובה<\/strong>.<\/p>",
+   "check": {
+    "q": "בשדה Opcode מופיע הערך <code>1<\/code>. איזו הודעה זו?",
+    "options": [
+     {
+      "t": "בקשת ARP",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "תשובת ARP",
+      "ok": false,
+      "fb": "תשובה מסומנת בערך 2."
+     },
+     {
+      "t": "הודעת DHCP",
+      "ok": false,
+      "fb": "זו חבילת ARP; ל-DHCP מבנה אחר."
+     }
+    ],
+    "hint": "מה קורה קודם — שאלה או תשובה?",
+    "why": "Opcode 1 = בקשה, Opcode 2 = תשובה."
+   },
+   "summary": [
+    "חבילת ARP — 28 בייטים",
+    "Hardware Type (Ethernet=1) · Protocol Type (IPv4=0x0800)",
+    "גדלים: MAC 6 בייטים, IPv4 4 בייטים",
+    "Opcode: 1 בקשה, 2 תשובה · Payload: MAC ו-IP של שולח ויעד"
+   ],
+   "homework": [
+    "מנה את חמשת השדות של חבילת ARP.",
+    "מה יופיע בשדה ה-MAC של היעד בבקשה, ומה בתשובה?"
+   ]
+  }
+ ],
+ "unitTitle": "פרוטוקול ARP ופרוטוקול DHCP",
+ "id": "y11-10-2"
+};
+</script>
+<script src="madrich-engine.js"></script>
+</body>
+</html>

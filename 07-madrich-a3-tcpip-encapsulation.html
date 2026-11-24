@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מודל TCP/IP, השוואה ו-Encapsulation — מדריך לימוד · תקשוב יישומי כיתה יא׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="madrich-engine.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="crumbs">
+      <a href="https://moti-lerner-proyektim.github.io/" id="mdCrHub">לומדים בעצמי</a> ‹
+      <a href="./" id="mdCrCourse">תקשוב יישומי</a> ‹
+      <a href="07-protocolim-vemodelim.html" id="mdCrUnit">פרוטוקולים ומודלים</a> ‹ <span id="mdCrHere">מודל TCP/IP, השוואה ו-Encapsulation</span>
+    </div>
+    <div class="site-name" id="mdSite">תקשוב יישומי · כיתה יא׳</div>
+  </div>
+
+  <main class="md-shell">
+    <header class="md-hero">
+      <div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg></div>
+      <div>
+        <div class="num" id="mdNum">חלק א׳ · מדריך 3 מתוך 3 · מדריך לימוד אינטראקטיבי</div>
+        <h1 id="mdTitle">מודל TCP/IP, השוואה ו-Encapsulation</h1>
+        <p id="mdDesc">מודל TCP/IP בן 4 השכבות, מיפוי מול OSI, תהליך ה-Encapsulation, וסיכום הסדרה.</p>
+      </div>
+    </header>
+
+    <div class="md-progress" id="mdProgress" aria-hidden="true"></div>
+    <div class="md-progress-label"><span id="mdProgressText"></span><span class="md-tts-wrap"><span id="mdTtsBox" class="md-tts-wrap"></span><button id="mdRestart" type="button">להתחיל מחדש</button></span></div>
+
+    <div class="md-log" id="mdLog" aria-live="polite"></div>
+
+    <div class="md-cmds" id="mdCmds" aria-label="פקודות"></div>
+    <div class="md-input">
+      <textarea id="mdText" rows="1" placeholder="כתוב כאן תשובה או פקודה… (Enter לשליחה)" aria-label="תשובה או פקודה"></textarea>
+      <button id="mdSend" type="button">שליחה</button>
+    </div>
+    <div class="md-note" id="mdNote">ההתקדמות נשמרת רק בדפדפן שלך · לא נאסף שום מידע</div>
+  </main>
+
+<script>
+window.MADRICH = {
+ "title": "מודל TCP/IP, השוואה ו-Encapsulation",
+ "persona": "אדריכל הרשת",
+ "story": "סיימנו לתכנן את כל 7 הקומות של תוכנית האב התיאורטית (OSI). עכשיו אראה לך את \"תוכנית העבודה\" המעשית שבאמת בונים לפיה בשטח — מודל TCP/IP — ונראה איך מכתב דיגיטלי \"נארז\" שכבה אחרי שכבה בדרכו ברשת.",
+ "desc": "מודל TCP/IP בן 4 השכבות, מיפוי מול OSI, תהליך ה-Encapsulation, וסיכום הסדרה.",
+ "num": "חלק א׳ · מדריך 3 מתוך 3",
+ "emoji": "📐",
+ "next": null,
+ "finalReview": [
+  "למה נולד מודל OSI",
+  "7 השכבות: פיזית, קשר, רשת, תעבורה, שיחה, ייצוג, יישום",
+  "TCP מול UDP",
+  "טבלת פורטים מרכזיים",
+  "מודל TCP/IP בן 4 השכבות",
+  "המיפוי בין OSI ל-TCP/IP",
+  "Encapsulation ו-Decapsulation"
+ ],
+ "stages": [
+  {
+   "title": "מודל TCP/IP — תוכנית העבודה המעשית",
+   "open": {
+    "q": "ל-TCP/IP יש רק <strong>4 שכבות<\/strong> ול-OSI יש 7. האם TCP/IP <strong>\"מדלג\"<\/strong> על תפקידים, או שהוא פשוט <strong>מארגן אותם אחרת<\/strong>?",
+    "model": "הוא <strong>מארגן אחרת<\/strong> — הוא ממזג כמה שכבות של OSI לשכבה אחת. כל התפקידים עדיין קיימים."
+   },
+   "explain": [
+    "<p><strong>TCP/IP<\/strong> הוא המודל המעשי שעליו בנוי האינטרנט היום — <strong>4 שכבות<\/strong>:<\/p><table><tr><th>#<\/th><th>שכבה<\/th><th>מה כוללת<\/th><\/tr><tr><td>4<\/td><td><strong>Application<\/strong> — יישום<\/td><td>HTTP, FTP, SMTP, DNS<\/td><\/tr><tr><td>3<\/td><td><strong>Transport<\/strong> — תעבורה<\/td><td>TCP, UDP<\/td><\/tr><tr><td>2<\/td><td><strong>Internet<\/strong> — אינטרנט<\/td><td>IP (IPv4/IPv6), ניתוב עולמי<\/td><\/tr><tr><td>1<\/td><td><strong>Network Access<\/strong> — גישה לרשת<\/td><td>Ethernet, Wi-Fi, כתובות MAC<\/td><\/tr><\/table>"
+   ],
+   "example": "אם OSI היא תוכנית אדריכלית מפורטת של 7 קומות, TCP/IP היא הגרסה המעשית של אותו בניין — עם 4 \"אגפים\" רחבים, כי זה מה שבונים בפועל.",
+   "again": "<p>תחשוב על <strong>מערכת שעות<\/strong>: אפשר לכתוב \"מתמטיקה, פיזיקה, כימיה, ביולוגיה\" (OSI), ואפשר לכתוב \"מדעים\" (TCP/IP). אותו חומר נלמד — רק מקובץ אחרת.<\/p>",
+   "simple": "<p>TCP/IP = <strong>4 שכבות<\/strong>: יישום · תעבורה · אינטרנט · גישה לרשת. ככה עובד האינטרנט באמת.<\/p>",
+   "check": {
+    "q": "באיזו שכבה של TCP/IP פועל פרוטוקול IP?",
+    "options": [
+     {
+      "t": "Internet",
+      "ok": true,
+      "fb": "נכון — שכבת האינטרנט אחראית על הניתוב העולמי."
+     },
+     {
+      "t": "Transport",
+      "ok": false,
+      "fb": "Transport כוללת TCP ו-UDP."
+     },
+     {
+      "t": "Network Access",
+      "ok": false,
+      "fb": "Network Access כוללת Ethernet, Wi-Fi ו-MAC."
+     },
+     {
+      "t": "Application",
+      "ok": false,
+      "fb": "Application כוללת HTTP, DNS וכו׳."
+     }
+    ],
+    "hint": "Internet Protocol...",
+    "why": "IP פועל בשכבת ה-Internet של TCP/IP."
+   },
+   "summary": [
+    "TCP/IP — המודל המעשי של האינטרנט, 4 שכבות",
+    "Application (HTTP, FTP, SMTP, DNS) · Transport (TCP, UDP) · Internet (IP) · Network Access (Ethernet, Wi-Fi, MAC)"
+   ],
+   "homework": [
+    "רשום את 4 שכבות TCP/IP ופרוטוקול אחד לכל אחת.",
+    "האם TCP/IP מדלג על תפקידים של OSI? הסבר."
+   ]
+  },
+  {
+   "title": "OSI מול TCP/IP — מיפוי, ולמה TCP/IP ניצח",
+   "open": {
+    "q": "אם האינטרנט עובד לפי TCP/IP — <strong>למה עדיין לומדים<\/strong> את מודל OSI?",
+    "model": "כי OSI <strong>מפורט יותר<\/strong> ולכן מצוין <strong>ללימוד, להבנה ולאבחון תקלות<\/strong>, וכי מקצועני רשתות מדברים בשפה שלו (\"בעיה בשכבה 2\")."
+   },
+   "explain": [
+    "<table><tr><th>OSI<\/th><th>TCP/IP<\/th><\/tr><tr><td>7 יישום + 6 ייצוג + 5 שיחה<\/td><td><strong>Application<\/strong><\/td><\/tr><tr><td>4 תעבורה<\/td><td><strong>Transport<\/strong><\/td><\/tr><tr><td>3 רשת<\/td><td><strong>Internet<\/strong><\/td><\/tr><tr><td>2 קשר + 1 פיזית<\/td><td><strong>Network Access<\/strong><\/td><\/tr><\/table>",
+    "<p><strong>שלוש סיבות לניצחון TCP/IP:<\/strong><\/p><ol><li><strong>פשטות ומעשיות<\/strong> — נבנה מתוך הנדסה בשטח; OSI היה מודל אקדמי.<\/li><li><strong>גמישות תשתיתית<\/strong> — תקן אחיד למעלה, וחופש מלא בשכבת הגישה הפיזית.<\/li><li><strong>סטנדרט האינטרנט<\/strong> — כשהאינטרנט אימץ את IP, TCP/IP הפך לעובדה מוגמרת; OSI נשאר בעיקר ללימוד.<\/li><\/ol>"
+   ],
+   "example": "כמו תוכנית לימודים תיאורטית מפורטת לנהיגה מול המבחן המעשי — המבחן פשוט יותר ומאורגן אחרת, אבל מכסה את כל מה שצריך בכביש.",
+   "again": "<p>זכור <strong>3-1-1-2<\/strong>: שלוש שכבות עליונות של OSI ← שכבה אחת (Application). אחת ← אחת (Transport). אחת ← אחת (Internet). שתיים תחתונות ← אחת (Network Access).<\/p>",
+   "simple": "<p>5+6+7 של OSI = <strong>Application<\/strong>. 4 = <strong>Transport<\/strong>. 3 = <strong>Internet<\/strong>. 1+2 = <strong>Network Access<\/strong>.<\/p>",
+   "check": {
+    "q": "שכבת הייצוג (6) של OSI — לאיזו שכבה של TCP/IP היא שייכת?",
+    "options": [
+     {
+      "t": "Application",
+      "ok": true,
+      "fb": "נכון — שכבות 5, 6 ו-7 מתמזגות ל-Application."
+     },
+     {
+      "t": "Transport",
+      "ok": false,
+      "fb": "Transport מקבילה רק לשכבה 4."
+     },
+     {
+      "t": "Internet",
+      "ok": false,
+      "fb": "Internet מקבילה לשכבה 3."
+     },
+     {
+      "t": "Network Access",
+      "ok": false,
+      "fb": "Network Access מקבילה לשכבות 1–2."
+     }
+    ],
+    "hint": "שלוש השכבות העליונות מתמזגות לאחת.",
+    "why": "שכבות 5–7 של OSI מתמזגות לשכבת ה-Application ב-TCP/IP."
+   },
+   "summary": [
+    "מיפוי: 5+6+7 ← Application · 4 ← Transport · 3 ← Internet · 1+2 ← Network Access",
+    "TCP/IP ניצח: פשטות ומעשיות · גמישות תשתיתית · סטנדרט האינטרנט",
+    "OSI — בעיקר ללימוד, הבנה ואבחון"
+   ],
+   "homework": [
+    "צייר טבלת מיפוי בין שכבות OSI לשכבות TCP/IP.",
+    "מנה שלוש סיבות לכך ש-TCP/IP ניצח בפועל."
+   ]
+  },
+  {
+   "title": "Encapsulation — איך מידע \"נארז\" בדרך",
+   "open": {
+    "q": "כשמנה מגיעה לשכבת הרשת ומקבלת <strong>כותרת IP<\/strong> — איזו כותרת כבר נוספה לה <strong>קודם<\/strong> בתהליך השליחה?",
+    "model": "<strong>כותרת TCP<\/strong> (או UDP) — מוסיפה אותה שכבת התעבורה, שבאה לפני שכבת הרשת בדרך למטה. כך נוצר קודם המקטע (Segment), ורק אחריו המנה (Packet)."
+   },
+   "explain": [
+    "<p><strong>Encapsulation<\/strong> (כימוס) — כל שכבה בדרך למטה \"עוטפת\" את המידע בכותרת משלה. כך נשלח מייל:<\/p><table><tr><th>שכבה<\/th><th>מה מתווסף<\/th><th>מה נוצר<\/th><\/tr><tr><td>7 — יישום<\/td><td>SMTP דוחף את המייל<\/td><td><strong>Data<\/strong><\/td><\/tr><tr><td>4 — תעבורה<\/td><td>כותרת TCP (פורט מקור, פורט 25)<\/td><td><strong>Segment<\/strong><\/td><\/tr><tr><td>3 — רשת<\/td><td>כותרת IP לניתוב<\/td><td><strong>Packet<\/strong><\/td><\/tr><tr><td>2 — עורק<\/td><td>כותרת MAC + סיומת CRC<\/td><td><strong>Frame<\/strong><\/td><\/tr><tr><td>1 — פיזית<\/td><td>תרגום לאותות<\/td><td><strong>Bits<\/strong><\/td><\/tr><\/table>",
+    "<p>בצד המקבל קורה התהליך ההפוך — <strong>Decapsulation<\/strong>: מקלפים שכבה אחרי שכבה, מהביטים ועד שהמייל מוצג.<\/p><div class=\"md-flow\"><b>Data<\/b><i>←<\/i><b>Segment<\/b><i>←<\/i><b>Packet<\/b><i>←<\/i><b>Frame<\/b><i>←<\/i><b>Bits<\/b><\/div>"
+   ],
+   "example": "כמו שליחת חבילה: כותבים מכתב (Data), שמים במעטפה עם שם הנמען (כותרת TCP), את המעטפה בקרטון עם כתובת עיר (כותרת IP), מדביקים תווית משלוח עם ברקוד (כותרת MAC) — ורק אז הנהג (השכבה הפיזית) יוצא לדרך.",
+   "again": "<p>זכור את <strong>שמות האריזות<\/strong> מלמעלה למטה: <strong>D<\/strong>ata · <strong>S<\/strong>egment · <strong>P<\/strong>acket · <strong>F<\/strong>rame · <strong>B<\/strong>its. ובצד השני — פותחים את האריזות בסדר ההפוך, כמו בובת מטריושקה.<\/p>",
+   "simple": "<p>בשליחה כל שכבה <strong>מוסיפה עטיפה<\/strong> (Encapsulation). בקבלה כל שכבה <strong>מורידה עטיפה<\/strong> (Decapsulation).<\/p>",
+   "check": {
+    "q": "מה נוצר בשכבה 2 אחרי הוספת כותרת MAC וסיומת CRC?",
+    "options": [
+     {
+      "t": "Frame (מסגרת)",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "Packet (מנה)",
+      "ok": false,
+      "fb": "Packet נוצרת בשכבה 3, עם כותרת IP."
+     },
+     {
+      "t": "Segment (מקטע)",
+      "ok": false,
+      "fb": "Segment נוצר בשכבה 4, עם כותרת TCP."
+     },
+     {
+      "t": "Bits",
+      "ok": false,
+      "fb": "ביטים הם מה שיוצא בשכבה 1."
+     }
+    ],
+    "hint": "שכבה 2 = ...",
+    "why": "בשכבה 2 מתווספות כותרת MAC וסיומת CRC, ונוצרת מסגרת (Frame)."
+   },
+   "summary": [
+    "Encapsulation — כל שכבה עוטפת בכותרת",
+    "Data (7) ← Segment (4, TCP) ← Packet (3, IP) ← Frame (2, MAC + CRC) ← Bits (1)",
+    "Decapsulation — התהליך ההפוך בצד המקבל"
+   ],
+   "homework": [
+    "תאר את תהליך ה-Encapsulation של מייל, משכבה 7 עד שכבה 1.",
+    "מה ההבדל בין Encapsulation ל-Decapsulation?"
+   ]
+  },
+  {
+   "title": "תשתית של חופש טכנולוגי — סיכום הסדרה",
+   "open": {
+    "q": "אחרי כל השכבות — מהו לדעתך <strong>היתרון המרכזי<\/strong> בכך שהאינטרנט בנוי משכבות נפרדות, ולא כמערכת אחת גדולה?",
+    "model": "אפשר <strong>לשנות או לשדרג שכבה אחת בלי לשבור את האחרות<\/strong> — למשל לעבור לסיבים אופטיים או ל-5G בלי לשנות שורת קוד בדפדפן. כל יצרן עובד באופן עצמאי, והכול עדיין מתחבר."
+   },
+   "explain": [
+    "<p>OSI ו-TCP/IP הם לא סתם רשימות כללים — הם <strong>ההסכם ההנדסי<\/strong> שמאפשר ליצרני חומרה, ספקי תקשורת ומפתחי תוכנה לעבוד <strong>באופן עצמאי<\/strong>, ובכל זאת לדבר באותה שפה.<\/p><p><strong>חלוקת האחריות<\/strong> בין השכבות — למשל ששדרוג סיבים אופטיים בשכבה 1 לא מחייב שינוי בדפדפן — היא מה שאפשר לאינטרנט להתפתח ולחבר את העולם.<\/p>"
+   ],
+   "example": "כמו תשתית החשמל — מחברים מכשיר חדש לשקע ואף אחד לא משנה את תחנת הכוח, כי כולם מסכימים על אותו תקן. כך כל טכנולוגיה חדשה (5G, Wi-Fi 7) מצטרפת לאינטרנט בלי לשבור את השכבות שמעליה.",
+   "again": "<p>תחשוב על <strong>טלפון עם כיסוי<\/strong>: אפשר להחליף כיסוי (שכבה אחת) בלי לשנות את הטלפון, ולהחליף אפליקציה בלי לשנות את הכיסוי. שכבות = חלקים שאפשר להחליף בנפרד.<\/p>",
+   "simple": "<p>שכבות נפרדות = <strong>אפשר לשדרג חלק אחד בלי לשבור את השאר<\/strong>. בגלל זה האינטרנט ממשיך לגדול.<\/p>",
+   "check": {
+    "q": "ספק אינטרנט החליף את כל הכבלים בעיר לסיבים אופטיים. מה צריך לשנות בדפדפנים של המשתמשים?",
+    "options": [
+     {
+      "t": "שום דבר — השינוי בשכבה הפיזית לא משפיע על שכבת היישום",
+      "ok": true,
+      "fb": "נכון — זה בדיוק היתרון של שכבות עצמאיות."
+     },
+     {
+      "t": "צריך להתקין דפדפן חדש שתומך בסיבים",
+      "ok": false,
+      "fb": "הדפדפן עובד בשכבת היישום ולא \"יודע\" באיזה כבל עובר המידע."
+     },
+     {
+      "t": "צריך לשנות את כתובות ה-IP של כל האתרים",
+      "ok": false,
+      "fb": "כתובות IP שייכות לשכבת הרשת ולא קשורות לסוג הכבל."
+     }
+    ],
+    "hint": "באיזו שכבה היה השינוי, ובאיזו שכבה פועל הדפדפן?",
+    "why": "שכבות עצמאיות מאפשרות לשדרג את השכבה הפיזית בלי לשנות דבר בשכבות שמעליה."
+   },
+   "summary": [
+    "המודלים הם הסכם הנדסי שמאפשר לכולם לעבוד באופן עצמאי",
+    "חלוקת אחריות בין שכבות = שדרוג שכבה אחת בלי לשבור אחרות",
+    "זה מה שאפשר לאינטרנט להתפתח"
+   ],
+   "homework": [
+    "מהו היתרון המרכזי בבניית האינטרנט בשכבות? תן דוגמה.",
+    "סכם בחמש נקודות את כל מה שלמדת בשלושת המדריכים על מודלי התקשורת."
+   ]
+  }
+ ],
+ "unitTitle": "פרוטוקולים ומודלים",
+ "id": "y11-07-3"
+};
+</script>
+<script src="madrich-engine.js"></script>
+</body>
+</html>

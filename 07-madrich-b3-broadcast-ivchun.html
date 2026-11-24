@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Broadcast, כלי אבחון וסיכום מסלול הנתונים — מדריך לימוד · תקשוב יישומי כיתה יא׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="madrich-engine.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="crumbs">
+      <a href="https://moti-lerner-proyektim.github.io/" id="mdCrHub">לומדים בעצמי</a> ‹
+      <a href="./" id="mdCrCourse">תקשוב יישומי</a> ‹
+      <a href="07-protocolim-vemodelim.html" id="mdCrUnit">פרוטוקולים ומודלים</a> ‹ <span id="mdCrHere">Broadcast, כלי אבחון וסיכום מסלול הנתונים</span>
+    </div>
+    <div class="site-name" id="mdSite">תקשוב יישומי · כיתה יא׳</div>
+  </div>
+
+  <main class="md-shell">
+    <header class="md-hero">
+      <div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg></div>
+      <div>
+        <div class="num" id="mdNum">חלק ב׳ · מדריך 3 מתוך 3 · מדריך לימוד אינטראקטיבי</div>
+        <h1 id="mdTitle">Broadcast, כלי אבחון וסיכום מסלול הנתונים</h1>
+        <p id="mdDesc">Broadcast בחומרה וסערת שידורים, ipconfig/ping/tracert, nslookup/netstat, ומסלול חבילה.</p>
+      </div>
+    </header>
+
+    <div class="md-progress" id="mdProgress" aria-hidden="true"></div>
+    <div class="md-progress-label"><span id="mdProgressText"></span><span class="md-tts-wrap"><span id="mdTtsBox" class="md-tts-wrap"></span><button id="mdRestart" type="button">להתחיל מחדש</button></span></div>
+
+    <div class="md-log" id="mdLog" aria-live="polite"></div>
+
+    <div class="md-cmds" id="mdCmds" aria-label="פקודות"></div>
+    <div class="md-input">
+      <textarea id="mdText" rows="1" placeholder="כתוב כאן תשובה או פקודה… (Enter לשליחה)" aria-label="תשובה או פקודה"></textarea>
+      <button id="mdSend" type="button">שליחה</button>
+    </div>
+    <div class="md-note" id="mdNote">ההתקדמות נשמרת רק בדפדפן שלך · לא נאסף שום מידע</div>
+  </main>
+
+<script>
+window.MADRICH = {
+ "title": "Broadcast, כלי אבחון וסיכום מסלול הנתונים",
+ "persona": "מאיה, מהנדסת תקשורת",
+ "story": "הבנו זהויות, שער ברירת מחדל ו-Hub מול Switch. עכשיו אצייד אותך בכלי אבחון אמיתיים לבדיקת בעיות ברשת של \"לינקאפ\" — ונסכם יחד את המסע המלא של מידע, מהמחשב ועד הקצה השני של העולם.",
+ "desc": "Broadcast בחומרה וסערת שידורים, ipconfig/ping/tracert, nslookup/netstat, ומסלול חבילה.",
+ "num": "חלק ב׳ · מדריך 3 מתוך 3",
+ "emoji": "👩‍💻",
+ "next": null,
+ "finalReview": [
+  "שתי הזהויות — MAC ו-IP",
+  "מבנה IPv4",
+  "מסכת הרשת",
+  "כתובות שמורות",
+  "שער ברירת מחדל",
+  "כתובת MAC",
+  "IP מול MAC",
+  "Hub מול Switch",
+  "Broadcast בחומרה",
+  "כלי האבחון",
+  "nslookup ו-netstat",
+  "מסלול חבילת הנתונים"
+ ],
+ "stages": [
+  {
+   "title": "שידור Broadcast ברמת החומרה",
+   "open": {
+    "q": "אתה יודע רק את <strong>כתובת ה-IP<\/strong> של מחשב ברשת, ולא את ה-MAC שלו. איך תמצא את ה-MAC?",
+    "model": "שולחים <strong>שאלה לכולם<\/strong> (Broadcast): \"למי יש את ה-IP הזה?\" — המחשב הנכון עונה עם ה-MAC שלו. זה בדיוק מה שפרוטוקול <strong>ARP<\/strong> עושה."
+   },
+   "explain": [
+    "<p>כרטיס רשת שמשדר Broadcast משתמש בכתובת MAC מיוחדת: <code>FF:FF:FF:FF:FF:FF<\/code>. המתג מפיץ אותה <strong>לכל היציאות<\/strong> — חוץ מזו שממנה הגיעה.<\/p><p><strong>למה צריך?<\/strong><\/p><ul><li><strong>ARP<\/strong> — מציאת MAC לפי IP ידוע<\/li><li><strong>DHCP<\/strong> — חלוקת כתובות IP למכשירים חדשים<\/li><\/ul>",
+    "<p>⚠️ <strong>סערת שידורים (Broadcast Storm)<\/strong> — שידורים משוכפלים במעגל אינסופי בגלל לולאות בחיבורים. התוצאה: עומס אדיר שעלול <strong>להפיל את הרשת<\/strong>.<\/p>"
+   ],
+   "example": "Broadcast הוא כמו הודעה ברמקול לכל בית הספר. סערת שידורים היא כשההודעה נתקעת בלולאה ומתנגנת שוב ושוב, עד שאף אחד לא מצליח לתפקד.",
+   "again": "<p><code>FF:FF:FF:FF:FF:FF<\/code> היא כמו לכתוב על מעטפה <strong>\"לכל הדיירים\"<\/strong>. זה שימושי כשלא יודעים למי בדיוק לשלוח — אבל אם המעטפות מתחילות לשכפל את עצמן, כל תיבות הדואר מתמלאות.<\/p>",
+   "simple": "<p>Broadcast = <strong>שולחים לכולם<\/strong> (<code>FF:FF:FF:FF:FF:FF<\/code>). משמש ל-ARP ו-DHCP. סערה = לולאה אינסופית שמפילה את הרשת.<\/p>",
+   "check": {
+    "q": "מה גורם לסערת שידורים (Broadcast Storm)?",
+    "options": [
+     {
+      "t": "לולאות בחיבורים שגורמות לשידורים להשתכפל בלי סוף",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "יותר מדי מחשבים עם אותה כתובת MAC",
+      "ok": false,
+      "fb": "זו בעיה אחרת; סערה נגרמת מלולאות."
+     },
+     {
+      "t": "שימוש ב-UDP במקום TCP",
+      "ok": false,
+      "fb": "אין קשר לפרוטוקול התעבורה."
+     }
+    ],
+    "hint": "מילת המפתח: \"מעגל\".",
+    "why": "לולאות בחומרה גורמות לשידורי Broadcast להסתובב ולהשתכפל עד קריסת הרשת."
+   },
+   "summary": [
+    "Broadcast בחומרה: MAC <code>FF:FF:FF:FF:FF:FF<\/code>; המתג מפיץ לכל היציאות חוץ מהמקור",
+    "נחוץ ל-ARP (MAC לפי IP) ו-DHCP (כתובות אוטומטיות)",
+    "Broadcast Storm — לולאות ← שכפול אינסופי ← קריסת הרשת"
+   ],
+   "homework": [
+    "מהי כתובת ה-MAC של Broadcast, ומה עושה המתג כשהוא מקבל אותה?",
+    "מהי סערת שידורים ומה גורם לה?"
+   ]
+  },
+  {
+   "title": "ארגז הכלים לאבחון (CLI Toolkit)",
+   "open": {
+    "q": "אתה רוצה לבדוק אם אתר מסוים <strong>מגיב<\/strong>, ומה <strong>מהירות התגובה<\/strong> שלו. איזה כלי תבחר קודם?",
+    "model": "<strong><code>ping<\/code><\/strong> — שולח חבילות ליעד ובודק אם הוא מגיב ותוך כמה זמן."
+   },
+   "explain": [
+    "<table><tr><th>כלי<\/th><th>תפקיד<\/th><th>משל<\/th><\/tr><tr><td><code>ipconfig<\/code><\/td><td>הגדרות ה-IP, המסכה והשער של המחשב שלך<\/td><td>לבדוק את הכתובת שלך<\/td><\/tr><tr><td><code>ping<\/code><\/td><td>שולח חבילות ליעד ובודק אם מגיב ותוך כמה זמן<\/td><td>לצלצל בפעמון ולראות אם עונים<\/td><\/tr><tr><td><code>tracert<\/code><\/td><td>מציג את כל תחנות הביניים (Hops) בדרך ליעד<\/td><td>לעקוב אחרי כל עצירה בדרך<\/td><\/tr><\/table><pre><code>C:\\&gt; ping google.com\nC:\\&gt; tracert google.com<\/code><\/pre>"
+   ],
+   "example": "ipconfig — לבדוק את הכתובת שלך. ping — לצלצל בפעמון ולבדוק אם מישהו עונה. tracert — לעקוב אחרי כל תחנת עצירה מהבית ועד היעד.",
+   "again": "<p>סדר אבחון הגיוני: <strong>ipconfig<\/strong> — \"האם יש לי כתובת בכלל?\" ← <strong>ping<\/strong> — \"האם היעד עונה?\" ← <strong>tracert<\/strong> — \"אם לא, איפה בדרך זה נתקע?\"<\/p>",
+   "simple": "<p>ipconfig = <strong>מי אני<\/strong>. ping = <strong>אתה שם?<\/strong> tracert = <strong>מה הדרך?<\/strong><\/p>",
+   "check": {
+    "q": "ping לאתר נכשל. איזה כלי יעזור לגלות <strong>באיזו תחנה בדרך<\/strong> המידע נתקע?",
+    "options": [
+     {
+      "t": "<code>tracert<\/code>",
+      "ok": true,
+      "fb": "נכון — הוא מציג את כל ה-Hops בדרך."
+     },
+     {
+      "t": "<code>ipconfig<\/code>",
+      "ok": false,
+      "fb": "ipconfig מציג רק את ההגדרות של המחשב שלך."
+     },
+     {
+      "t": "<code>ping<\/code>",
+      "ok": false,
+      "fb": "ping רק אומר שהיעד לא עונה — לא איפה זה נתקע."
+     }
+    ],
+    "hint": "trace = לעקוב אחרי מסלול.",
+    "why": "tracert ממפה את התחנות בדרך, ולכן מראה איפה המסלול נעצר."
+   },
+   "summary": [
+    "<code>ipconfig<\/code> — IP, מסכה ושער של המחשב",
+    "<code>ping<\/code> — האם היעד מגיב ומה זמן התגובה",
+    "<code>tracert<\/code> — תחנות הביניים (Hops) בדרך ליעד"
+   ],
+   "homework": [
+    "מה עושה כל אחד מהכלים ipconfig, ping ו-tracert?",
+    "תאר סדר אבחון לבעיה \"אין אינטרנט\" בעזרת שלושת הכלים."
+   ]
+  },
+  {
+   "title": "אבחון מתקדם — nslookup ו-netstat",
+   "open": {
+    "q": "כשאתה מקליד <code>google.com<\/code> בדפדפן — איך המחשב יודע לאיזו <strong>כתובת IP<\/strong> לפנות?",
+    "model": "הוא שואל <strong>שרת DNS<\/strong>, שמתרגם את השם לכתובת IP. אפשר לראות את התרגום הזה בעצמך עם <code>nslookup<\/code>."
+   },
+   "explain": [
+    "<p><strong><code>nslookup<\/code><\/strong> — ממירה שם דומיין לכתובת IP דרך DNS:<\/p><pre><code>C:\\&gt; nslookup example.com\nAddress:  93.184.216.34<\/code><\/pre>",
+    "<p><strong><code>netstat<\/code><\/strong> — מציגה חיבורי רשת פעילים, פורטים וסטטיסטיקות. שני מצבים נפוצים:<\/p><table><tr><th>מצב<\/th><th>פירוש<\/th><\/tr><tr><td><code>LISTENING<\/code><\/td><td>פורט שממתין לחיבור נכנס<\/td><\/tr><tr><td><code>ESTABLISHED<\/code><\/td><td>חיבור פעיל עם יעד מרוחק<\/td><\/tr><\/table>"
+   ],
+   "example": "nslookup הוא כמו לחפש מספר טלפון בפנקס לפי שם. netstat הוא כמו לראות רשימה של כל השיחות הפעילות שלך כרגע.",
+   "again": "<p>nslookup עונה על <strong>\"מה הכתובת של...?\"<\/strong>. netstat עונה על <strong>\"עם מי אני מדבר עכשיו, ומי מחכה לי?\"<\/strong>.<\/p>",
+   "simple": "<p><code>nslookup<\/code> = <strong>שם ← IP<\/strong>. <code>netstat<\/code> = <strong>מי מחובר אליי עכשיו<\/strong>.<\/p>",
+   "check": {
+    "q": "ב-netstat מופיע חיבור במצב <code>ESTABLISHED<\/code>. מה זה אומר?",
+    "options": [
+     {
+      "t": "יש חיבור פעיל וקיים בין המחשב שלך לבין יעד מרוחק",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "פורט שממתין לחיבור נכנס",
+      "ok": false,
+      "fb": "זה המצב LISTENING."
+     },
+     {
+      "t": "החיבור נכשל",
+      "ok": false,
+      "fb": "ESTABLISHED = \"נוצר\" — החיבור קיים ופעיל."
+     }
+    ],
+    "hint": "Established = נוצר, מבוסס.",
+    "why": "ESTABLISHED מציין חיבור פעיל וקיים עם יעד מרוחק."
+   },
+   "summary": [
+    "<code>nslookup<\/code> — שם דומיין ← כתובת IP (דרך DNS)",
+    "<code>netstat<\/code> — חיבורים, פורטים וסטטיסטיקות",
+    "<code>LISTENING<\/code> — ממתין לחיבור · <code>ESTABLISHED<\/code> — חיבור פעיל"
+   ],
+   "homework": [
+    "מה עושה nslookup? תן דוגמה לשימוש.",
+    "מה ההבדל בין LISTENING ל-ESTABLISHED ב-netstat?"
+   ]
+  },
+  {
+   "title": "סיכום המערכת — מסלול חבילת הנתונים",
+   "open": {
+    "q": "אם היית צריך לתאר <strong>במשפט אחד<\/strong> את כל המסע של מידע מהמחשב שלך ועד שרת בצד השני של העולם — מה היית אומר?",
+    "model": "למשל: \"המחשב מוצא את כתובת היעד ב-DNS, המתג מעביר את החבילה לנתב לפי <strong>MAC<\/strong>, והנתבים מעבירים אותה ברחבי העולם לפי <strong>IP<\/strong> עד היעד.\""
+   },
+   "explain": [
+    "<p>המסלול המלא, שלב אחרי שלב:<\/p><ol><li><strong>האפליקציה פונה לכתובת<\/strong> — המחשב מברר את כתובת ה-IP של היעד (DNS, כמו <code>nslookup<\/code>).<\/li><li><strong>המתג מנתב מקומית<\/strong> — לפי טבלת ה-MAC הוא מזהה שהחבילה צריכה לצאת, ומעביר אותה ישר לנתב (Gateway), בלי התנגשויות.<\/li><li><strong>השער מעביר הלאה<\/strong> — הנתב קורא את כתובת ה-IP של היעד ומנתב לאינטרנט.<\/li><\/ol><div class=\"md-flow\"><b>אפליקציה + DNS<\/b><i>←<\/i><b>מתג (MAC)<\/b><i>←<\/i><b>נתב/שער (IP)<\/b><i>←<\/i><b>אינטרנט<\/b><i>←<\/i><b>יעד<\/b><\/div>",
+    "<p><strong>השורה התחתונה:<\/strong> <strong>MAC<\/strong> = ניווט <strong>מחדר לחדר<\/strong> (מקומי). <strong>IP<\/strong> = ניווט <strong>ממדינה למדינה<\/strong> (גלובלי).<\/p>"
+   ],
+   "example": "כמו לשלוח מכתב: קודם הכתובת המקומית כדי שהדוור יוציא אותו מהבניין, ואז הכתובת הבינלאומית כדי שיגיע ליעד הרחוק.",
+   "again": "<p>שלושה שחקנים, שלושה תפקידים: <strong>DNS<\/strong> — \"לאן?\". <strong>מתג<\/strong> — \"איך יוצאים מהבניין?\" (MAC). <strong>נתב<\/strong> — \"איך מגיעים לעיר אחרת?\" (IP).<\/p>",
+   "simple": "<p>DNS נותן <strong>כתובת<\/strong> ← מתג מוביל ל<strong>נתב<\/strong> ← נתב שולח ל<strong>אינטרנט<\/strong> ← מגיעים ל<strong>יעד<\/strong>.<\/p>",
+   "check": {
+    "q": "באיזה שלב במסלול נעשה שימוש בטבלת ה-MAC?",
+    "options": [
+     {
+      "t": "כשהמתג מעביר את החבילה בתוך הרשת המקומית אל הנתב",
+      "ok": true,
+      "fb": "נכון — MAC היא לניווט מקומי."
+     },
+     {
+      "t": "כשהנתב מעביר את החבילה ברחבי האינטרנט",
+      "ok": false,
+      "fb": "הנתב מנתב לפי IP."
+     },
+     {
+      "t": "כשה-DNS מתרגם שם לכתובת",
+      "ok": false,
+      "fb": "DNS מתרגם שמות ל-IP, לא קשור לטבלת MAC."
+     }
+    ],
+    "hint": "MAC = מחדר לחדר.",
+    "why": "טבלת ה-MAC משמשת את המתג להעברה מקומית; IP משמש לניתוב הגלובלי."
+   },
+   "summary": [
+    "1. אפליקציה + DNS — מוצאים את IP היעד",
+    "2. מתג — מעביר מקומית לנתב לפי טבלת MAC",
+    "3. נתב (Gateway) — מנתב לאינטרנט לפי IP",
+    "MAC = מקומי (חדר לחדר) · IP = גלובלי (מדינה למדינה)"
+   ],
+   "homework": [
+    "תאר את מסלול חבילת הנתונים מהמחשב שלך ועד שרת בחו\"ל, בשלושה שלבים.",
+    "הסבר: \"MAC מחדר לחדר, IP ממדינה למדינה\"."
+   ]
+  }
+ ],
+ "unitTitle": "פרוטוקולים ומודלים",
+ "id": "y11-07-6"
+};
+</script>
+<script src="madrich-engine.js"></script>
+</body>
+</html>

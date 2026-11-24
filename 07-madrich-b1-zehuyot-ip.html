@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>זהויות הרשת ומבנה כתובת ה-IP — מדריך לימוד · תקשוב יישומי כיתה יא׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="madrich-engine.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="crumbs">
+      <a href="https://moti-lerner-proyektim.github.io/" id="mdCrHub">לומדים בעצמי</a> ‹
+      <a href="./" id="mdCrCourse">תקשוב יישומי</a> ‹
+      <a href="07-protocolim-vemodelim.html" id="mdCrUnit">פרוטוקולים ומודלים</a> ‹ <span id="mdCrHere">זהויות הרשת ומבנה כתובת ה-IP</span>
+    </div>
+    <div class="site-name" id="mdSite">תקשוב יישומי · כיתה יא׳</div>
+  </div>
+
+  <main class="md-shell">
+    <header class="md-hero">
+      <div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5L6.5 17M12 11.5l5.5 5.5"/></svg></div>
+      <div>
+        <div class="num" id="mdNum">חלק ב׳ · מדריך 1 מתוך 3 · מדריך לימוד אינטראקטיבי</div>
+        <h1 id="mdTitle">זהויות הרשת ומבנה כתובת ה-IP</h1>
+        <p id="mdDesc">MAC ו-IP, מבנה IPv4, מסכת הרשת, והכתובות השמורות בכל רשת.</p>
+      </div>
+    </header>
+
+    <div class="md-progress" id="mdProgress" aria-hidden="true"></div>
+    <div class="md-progress-label"><span id="mdProgressText"></span><span class="md-tts-wrap"><span id="mdTtsBox" class="md-tts-wrap"></span><button id="mdRestart" type="button">להתחיל מחדש</button></span></div>
+
+    <div class="md-log" id="mdLog" aria-live="polite"></div>
+
+    <div class="md-cmds" id="mdCmds" aria-label="פקודות"></div>
+    <div class="md-input">
+      <textarea id="mdText" rows="1" placeholder="כתוב כאן תשובה או פקודה… (Enter לשליחה)" aria-label="תשובה או פקודה"></textarea>
+      <button id="mdSend" type="button">שליחה</button>
+    </div>
+    <div class="md-note" id="mdNote">ההתקדמות נשמרת רק בדפדפן שלך · לא נאסף שום מידע</div>
+  </main>
+
+<script>
+window.MADRICH = {
+ "title": "זהויות הרשת ומבנה כתובת ה-IP",
+ "persona": "מאיה, מהנדסת תקשורת",
+ "story": "הגדרנו והפעלנו בהצלחה את המתג הראשון של \"לינקאפ\". עכשיו נבין לעומק איך מידע \"מוצא\" את דרכו: מהי הזהות הכפולה של כל מכשיר, איך בנויה כתובת ה-IP, ואילו כתובות שמורות ואסור להקצות.",
+ "desc": "MAC ו-IP, מבנה IPv4, מסכת הרשת, והכתובות השמורות בכל רשת.",
+ "num": "חלק ב׳ · מדריך 1 מתוך 3",
+ "emoji": "👩‍💻",
+ "next": {
+  "href": "07-madrich-b2-gateway-mac.html",
+  "title": "מדריך 2: שער ברירת מחדל, כתובת MAC וניהול תנועה",
+  "teaser": "שער ברירת המחדל, מבנה כתובת ה-MAC, IP מול MAC, ו-Hub מול Switch."
+ },
+ "stages": [
+  {
+   "title": "שתי הזהויות של כל מכשיר — MAC ו-IP",
+   "open": {
+    "q": "אם היית עובר דירה לעיר אחרת — <strong>מספר תעודת הזהות<\/strong> שלך היה משתנה? ומה עם <strong>הכתובת<\/strong> שלך?",
+    "model": "תעודת הזהות <strong>לא משתנה<\/strong>; הכתובת <strong>כן<\/strong>. בדיוק כך: MAC קבועה (כמו ת\"ז), ו-IP משתנה כשעוברים רשת (כמו כתובת מגורים)."
+   },
+   "explain": [
+    "<table><tr><th><\/th><th>🔩 <strong>MAC<\/strong> — כתובת פיזית<\/th><th>🏠 <strong>IP<\/strong> — כתובת לוגית<\/th><\/tr><tr><td>איפה<\/td><td>צרובה בכרטיס הרשת<\/td><td>מוקצית לפי הרשת<\/td><\/tr><tr><td>משתנה?<\/td><td><strong>לעולם לא<\/strong><\/td><td><strong>כן<\/strong> — במעבר רשת<\/td><\/tr><tr><td>משמשת ל<\/td><td>תקשורת בתוך הרשת המקומית<\/td><td>ניתוב ברחבי האינטרנט<\/td><\/tr><tr><td>דוגמה<\/td><td><code>00:1A:2B:3C:4D:5E<\/code><\/td><td><code>192.168.1.10<\/code> / <code>2001:0db8:85a3::8a2e:0370:7334<\/code><\/td><\/tr><\/table>"
+   ],
+   "example": "תעודת הזהות (מספר קבוע) מקבילה ל-MAC; כתובת המגורים (משתנה כשעוברים דירה) מקבילה ל-IP.",
+   "again": "<p>MAC עונה על <strong>\"מי אתה?\"<\/strong>. IP עונה על <strong>\"איפה אתה עכשיו?\"<\/strong>. בתוך הבית מספיק לדעת מי (MAC); כדי להגיע מעיר אחרת צריך לדעת איפה (IP).<\/p>",
+   "simple": "<p><strong>MAC<\/strong> = ת\"ז של המכשיר, לא משתנה. <strong>IP<\/strong> = כתובת, משתנה כשעוברים רשת.<\/p>",
+   "check": {
+    "q": "לקחת מחשב נייד מהבית לבית הספר והתחברת לרשת שם. מה השתנה?",
+    "options": [
+     {
+      "t": "כתובת ה-IP — כתובת ה-MAC נשארה זהה",
+      "ok": true,
+      "fb": "נכון — MAC צרובה, IP תלויה ברשת."
+     },
+     {
+      "t": "כתובת ה-MAC — כתובת ה-IP נשארה זהה",
+      "ok": false,
+      "fb": "הפוך: ה-MAC צרובה בכרטיס ולא משתנה."
+     },
+     {
+      "t": "שתיהן השתנו",
+      "ok": false,
+      "fb": "ה-MAC קבועה — רק ה-IP משתנה."
+     },
+     {
+      "t": "שום דבר לא השתנה",
+      "ok": false,
+      "fb": "ברשת חדשה המכשיר מקבל כתובת IP חדשה."
+     }
+    ],
+    "hint": "מה \"צרוב\" ומה \"מוקצה\"?",
+    "why": "MAC קבועה בחומרה; IP מוקצית לפי הרשת ולכן משתנה במעבר."
+   },
+   "summary": [
+    "MAC — פיזית, צרובה, קבועה, לתקשורת מקומית (<code>00:1A:2B:3C:4D:5E<\/code>)",
+    "IP — לוגית, משתנה בין רשתות, לניתוב באינטרנט (<code>192.168.1.10<\/code>)"
+   ],
+   "homework": [
+    "השווה בין כתובת MAC לכתובת IP בשלושה היבטים.",
+    "תן דוגמה מהחיים שמסבירה את ההבדל בין MAC ל-IP."
+   ]
+  },
+  {
+   "title": "מבנה הכתובת הלוגית IPv4",
+   "open": {
+    "q": "כתובת IP בנויה מ-4 מספרים בין 0 ל-255. איזה חלק לדעתך מזהה את <strong>\"השכונה\"<\/strong> (הרשת), ואיזה את <strong>\"הבית\"<\/strong> (המארח)?",
+    "model": "בדרך כלל החלק <strong>השמאלי<\/strong> (המספרים הראשונים) מזהה את הרשת, והחלק <strong>הימני<\/strong> (האחרון) את המכשיר. איפה בדיוק עובר הגבול — קובעת מסכת הרשת."
+   },
+   "explain": [
+    "<p><strong>IPv4<\/strong> = 4 <strong>אוקטטות<\/strong> מופרדות בנקודות; כל אוקטטה = 8 סיביות, ערך 0–255; סה\"כ <strong>32 סיביות<\/strong>. לדוגמה: <code>79.125.0.180<\/code><\/p><p>לכל כתובת זהות כפולה:<\/p><table><tr><th>חלק<\/th><th>משל<\/th><th>בדוגמה<\/th><\/tr><tr><td><strong>Network ID<\/strong><\/td><td>השכונה<\/td><td><code>79.125.0<\/code><\/td><\/tr><tr><td><strong>Host ID<\/strong><\/td><td>הבית הספציפי<\/td><td><code>180<\/code><\/td><\/tr><\/table>"
+   ],
+   "example": "בכתובת <code>79.125.0.180<\/code>, החלק <code>79.125.0<\/code> הוא מזהה הרשת (השכונה), ו-<code>180<\/code> הוא מזהה המארח (מספר הבית).",
+   "again": "<p>חשוב על <strong>מספר טלפון<\/strong>: הקידומת (03, 02) היא האזור — כמו Network ID; שאר הספרות הן הטלפון הספציפי — כמו Host ID.<\/p>",
+   "simple": "<p>IPv4 = <strong>4 מספרים<\/strong> (0–255). ההתחלה = <strong>הרשת<\/strong>, הסוף = <strong>המכשיר<\/strong>.<\/p>",
+   "check": {
+    "q": "כמה סיביות יש בכתובת IPv4?",
+    "options": [
+     {
+      "t": "32",
+      "ok": true,
+      "fb": "נכון — 4 אוקטטות × 8 סיביות."
+     },
+     {
+      "t": "48",
+      "ok": false,
+      "fb": "48 סיביות זה גודל של כתובת MAC."
+     },
+     {
+      "t": "128",
+      "ok": false,
+      "fb": "128 סיביות זה גודל של IPv6."
+     },
+     {
+      "t": "8",
+      "ok": false,
+      "fb": "8 סיביות זה אוקטטה אחת בלבד."
+     }
+    ],
+    "hint": "4 × 8 = ?",
+    "why": "IPv4 מורכבת מ-4 אוקטטות של 8 סיביות — 32 סיביות."
+   },
+   "summary": [
+    "IPv4: 4 אוקטטות, כל אחת 8 סיביות (0–255), סה\"כ 32 סיביות",
+    "Network ID = השכונה; Host ID = הבית"
+   ],
+   "homework": [
+    "ממה בנויה כתובת IPv4? כמה סיביות בכל אוקטטה ובכל הכתובת?",
+    "בכתובת <code>10.20.30.40<\/code> (עם מסכה <code>255.255.255.0<\/code>) — מה Network ID ומה Host ID?"
+   ]
+  },
+  {
+   "title": "מסכת הרשת (Subnet Mask)",
+   "open": {
+    "q": "קיבלת IP <code>192.168.1.5<\/code> ומסכה <code>255.255.255.0<\/code>. איזה חלק מזהה את <strong>הרשת<\/strong> ואיזה את <strong>המכשיר<\/strong>?",
+    "model": "הרשת: <code>192.168.1<\/code> (שלוש האוקטטות שמול 255). המכשיר: <code>5<\/code> (האוקטטה שמול 0)."
+   },
+   "explain": [
+    "<p><strong>מסכת הרשת<\/strong> \"נופלת\" מעל כתובת ה-IP ומגדירה את הגבול:<\/p><ul><li><code>255<\/code> — החלק <strong>שייך לרשת<\/strong> (נעול, קבוע)<\/li><li><code>0<\/code> — החלק <strong>שייך למכשיר<\/strong> (פתוח לשינוי)<\/li><\/ul><table><tr><th><\/th><th>1<\/th><th>2<\/th><th>3<\/th><th>4<\/th><\/tr><tr><td>IP<\/td><td>192<\/td><td>168<\/td><td>1<\/td><td>5<\/td><\/tr><tr><td>Mask<\/td><td>255<\/td><td>255<\/td><td>255<\/td><td>0<\/td><\/tr><tr><td><\/td><td>רשת<\/td><td>רשת<\/td><td>רשת<\/td><td><strong>מכשיר<\/strong><\/td><\/tr><\/table>"
+   ],
+   "example": "המסכה היא כמו שבלונה שמניחים מעל הכתובת — היא מראה אילו ספרות קבועות (שם השכונה) ואילו פתוחות לשינוי (מספר הבית).",
+   "again": "<p>דמיין <strong>כרטיס ניקוב<\/strong>: איפה שיש 255 — החור סגור, המספר \"נעול\". איפה שיש 0 — החור פתוח, ושם כל מכשיר מקבל מספר משלו.<\/p>",
+   "simple": "<p>255 = <strong>רשת<\/strong>. 0 = <strong>מכשיר<\/strong>. זהו.<\/p>",
+   "check": {
+    "q": "IP <code>10.5.8.20<\/code> עם מסכה <code>255.255.0.0<\/code>. מהו חלק הרשת?",
+    "options": [
+     {
+      "t": "<code>10.5<\/code>",
+      "ok": true,
+      "fb": "נכון — שתי האוקטטות שמול 255."
+     },
+     {
+      "t": "<code>10.5.8<\/code>",
+      "ok": false,
+      "fb": "האוקטטה השלישית מול 0 — היא שייכת למכשיר."
+     },
+     {
+      "t": "<code>10<\/code>",
+      "ok": false,
+      "fb": "שתי אוקטטות מול 255, לא אחת."
+     },
+     {
+      "t": "<code>8.20<\/code>",
+      "ok": false,
+      "fb": "זה חלק המכשיר."
+     }
+    ],
+    "hint": "ספור כמה פעמים יש 255 במסכה.",
+    "why": "עם <code>255.255.0.0<\/code> שתי האוקטטות הראשונות הן חלק הרשת: <code>10.5<\/code>."
+   },
+   "summary": [
+    "Subnet Mask מגדירה את הגבול בין רשת למכשיר",
+    "255 = רשת (נעול) · 0 = מכשיר (פתוח)",
+    "<code>192.168.1.5<\/code> / <code>255.255.255.0<\/code> ← רשת <code>192.168.1<\/code>, מכשיר <code>5<\/code>"
+   ],
+   "homework": [
+    "מה תפקיד מסכת הרשת?",
+    "IP <code>172.16.4.9<\/code> עם <code>255.255.0.0<\/code>: מה חלק הרשת ומה חלק המכשיר?"
+   ]
+  },
+  {
+   "title": "הכתובות השמורות בכל רשת",
+   "open": {
+    "q": "אם רצית לשלוח הודעה אחת שתגיע <strong>בו-זמנית לכל המכשירים<\/strong> ברשת — לאיזו כתובת היית שולח?",
+    "model": "לכתובת ה-<strong>Broadcast<\/strong> של הרשת — זו שבה כל חלק המכשיר הוא 255 (למשל <code>192.168.1.255<\/code>)."
+   },
+   "explain": [
+    "<p>בכל רשת יש <strong>שתי כתובות שמורות<\/strong> שלעולם לא מקצים למכשיר:<\/p><table><tr><th>כתובת<\/th><th>מתי<\/th><th>דוגמה (מסכה <code>255.255.0.0<\/code>)<\/th><\/tr><tr><td><strong>Network ID<\/strong> — \"שם הרחוב\"<\/td><td>כל חלק המכשיר = <strong>0<\/strong><\/td><td><code>172.16.0.0<\/code><\/td><\/tr><tr><td><strong>Broadcast<\/strong> — לכולם<\/td><td>כל חלק המכשיר = <strong>255<\/strong><\/td><td><code>172.16.255.255<\/code><\/td><\/tr><\/table><p>בדוגמה הנפוצה, <code>192.168.1.0/24<\/code>: Network ID = <code>192.168.1.0<\/code>, Broadcast = <code>192.168.1.255<\/code>, ומכשירים מקבלים <code>.1<\/code> עד <code>.254<\/code>.<\/p>"
+   ],
+   "example": "ה-Network ID הוא כמו שם הרחוב עצמו (לא בית ספציפי); כתובת ה-Broadcast היא כמו הודעה ברמקול לכל תושבי הרחוב בבת אחת.",
+   "again": "<p>חשוב על <strong>בניין<\/strong>: \"רחוב הרצל\" (Network ID) — זה לא דירה, אי אפשר לגור בו. \"כל דיירי הבניין\" (Broadcast) — גם זו לא דירה אחת. כל השאר — דירות אמיתיות (מכשירים).<\/p>",
+   "simple": "<p>חלק המכשיר <strong>כולו 0<\/strong> = כתובת הרשת. <strong>כולו 255<\/strong> = שידור לכולם. אף מכשיר לא מקבל אותן.<\/p>",
+   "check": {
+    "q": "ברשת <code>192.168.1.0<\/code> עם מסכה <code>255.255.255.0<\/code>, איזו כתובת <strong>אסור<\/strong> לתת למחשב?",
+    "options": [
+     {
+      "t": "<code>192.168.1.255<\/code>",
+      "ok": true,
+      "fb": "נכון — זו כתובת ה-Broadcast של הרשת."
+     },
+     {
+      "t": "<code>192.168.1.1<\/code>",
+      "ok": false,
+      "fb": "זו כתובת חוקית למכשיר (לרוב הנתב)."
+     },
+     {
+      "t": "<code>192.168.1.100<\/code>",
+      "ok": false,
+      "fb": "זו כתובת חוקית למכשיר."
+     },
+     {
+      "t": "<code>192.168.1.254<\/code>",
+      "ok": false,
+      "fb": "זו כתובת חוקית — האחרונה לפני ה-Broadcast."
+     }
+    ],
+    "hint": "חלק המכשיר כולו 255 —",
+    "why": "כשחלק המכשיר כולו 255 זו כתובת ה-Broadcast, ולכן אסור להקצות אותה."
+   },
+   "summary": [
+    "שתי כתובות שמורות בכל רשת — לא למכשירים",
+    "<strong>Network ID<\/strong> — חלק המכשיר כולו 0",
+    "<strong>Broadcast<\/strong> — חלק המכשיר כולו 255; שליחה לכולם",
+    "ב-<code>192.168.1.0/24<\/code>: מכשירים <code>.1<\/code>–<code>.254<\/code>"
+   ],
+   "homework": [
+    "מהן שתי הכתובות השמורות בכל רשת, ולמה אי אפשר להקצות אותן?",
+    "ברשת <code>10.1.1.0<\/code> עם <code>255.255.255.0<\/code> — מהי כתובת הרשת ומהי כתובת ה-Broadcast?"
+   ]
+  }
+ ],
+ "unitTitle": "פרוטוקולים ומודלים",
+ "id": "y11-07-4"
+};
+</script>
+<script src="madrich-engine.js"></script>
+</body>
+</html>

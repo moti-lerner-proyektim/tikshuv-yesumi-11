@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>יסודות המדיה החוטית — נחושת — מדריך לימוד · תקשוב יישומי כיתה יא׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="madrich-engine.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="crumbs">
+      <a href="https://moti-lerner-proyektim.github.io/" id="mdCrHub">לומדים בעצמי</a> ‹
+      <a href="./" id="mdCrCourse">תקשוב יישומי</a> ‹
+      <a href="08-hashichva-hafizit.html" id="mdCrUnit">השכבה הפיזית</a> ‹ <span id="mdCrHere">יסודות המדיה החוטית — נחושת</span>
+    </div>
+    <div class="site-name" id="mdSite">תקשוב יישומי · כיתה יא׳</div>
+  </div>
+
+  <main class="md-shell">
+    <header class="md-hero">
+      <div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M4 20c0-6 4-6 8-8s8-2 8-8"/><circle cx="4" cy="20" r="1.5"/><circle cx="20" cy="4" r="1.5"/></svg></div>
+      <div>
+        <div class="num" id="mdNum">מדריך 1 מתוך 3 · מדריך לימוד אינטראקטיבי</div>
+        <h1 id="mdTitle">יסודות המדיה החוטית — נחושת</h1>
+        <p id="mdDesc">תפקיד השכבה הפיזית, כבלי Twisted Pair, קטגוריות Cat, כבל ישיר מול מוצלב, וכבל קואקסיאלי.</p>
+      </div>
+    </header>
+
+    <div class="md-progress" id="mdProgress" aria-hidden="true"></div>
+    <div class="md-progress-label"><span id="mdProgressText"></span><span class="md-tts-wrap"><span id="mdTtsBox" class="md-tts-wrap"></span><button id="mdRestart" type="button">להתחיל מחדש</button></span></div>
+
+    <div class="md-log" id="mdLog" aria-live="polite"></div>
+
+    <div class="md-cmds" id="mdCmds" aria-label="פקודות"></div>
+    <div class="md-input">
+      <textarea id="mdText" rows="1" placeholder="כתוב כאן תשובה או פקודה… (Enter לשליחה)" aria-label="תשובה או פקודה"></textarea>
+      <button id="mdSend" type="button">שליחה</button>
+    </div>
+    <div class="md-note" id="mdNote">ההתקדמות נשמרת רק בדפדפן שלך · לא נאסף שום מידע</div>
+  </main>
+
+<script>
+window.MADRICH = {
+ "title": "יסודות המדיה החוטית — נחושת",
+ "persona": "מאיה, מהנדסת רשת ב\"לינקאפ\"",
+ "story": "הצוות שלי ב\"לינקאפ\" מתקין תשתית תקשורת חדשה למשרדים. אני לוקחת אותך \"לשטח\" כדי לראות מה באמת עובר בתוך הכבלים שמחברים את המחשבים — עוד לפני שהביטים הופכים לאתרים ולמיילים.",
+ "desc": "תפקיד השכבה הפיזית, כבלי Twisted Pair, קטגוריות Cat, כבל ישיר מול מוצלב, וכבל קואקסיאלי.",
+ "num": "מדריך 1 מתוך 3",
+ "emoji": "🔌",
+ "next": {
+  "href": "08-madrich-2-sivim.html",
+  "title": "מדריך 2: סיבים אופטיים ומדידת ביצועים",
+  "teaser": "סיבים אופטיים, Multimode מול Singlemode, נחושת מול סיב, ורוחב פס."
+ },
+ "stages": [
+  {
+   "title": "תפקיד השכבה הפיזית — ממיר ביטים לאותות",
+   "open": {
+    "q": "כשאתה שולח הודעה בוואטסאפ דרך Wi-Fi — איזו <strong>\"שפה פיזית\"<\/strong> עוברת עכשיו באוויר בין הטלפון לנתב?",
+    "model": "<strong>גלי רדיו (RF)<\/strong>. הביטים של ההודעה מתורגמים לגלי רדיו, שעוברים באוויר אל הנתב."
+   },
+   "explain": [
+    "<p>השכבה הפיזית (Layer 1) מתרגמת נתונים בינאריים (0 ו-1) ל<strong>אותות פיזיים<\/strong> שיכולים לעבור במדיה, ומגדירה את התכונות ה<strong>מכניות והחשמליות<\/strong> של הרשת.<\/p><table><tr><th>מדיה<\/th><th>מה עובר בה<\/th><\/tr><tr><td>🟠 <strong>נחושת<\/strong> (Copper)<\/td><td>אותות חשמליים<\/td><\/tr><tr><td>💡 <strong>סיב אופטי<\/strong> (Fiber)<\/td><td>פולסים של אור<\/td><\/tr><tr><td>📡 <strong>אלחוטי<\/strong> (Wireless)<\/td><td>גלי רדיו (RF)<\/td><\/tr><\/table><p>כל סוג מדיה דורש חומרה, מחברים ופרוטוקולים משלו.<\/p>"
+   ],
+   "example": "כמו תרגום שפה: הביטים הם המסר, וכל מדיה \"מדברת\" בשפה אחרת — חוט חשמל במתח חשמלי, סיב אופטי בהבזקי אור, האוויר בגלי רדיו. אותו מסר, שלוש שפות.",
+   "again": "<p>חשוב על <strong>מכתב<\/strong> שאפשר לשלוח בדואר (נחושת), להבהב אותו בפנס בקוד מורס (סיב), או להקריא אותו ברדיו (אלחוט). התוכן זהה — רק \"כלי ההובלה\" שונה.<\/p>",
+   "simple": "<p>שכבה 1 הופכת <strong>0 ו-1<\/strong> ל<strong>חשמל, אור או רדיו<\/strong>.<\/p>",
+   "check": {
+    "q": "מה עובר בתוך סיב אופטי?",
+    "options": [
+     {
+      "t": "פולסים של אור",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "אותות חשמליים",
+      "ok": false,
+      "fb": "אותות חשמליים עוברים בנחושת."
+     },
+     {
+      "t": "גלי רדיו",
+      "ok": false,
+      "fb": "גלי רדיו עוברים באוויר — במדיה האלחוטית."
+     }
+    ],
+    "hint": "אופטי = קשור לראייה...",
+    "why": "סיב אופטי מעביר את הביטים כפולסים של אור."
+   },
+   "summary": [
+    "שכבה 1 מתרגמת ביטים לאותות פיזיים ומגדירה תכונות מכניות וחשמליות",
+    "נחושת — חשמל · סיב — אור · אלחוטי — גלי רדיו (RF)"
+   ],
+   "homework": [
+    "מה תפקיד השכבה הפיזית?",
+    "מנה שלושה סוגי מדיה ומה עובר בכל אחד."
+   ]
+  },
+  {
+   "title": "אנטומיה של כבלי נחושת — UTP, FTP, STP",
+   "open": {
+    "q": "משרד נמצא ליד <strong>מכונות תעשייתיות<\/strong> שיוצרות הרבה הפרעות חשמליות. איזה כבל לדעתך יתאים שם — UTP, FTP או STP?",
+    "model": "<strong>STP<\/strong> — עם סיכוך לכל זוג ורשת נחושת סביב כולם. הוא העמיד ביותר להפרעות."
+   },
+   "explain": [
+    "<p>כבלי נחושת בנויים מ<strong>גידים שזורים<\/strong> (Twisted Pair) — השזירה מקטינה <strong>הפרעות אלקטרומגנטיות (EMI)<\/strong> והפרעות <strong>תדרי רדיו (RFI)<\/strong>. רמת הסיכוך קובעת את העמידות לרעש:<\/p><table><tr><th>סוג<\/th><th>מבנה<\/th><th>הגנה<\/th><\/tr><tr><td><strong>UTP<\/strong> (Unshielded)<\/td><td>4 זוגות, בלי סיכוך — הנפוץ ביותר<\/td><td>בסיסית<\/td><\/tr><tr><td><strong>FTP<\/strong> (Foiled)<\/td><td>עטיפת אלומיניום (Foil) סביב כל הכבל<\/td><td>בינונית<\/td><\/tr><tr><td><strong>STP<\/strong> (Shielded)<\/td><td>אלומיניום על כל זוג + רשת נחושת קלועה סביב כולם<\/td><td>מקסימלית<\/td><\/tr><\/table>"
+   ],
+   "example": "כמו שכבות בגדים בקור: UTP הוא חולצה דקה (מספיקה לרוב הימים), FTP מעיל קל, ו-STP מעיל חורף כבד — לתנאים קשים במיוחד, כמו ליד מכונות תעשייתיות.",
+   "again": "<p>U = <strong>U<\/strong>nshielded — בלי מגן. F = <strong>F<\/strong>oil — נייר כסף אחד מסביב. S = <strong>S<\/strong>hielded — מגן על כל זוג, ועוד רשת מסביב.<\/p>",
+   "simple": "<p>UTP = בלי הגנה, הכי נפוץ. FTP = הגנה אחת. STP = הכי מוגן, לסביבה רועשת.<\/p>",
+   "check": {
+    "q": "למה הגידים בכבל רשת <strong>שזורים<\/strong> זה בזה?",
+    "options": [
+     {
+      "t": "כדי להקטין הפרעות אלקטרומגנטיות",
+      "ok": true,
+      "fb": "נכון — השזירה מבטלת חלק גדול מההפרעות."
+     },
+     {
+      "t": "כדי שהכבל יהיה גמיש יותר",
+      "ok": false,
+      "fb": "זו לא הסיבה ההנדסית לשזירה."
+     },
+     {
+      "t": "כדי לחסוך בנחושת",
+      "ok": false,
+      "fb": "השזירה דווקא מאריכה מעט את הגידים."
+     }
+    ],
+    "hint": "EMI...",
+    "why": "שזירת הזוגות מקטינה EMI ו-RFI."
+   },
+   "summary": [
+    "Twisted Pair — שזירה מקטינה EMI ו-RFI",
+    "UTP — בלי סיכוך, הנפוץ ביותר",
+    "FTP — עטיפת אלומיניום סביב הכבל",
+    "STP — סיכוך לכל זוג + רשת קלועה; הגנה מקסימלית"
+   ],
+   "homework": [
+    "השווה בין UTP, FTP ו-STP.",
+    "איזה כבל תבחר לרשת במפעל עם מכונות כבדות, ולמה?"
+   ]
+  },
+  {
+   "title": "קטגוריות כבלי Ethernet — Cat3 עד Cat7",
+   "open": {
+    "q": "אתה קונה כבל למחשב הגיימינג ורוצה מהירות של <strong>לפחות 1 Gbps<\/strong>. מה הקטגוריה הזולה ביותר שתספיק? (רמז: בטבלה שתיכף נראה)",
+    "model": "<strong>Cat 5e<\/strong> — היא הקטגוריה הראשונה שתומכת ב-1 Gbps."
+   },
+   "explain": [
+    "<p>ככל שהמהירות עולה, נדרש סיכוך ושזירה טובים יותר כדי למנוע <strong>זליגת אותות בין הזוגות (Crosstalk)<\/strong>. כל הקטגוריות כאן — <strong>עד 100 מטר<\/strong>.<\/p><table><tr><th>קטגוריה<\/th><th>מהירות<\/th><th>תקן<\/th><\/tr><tr><td>Cat 3<\/td><td>10 Mbps<\/td><td>10BASE-T<\/td><\/tr><tr><td>Cat 5<\/td><td>100 Mbps<\/td><td>100BASE-TX<\/td><\/tr><tr><td><strong>Cat 5e<\/strong><\/td><td><strong>1 Gbps<\/strong><\/td><td>1000BASE-T<\/td><\/tr><tr><td>Cat 6<\/td><td>1 Gbps (10 Gbps למרחק קצר)<\/td><td>1000BASE-T<\/td><\/tr><tr><td>Cat 6a<\/td><td>10 Gbps<\/td><td>10GBASE-T<\/td><\/tr><tr><td>Cat 7<\/td><td>10 Gbps, סיכוך לכל זוג (S/FTP)<\/td><td>10GBASE-T<\/td><\/tr><\/table>"
+   ],
+   "example": "כמו שדרוג כביש: ככל שרוצים לנסוע מהר יותר, צריך כביש איכותי יותר עם יותר מעקות (סיכוך), כדי שהמכוניות (הזוגות) שנוסעות זו לצד זו לא \"יתנגשו\" (Crosstalk).",
+   "again": "<p>הכלל: <strong>מספר גבוה יותר = מהיר יותר ומוגן יותר<\/strong>. וקפיצות שכדאי לזכור: Cat 5 ← 100 מגה, Cat 5e ← גיגה, Cat 6a ← 10 גיגה.<\/p>",
+   "simple": "<p>Cat 5e = <strong>1 Gbps<\/strong>. Cat 6a = <strong>10 Gbps<\/strong>. כולם עד <strong>100 מטר<\/strong>.<\/p>",
+   "check": {
+    "q": "מהו המרחק המקסימלי של כבל Ethernet מנחושת, בכל הקטגוריות?",
+    "options": [
+     {
+      "t": "100 מטר",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "1,000 מטר",
+      "ok": false,
+      "fb": "זה רחוק מדי לנחושת — לשם צריך סיב אופטי."
+     },
+     {
+      "t": "10 מטר",
+      "ok": false,
+      "fb": "נחושת מגיעה רחוק יותר — עד 100 מטר."
+     }
+    ],
+    "hint": "מספר עגול — מאה.",
+    "why": "כל קטגוריות הנחושת מוגבלות ל-100 מטר."
+   },
+   "summary": [
+    "מהירות גבוהה יותר דורשת הגנה מפני Crosstalk",
+    "Cat 3: 10 Mbps · Cat 5: 100 Mbps · Cat 5e/6: 1 Gbps · Cat 6a/7: 10 Gbps",
+    "כולן עד 100 מטר"
+   ],
+   "homework": [
+    "מהו Crosstalk, ולמה הוא גדל כשהמהירות עולה?",
+    "איזו קטגוריה מינימלית תבחר לרשת של 10 Gbps?"
+   ]
+  },
+  {
+   "title": "לוגיקת חיווט — כבל ישיר מול מוצלב, ו-Auto-MDIX",
+   "open": {
+    "q": "רוצים לחבר <strong>שני מחשבים ישירות<\/strong> זה לזה, בלי נתב או מתג באמצע. לפני Auto-MDIX — איזה כבל היה צריך?",
+    "model": "<strong>כבל מוצלב (Crossover)<\/strong> — כי מחברים שני מכשירים מאותו סוג."
+   },
+   "explain": [
+    "<table><tr><th>כבל<\/th><th>חיווט<\/th><th>מתי<\/th><\/tr><tr><td><strong>ישיר<\/strong> (Straight-Through)<\/td><td>פינים תואמים: 1–1, 2–2...<\/td><td>מכשירים <strong>שונים<\/strong> — מחשב למתג/נתב<\/td><\/tr><tr><td><strong>מוצלב<\/strong> (Crossover)<\/td><td>הצלבה: 1–3, 2–6<\/td><td>מכשירים <strong>זהים<\/strong> — מתג למתג, מחשב למחשב<\/td><\/tr><\/table><p><strong>Auto-MDIX<\/strong> — טכנולוגיה מודרנית שמבצעת את ההצלבה <strong>אוטומטית<\/strong> בתוך המכשיר, ולכן היום כמעט אין צורך בכבל מוצלב.<\/p>"
+   ],
+   "example": "פעם היה צריך מתאם מיוחד כדי לחבר שני מכשירים מאותו סוג. היום רוב המכשירים \"חכמים\" מספיק כדי להבין לבד איך להתחבר, בלי שתדע איזה כבל יש לך ביד.",
+   "again": "<p>חשוב על <strong>שיחת טלפון<\/strong>: הפה של אחד צריך להגיע לאוזן של השני. אם שני המכשירים זהים, \"פה\" מתחבר ל\"פה\" — ולכן צריך להצליב. Auto-MDIX הוא טלפון שמסתובב לבד לכיוון הנכון.<\/p>",
+   "simple": "<p>שונים ← <strong>ישיר<\/strong>. זהים ← <strong>מוצלב<\/strong>. היום Auto-MDIX עושה את זה לבד.<\/p>",
+   "check": {
+    "q": "איזה כבל מתאים (בלי Auto-MDIX) לחיבור <strong>מחשב למתג<\/strong>?",
+    "options": [
+     {
+      "t": "כבל ישיר (Straight-Through)",
+      "ok": true,
+      "fb": "נכון — מכשירים שונים."
+     },
+     {
+      "t": "כבל מוצלב (Crossover)",
+      "ok": false,
+      "fb": "מוצלב משמש לחיבור מכשירים זהים."
+     },
+     {
+      "t": "כבל קואקסיאלי",
+      "ok": false,
+      "fb": "קואקס לא משמש לחיבור Ethernet מודרני למתג."
+     }
+    ],
+    "hint": "מחשב ומתג — אותו סוג מכשיר?",
+    "why": "מחשב ומתג הם מכשירים שונים, ולכן מספיק כבל ישיר."
+   },
+   "summary": [
+    "ישיר — פינים תואמים; מכשירים שונים",
+    "מוצלב — 1–3, 2–6; מכשירים זהים",
+    "Auto-MDIX — הצלבה אוטומטית; כמעט מייתר את הכבל המוצלב"
+   ],
+   "homework": [
+    "מתי משתמשים בכבל ישיר ומתי בכבל מוצלב? תן דוגמה לכל אחד.",
+    "מה עושה Auto-MDIX?"
+   ]
+  },
+  {
+   "title": "כבל קואקסיאלי — הסטנדרט הוותיק",
+   "open": {
+    "q": "כבלי קואקס עדיין נמצאים בהרבה בתים. איזה <strong>שירות ביתי<\/strong> מוכר עדיין מתחבר לרוב בכבל כזה?",
+    "model": "<strong>טלוויזיה בכבלים<\/strong> (ולעיתים גם מודם אינטרנט של חברת הכבלים)."
+   },
+   "explain": [
+    "<p><strong>כבל קואקסיאלי<\/strong> (Coaxial) בנוי שכבות סביב ציר אחד, ועמיד מאוד להפרעות:<\/p><div class=\"md-flow\"><b>ליבת נחושת (Core)<\/b><i>←<\/i><b>בידוד (Dielectric)<\/b><i>←<\/i><b>רשת נחושת (Shield)<\/b><i>←<\/i><b>מעטפת (Jacket)<\/b><\/div><table><tr><th>סוג<\/th><th>עכבה<\/th><th>שימוש<\/th><\/tr><tr><td><strong>RG-58<\/strong><\/td><td>50 Ohm<\/td><td>תדרי רדיו ורשתות ישנות<\/td><\/tr><tr><td><strong>RG-59<\/strong><\/td><td>75 Ohm<\/td><td>טלוויזיה בכבלים ווידאו<\/td><\/tr><\/table><p><strong>מחבר BNC<\/strong> — נעילה מהירה בחצי סיבוב (Bayonet).<\/p>"
+   ],
+   "example": "כמו צינור בתוך צינור: הצינור הפנימי (ליבת הנחושת) מוביל את המידע, והחיצוני (הרשת המסוככת) מגן עליו מהפרעות — כמו צינור מים שקבור באדמה בתוך צינור הגנה.",
+   "again": "<p>מהמרכז החוצה: <strong>מוליך<\/strong> ← <strong>מבודד<\/strong> ← <strong>מגן<\/strong> ← <strong>מעיל<\/strong>. ארבע שכבות, ציר משותף אחד — לכן \"קו-אקסיאלי\".<\/p>",
+   "simple": "<p>קואקס = <strong>חוט באמצע<\/strong> + <strong>מגן מסביב<\/strong>. היום בעיקר לטלוויזיה בכבלים.<\/p>",
+   "check": {
+    "q": "מה תפקיד רשת הנחושת (Shield) בכבל קואקסיאלי?",
+    "options": [
+     {
+      "t": "להגן על הליבה מפני הפרעות חיצוניות",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "להוביל את המידע העיקרי",
+      "ok": false,
+      "fb": "את המידע מובילה ליבת הנחושת שבמרכז."
+     },
+     {
+      "t": "לחבר את הכבל למחבר BNC בלבד",
+      "ok": false,
+      "fb": "התפקיד העיקרי שלה הוא סיכוך."
+     }
+    ],
+    "hint": "Shield = מגן.",
+    "why": "רשת הנחושת מסוככת את הליבה מפני הפרעות."
+   },
+   "summary": [
+    "קואקס: ליבה · בידוד · רשת נחושת · מעטפת",
+    "RG-58 (50 Ohm) — RF ורשתות ישנות · RG-59 (75 Ohm) — טלוויזיה ווידאו",
+    "מחבר BNC — נעילת חצי סיבוב"
+   ],
+   "homework": [
+    "צייר וסמן את ארבע השכבות של כבל קואקסיאלי.",
+    "מה ההבדל בין RG-58 ל-RG-59?"
+   ]
+  }
+ ],
+ "unitTitle": "השכבה הפיזית",
+ "id": "y11-08-1"
+};
+</script>
+<script src="madrich-engine.js"></script>
+</body>
+</html>

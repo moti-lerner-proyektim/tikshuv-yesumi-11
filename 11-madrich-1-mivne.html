@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מיקום שכבת הקו ומבנה פנימי — מדריך לימוד · תקשוב יישומי כיתה יא׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="madrich-engine.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="crumbs">
+      <a href="https://moti-lerner-proyektim.github.io/" id="mdCrHub">לומדים בעצמי</a> ‹
+      <a href="./" id="mdCrCourse">תקשוב יישומי</a> ‹
+      <a href="11-shichvat-hakav.html" id="mdCrUnit">שכבת הקו</a> ‹ <span id="mdCrHere">מיקום שכבת הקו ומבנה פנימי</span>
+    </div>
+    <div class="site-name" id="mdSite">תקשוב יישומי · כיתה יא׳</div>
+  </div>
+
+  <main class="md-shell">
+    <header class="md-hero">
+      <div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg></div>
+      <div>
+        <div class="num" id="mdNum">מדריך 1 מתוך 3 · מדריך לימוד אינטראקטיבי</div>
+        <h1 id="mdTitle">מיקום שכבת הקו ומבנה פנימי</h1>
+        <p id="mdDesc">מיקום שכבה 2, תתי-השכבות LLC ו-MAC, ארבע הפונקציות, מבנה מסגרת Ethernet, ו-MAC מול IP.</p>
+      </div>
+    </header>
+
+    <div class="md-progress" id="mdProgress" aria-hidden="true"></div>
+    <div class="md-progress-label"><span id="mdProgressText"></span><span class="md-tts-wrap"><span id="mdTtsBox" class="md-tts-wrap"></span><button id="mdRestart" type="button">להתחיל מחדש</button></span></div>
+
+    <div class="md-log" id="mdLog" aria-live="polite"></div>
+
+    <div class="md-cmds" id="mdCmds" aria-label="פקודות"></div>
+    <div class="md-input">
+      <textarea id="mdText" rows="1" placeholder="כתוב כאן תשובה או פקודה… (Enter לשליחה)" aria-label="תשובה או פקודה"></textarea>
+      <button id="mdSend" type="button">שליחה</button>
+    </div>
+    <div class="md-note" id="mdNote">ההתקדמות נשמרת רק בדפדפן שלך · לא נאסף שום מידע</div>
+  </main>
+
+<script>
+window.MADRICH = {
+ "title": "מיקום שכבת הקו ומבנה פנימי",
+ "persona": "מאיה, מהנדסת רשת ב\"לינקאפ\"",
+ "story": "המחשב במשרד כבר קיבל כתובת IP ותרגם אותה ל-MAC. עכשיו אראה לך את השכבה שמאחורי הקלעים, שבפועל \"אורזת\" את המידע ושולחת אותו בכבל — שכבת הקו.",
+ "desc": "מיקום שכבה 2, תתי-השכבות LLC ו-MAC, ארבע הפונקציות, מבנה מסגרת Ethernet, ו-MAC מול IP.",
+ "num": "מדריך 1 מתוך 3",
+ "emoji": "📦",
+ "next": {
+  "href": "11-madrich-2-hitnagshuyot.html",
+  "title": "מדריך 2: התנגשויות ופרוטוקולי גישה למדיום",
+  "teaser": "התנגשויות, CSMA/CD, CSMA/CA והצומת הנסתר, ו-Token Ring מול Ethernet."
+ },
+ "stages": [
+  {
+   "title": "מיקום שכבת הקו במודל OSI",
+   "open": {
+    "q": "שכבה 3 מטפלת בכתובות IP, ושכבה 1 רק באותות חשמליים. <strong>למה צריך שכבה נוספת ביניהן<\/strong>?",
+    "model": "כי מישהו צריך <strong>לארוז<\/strong> את המנה הלוגית למסגרת, להוסיף <strong>כתובות פיזיות (MAC)<\/strong>, לבדוק <strong>שגיאות<\/strong> ולקבוע <strong>מי משדר מתי<\/strong> — דברים שאף אחת מהשכבות האחרות לא עושה."
+   },
+   "explain": [
+    "<p><strong>שכבת הקו<\/strong> (Data Link) היא <strong>שכבה 2<\/strong> במודל OSI. היא מקבלת מנות משכבת הרשת, ומכינה אותן לשידור כאותות בשכבה הפיזית.<\/p><table><tr><th>שכבה<\/th><th>מה מטפלת<\/th><\/tr><tr><td>3 — רשת<\/td><td>ניתוב לוגי, כתובות IP<\/td><\/tr><tr><td><strong>2 — קו<\/strong><\/td><td><strong>הגשר: מסגרות, MAC, שגיאות, גישה<\/strong><\/td><\/tr><tr><td>1 — פיזית<\/td><td>אותות חשמליים ומכניים<\/td><\/tr><\/table>"
+   ],
+   "example": "כמו אריזה בדואר: המכתב (המידע משכבה 3) לא יכול \"לעוף\" לבד במערכת המיון. צריך לשים אותו במעטפה עם ברקוד, ורק אז הוא עולה על פס ההובלה (שכבה 1).",
+   "again": "<p>חשוב על <strong>מתורגמן<\/strong> בין מנהל (שכבה 3, מדבר ב\"כתובות\") לבין פועל (שכבה 1, מבין רק \"חשמל\"). שכבת הקו מתרגמת את ההוראה לשפה שהפועל יכול לבצע.<\/p>",
+   "simple": "<p>שכבה 2 = <strong>הגשר<\/strong> בין IP (שכבה 3) לבין החשמל בכבל (שכבה 1).<\/p>",
+   "check": {
+    "q": "בין אילו שכבות נמצאת שכבת הקו?",
+    "options": [
+     {
+      "t": "בין השכבה הפיזית (1) לשכבת הרשת (3)",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "בין שכבת הרשת (3) לשכבת התעבורה (4)",
+      "ok": false,
+      "fb": "זו שכבה 2 — מתחת לשכבת הרשת."
+     },
+     {
+      "t": "מעל שכבת היישום",
+      "ok": false,
+      "fb": "אין שכבה מעל שכבה 7."
+     }
+    ],
+    "hint": "שכבה 2.",
+    "why": "שכבת הקו היא שכבה 2 — בין 1 ל-3."
+   },
+   "summary": [
+    "שכבת הקו = שכבה 2 ב-OSI",
+    "מקבלת מנות משכבה 3 ומכינה אותן לשכבה 1",
+    "הגשר בין העולם הלוגי לעולם הפיזי"
+   ],
+   "homework": [
+    "היכן ממוקמת שכבת הקו, ולמה היא נחוצה?",
+    "תן דוגמה מהחיים לתפקיד של \"גשר\" בין שתי שכבות."
+   ]
+  },
+  {
+   "title": "המבנה הפנימי — LLC ו-MAC",
+   "open": {
+    "q": "שני מחשבים מנסים \"לדבר\" באותו זמן דרך אותו כבל. איזו תת-שכבה לדעתך קובעת <strong>מי מדבר קודם<\/strong> — LLC או MAC?",
+    "model": "<strong>MAC<\/strong> (Media Access Control) — היא אחראית על <strong>הגישה למדיום<\/strong> המשותף."
+   },
+   "explain": [
+    "<table><tr><th>תת-שכבה<\/th><th>תקן<\/th><th>תפקיד<\/th><\/tr><tr><td><strong>LLC<\/strong> — Logical Link Control<\/td><td>IEEE 802.2<\/td><td>ממשק אחיד לשכבת הרשת שמעל; טיפול בכל מסגרת, זיהוי שגיאות, תמיכה בכמה פרוטוקולים<\/td><\/tr><tr><td><strong>MAC<\/strong> — Media Access Control<\/td><td>IEEE 802.3 / 802.11<\/td><td>גישה למדיום המשותף: כתובת פיזית, \"זכות דיבור\", עבודה בכרטיס הרשת (NIC)<\/td><\/tr><\/table>"
+   ],
+   "visual": "<div class=\"md-flow\"><b>שכבה 3<\/b><i>←<\/i><b>LLC (מלמעלה)<\/b><i>←<\/i><b>MAC (מלמטה)<\/b><i>←<\/i><b>שכבה 1<\/b><\/div>",
+   "example": "כמו קבלת פנים במשרד: LLC היא הפקידה שמתעדת כל בקשה מול המחלקות למעלה; MAC הוא השומר בכניסה שקובע מתי כל מבקר נכנס בדלת הפיזית.",
+   "again": "<p><strong>LLC<\/strong> פונה <strong>למעלה<\/strong> — \"מה אני מעביר?\". <strong>MAC<\/strong> פונה <strong>למטה<\/strong> — \"מתי ואיך אני נוגע בכבל?\".<\/p>",
+   "simple": "<p>LLC = <strong>מדבר עם שכבה 3<\/strong>. MAC = <strong>מדבר עם הכבל<\/strong> וקובע תורות.<\/p>",
+   "check": {
+    "q": "לאיזו תת-שכבה שייכת כתובת ה-MAC הפיזית?",
+    "options": [
+     {
+      "t": "MAC",
+      "ok": true,
+      "fb": "נכון — מכאן גם השם."
+     },
+     {
+      "t": "LLC",
+      "ok": false,
+      "fb": "LLC עוסקת בממשק לשכבה 3."
+     },
+     {
+      "t": "לשכבת הרשת",
+      "ok": false,
+      "fb": "שכבת הרשת עוסקת בכתובות IP."
+     }
+    ],
+    "hint": "שם הכתובת = שם תת-השכבה.",
+    "why": "כתובת ה-MAC שייכת לתת-שכבת MAC."
+   },
+   "summary": [
+    "LLC (802.2) — ממשק לשכבה 3, טיפול במסגרות ובשגיאות",
+    "MAC (802.3/802.11) — גישה למדיום, כתובת פיזית, NIC"
+   ],
+   "homework": [
+    "השווה בין LLC ל-MAC: תקן ותפקיד.",
+    "איזו תת-שכבה מחליטה מי משדר — ולמה דווקא היא?"
+   ]
+  },
+  {
+   "title": "ארבע פונקציות הליבה",
+   "open": {
+    "q": "מסגרת מגיעה <strong>פגומה<\/strong> בגלל הפרעה בכבל. איזו פונקציה של שכבת הקו לדעתך תזהה את זה?",
+    "model": "<strong>בקרת שגיאות<\/strong> — בדיקת CRC מגלה שהמסגרת השתנתה בדרך, וניתן לבקש שידור חוזר."
+   },
+   "explain": [
+    "<table><tr><th>פונקציה<\/th><th>מה עושה<\/th><\/tr><tr><td>🚦 <strong>גישה למדיום<\/strong><\/td><td>מנהלת את התחרות על המשאב המשותף — מי משדר מתי<\/td><\/tr><tr><td>🔗 <strong>קישור ישיר<\/strong><\/td><td>העברה אמינה בין שתי נקודות שמחוברות ישירות<\/td><\/tr><tr><td>🧪 <strong>בקרת שגיאות וזרימה<\/strong><\/td><td>מאתרת שגיאות (CRC), מבקשת שידור חוזר, ומווסתת קצב<\/td><\/tr><tr><td>📦 <strong>כימוס<\/strong> (Encapsulation)<\/td><td>עוטפת נתונים במסגרת עם כותרת (Header) וסוגר (Trailer)<\/td><\/tr><\/table>"
+   ],
+   "example": "כמו שליח מקצועי: בודק מתי תורו לצאת (גישה), מביא בדיוק מ-A ל-B (קישור ישיר), בודק שהחבילה לא נפגעה ומבקש משלוח חוזר אם כן (שגיאות), ותמיד אורז במעטפה עם תווית (כימוס).",
+   "again": "<p>ארבע שאלות: <strong>מתי?<\/strong> (גישה) · <strong>לאן?<\/strong> (קישור ישיר) · <strong>הגיע שלם?<\/strong> (שגיאות) · <strong>איך ארוז?<\/strong> (כימוס).<\/p>",
+   "simple": "<p>שכבת הקו: <strong>קובעת תור<\/strong>, <strong>מעבירה<\/strong>, <strong>בודקת<\/strong>, <strong>אורזת<\/strong>.<\/p>",
+   "check": {
+    "q": "איזו פונקציה עוטפת את הנתונים בכותרת ובסוגר?",
+    "options": [
+     {
+      "t": "כימוס (Encapsulation)",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "גישה למדיום",
+      "ok": false,
+      "fb": "גישה למדיום קובעת מי משדר."
+     },
+     {
+      "t": "בקרת זרימה",
+      "ok": false,
+      "fb": "בקרת זרימה מווסתת קצב."
+     }
+    ],
+    "hint": "כמו לשים במעטפה.",
+    "why": "כימוס = עטיפת הנתונים במסגרת עם Header ו-Trailer."
+   },
+   "summary": [
+    "גישה למדיום — מי משדר מתי",
+    "קישור ישיר — העברה אמינה בין שכנים",
+    "בקרת שגיאות וזרימה — CRC, שידור חוזר, ויסות קצב",
+    "כימוס — Header + Trailer = מסגרת"
+   ],
+   "homework": [
+    "מנה את ארבע הפונקציות של שכבת הקו והסבר כל אחת.",
+    "איזו פונקציה מטפלת בכבל עם הפרעות? הסבר."
+   ]
+  },
+  {
+   "title": "מבנה מסגרת Ethernet",
+   "open": {
+    "q": "מגיעה מסגרת Ethernet בגודל <strong>40 בייטים<\/strong> בלבד — קטנה מהמינימום החוקי (64). על מה זה עשוי להצביע?",
+    "model": "על <strong>מסגרת פגומה<\/strong> — בדרך כלל שארית של <strong>התנגשות<\/strong> שקטעה את השידור באמצע (נקראת Runt)."
+   },
+   "explain": [
+    "<p>מסגרת Ethernet (IEEE 802.3) — שדות קבועים בסדר קבוע:<\/p><table><tr><th>שדה<\/th><th>גודל<\/th><th>תפקיד<\/th><\/tr><tr><td>Preamble<\/td><td>7 בייטים<\/td><td>סנכרון שעונים (לא נספר בגודל המסגרת)<\/td><\/tr><tr><td>SFD<\/td><td>1 בייט<\/td><td>סמן תחילת המסגרת<\/td><\/tr><tr><td><strong>כתובת יעד<\/strong><\/td><td>6 בייטים<\/td><td>MAC של המקבל<\/td><\/tr><tr><td><strong>כתובת מקור<\/strong><\/td><td>6 בייטים<\/td><td>MAC של השולח<\/td><\/tr><tr><td>סוג/אורך<\/td><td>2 בייטים<\/td><td>הפרוטוקול של השכבה הבאה<\/td><\/tr><tr><td><strong>נתונים + ריפוד<\/strong><\/td><td>46–1500 בייטים<\/td><td>המידע עצמו (Payload)<\/td><\/tr><tr><td><strong>FCS<\/strong><\/td><td>4 בייטים<\/td><td>CRC — גילוי שגיאות<\/td><\/tr><\/table><p>גודל חוקי: <strong>64 עד 1518 בייטים<\/strong>. המינימום חיוני לזיהוי התנגשויות (CSMA/CD — במדריך הבא).<\/p>"
+   ],
+   "example": "כמו מעטפה רשמית עם שדות קבועים: נמען, שולח, סוג משלוח, תוכן — תמיד באותו מקום, כך שכל מרכז מיון יודע איפה כל פרט בלי לפתוח את המעטפה.",
+   "again": "<p>חשבון מהיר: 6 + 6 + 2 + 46 + 4 = <strong>64<\/strong> (המינימום). 6 + 6 + 2 + 1500 + 4 = <strong>1518<\/strong> (המקסימום). ה-Preamble וה-SFD לא נספרים.<\/p>",
+   "simple": "<p>מסגרת = <strong>יעד<\/strong> + <strong>מקור<\/strong> + <strong>סוג<\/strong> + <strong>נתונים<\/strong> + <strong>בדיקה (FCS)<\/strong>. בין 64 ל-1518 בייטים.<\/p>",
+   "check": {
+    "q": "איזה שדה במסגרת משמש לגילוי שגיאות?",
+    "options": [
+     {
+      "t": "FCS",
+      "ok": true,
+      "fb": "נכון — Frame Check Sequence, מבוסס CRC."
+     },
+     {
+      "t": "Preamble",
+      "ok": false,
+      "fb": "Preamble משמש לסנכרון."
+     },
+     {
+      "t": "סוג/אורך",
+      "ok": false,
+      "fb": "השדה הזה מציין את פרוטוקול השכבה הבאה."
+     },
+     {
+      "t": "כתובת מקור",
+      "ok": false,
+      "fb": "זו כתובת ה-MAC של השולח."
+     }
+    ],
+    "hint": "F-C-S = Frame Check...",
+    "why": "ה-FCS מכיל CRC לגילוי שגיאות."
+   },
+   "summary": [
+    "Preamble (7) + SFD (1) — סנכרון והתחלה",
+    "יעד (6) · מקור (6) · סוג/אורך (2)",
+    "נתונים 46–1500 · FCS (4) — CRC",
+    "גודל מסגרת: 64–1518 בייטים"
+   ],
+   "homework": [
+    "צייר את מבנה מסגרת Ethernet עם גודל כל שדה.",
+    "חשב: מה הגודל המינימלי והמקסימלי של מסגרת, ולמה ה-Preamble לא נספר?"
+   ]
+  },
+  {
+   "title": "מזהה החומרה — MAC מול IP",
+   "open": {
+    "q": "מחשב נייד עובר מרשת הבית לרשת בית הספר. איזו כתובת <strong>תישאר קבועה<\/strong> ואיזו <strong>תשתנה<\/strong>?",
+    "model": "ה-<strong>MAC<\/strong> נשארת קבועה (צרובה בכרטיס). ה-<strong>IP<\/strong> משתנה (מוקצית מחדש ברשת החדשה)."
+   },
+   "explain": [
+    "<p><strong>כתובת MAC:<\/strong> 48 סיביות (6 בייטים), בהקסדצימלי — <code>00:1A:92:4A:F7:3C<\/code>. מורכבת מ-<strong>OUI<\/strong> (קוד יצרן: Apple, Dell...) ו<strong>מזהה ייחודי<\/strong> של הכרטיס.<\/p><table><tr><th><\/th><th><strong>MAC<\/strong><\/th><th><strong>IP<\/strong><\/th><\/tr><tr><td>סביבה<\/td><td>רשת מקומית (LAN) בלבד<\/td><td>מקומית וגלובלית<\/td><\/tr><tr><td>מקור<\/td><td>צרובה ע\"י היצרן<\/td><td>מוקצית ע\"י DHCP או מנהל רשת<\/td><\/tr><tr><td>קביעות<\/td><td>קבועה<\/td><td>משתנה בין רשתות<\/td><\/tr><tr><td>ניתוב<\/td><td>לא עוברת נתב<\/td><td>ניתנת לניתוב מלא<\/td><\/tr><\/table>"
+   ],
+   "example": "MAC היא כמו טביעת אצבע — נולדת איתך ולא משתנה. IP היא כמו כתובת בית — משתנה בכל מעבר דירה (רשת).",
+   "again": "<p>שים לב ל<strong>\"לא עוברת נתב\"<\/strong>: כשמסגרת עוברת נתב, הנתב בונה מסגרת חדשה עם MAC חדשות לקטע הבא — אבל ה-IP של היעד נשאר אותו דבר לאורך כל הדרך.<\/p>",
+   "simple": "<p>MAC = <strong>קבועה, מקומית<\/strong>. IP = <strong>משתנה, גלובלית<\/strong>.<\/p>",
+   "check": {
+    "q": "איזו כתובת <strong>נשארת זהה<\/strong> לאורך כל הדרך באינטרנט, מהשולח ועד היעד?",
+    "options": [
+     {
+      "t": "כתובת ה-IP של היעד",
+      "ok": true,
+      "fb": "נכון — ה-MAC מתחלפות בכל קטע, ה-IP נשארת."
+     },
+     {
+      "t": "כתובת ה-MAC של היעד",
+      "ok": false,
+      "fb": "MAC לא עוברת נתב — היא מתחלפת בכל קטע."
+     },
+     {
+      "t": "שתיהן",
+      "ok": false,
+      "fb": "רק ה-IP נשמרת לאורך כל המסלול."
+     }
+    ],
+    "hint": "איזו כתובת \"ניתנת לניתוב\"?",
+    "why": "כתובות MAC מוחלפות בכל נתב; כתובת IP היעד נשארת קבועה לאורך המסלול."
+   },
+   "summary": [
+    "MAC: 48 סיביות, Hex, OUI (יצרן) + מזהה כרטיס",
+    "MAC — LAN בלבד, צרובה, קבועה, לא עוברת נתב",
+    "IP — מקומית וגלובלית, מוקצית, משתנה, ניתנת לניתוב"
+   ],
+   "homework": [
+    "השווה בין MAC ל-IP בארבעה מאפיינים.",
+    "מה משתנה ומה נשאר כשמחשב נייד עובר מרשת לרשת?"
+   ]
+  }
+ ],
+ "unitTitle": "שכבת הקו",
+ "id": "y11-11-1"
+};
+</script>
+<script src="madrich-engine.js"></script>
+</body>
+</html>

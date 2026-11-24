@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>אבטחה, כלי ניהול והשוואה מסכמת — מדריך לימוד · תקשוב יישומי כיתה יא׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="madrich-engine.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="crumbs">
+      <a href="https://moti-lerner-proyektim.github.io/" id="mdCrHub">לומדים בעצמי</a> ‹
+      <a href="./" id="mdCrCourse">תקשוב יישומי</a> ‹
+      <a href="10-arp-dhcp.html" id="mdCrUnit">פרוטוקול ARP ופרוטוקול DHCP</a> ‹ <span id="mdCrHere">אבטחה, כלי ניהול והשוואה מסכמת</span>
+    </div>
+    <div class="site-name" id="mdSite">תקשוב יישומי · כיתה יא׳</div>
+  </div>
+
+  <main class="md-shell">
+    <header class="md-hero">
+      <div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <div>
+        <div class="num" id="mdNum">מדריך 3 מתוך 3 · מדריך לימוד אינטראקטיבי</div>
+        <h1 id="mdTitle">אבטחה, כלי ניהול והשוואה מסכמת</h1>
+        <p id="mdDesc">ARP Spoofing ו-Man-in-the-Middle, פקודות arp, השוואת DHCP ו-ARP, ופירמידת הרשת המקומית.</p>
+      </div>
+    </header>
+
+    <div class="md-progress" id="mdProgress" aria-hidden="true"></div>
+    <div class="md-progress-label"><span id="mdProgressText"></span><span class="md-tts-wrap"><span id="mdTtsBox" class="md-tts-wrap"></span><button id="mdRestart" type="button">להתחיל מחדש</button></span></div>
+
+    <div class="md-log" id="mdLog" aria-live="polite"></div>
+
+    <div class="md-cmds" id="mdCmds" aria-label="פקודות"></div>
+    <div class="md-input">
+      <textarea id="mdText" rows="1" placeholder="כתוב כאן תשובה או פקודה… (Enter לשליחה)" aria-label="תשובה או פקודה"></textarea>
+      <button id="mdSend" type="button">שליחה</button>
+    </div>
+    <div class="md-note" id="mdNote">ההתקדמות נשמרת רק בדפדפן שלך · לא נאסף שום מידע</div>
+  </main>
+
+<script>
+window.MADRICH = {
+ "title": "אבטחה, כלי ניהול והשוואה מסכמת",
+ "persona": "מאיה, מהנדסת רשת ב\"לינקאפ\"",
+ "story": "ראינו איך DHCP ו-ARP עובדים כשהכול תקין. אבל לפרוטוקול שמבוסס על אמון מלא יש גם צד אפל. אלמד אותך איך מגינים על הרשת, ואילו כלים מנהלי רשת משתמשים בהם בפועל.",
+ "desc": "ARP Spoofing ו-Man-in-the-Middle, פקודות arp, השוואת DHCP ו-ARP, ופירמידת הרשת המקומית.",
+ "num": "מדריך 3 מתוך 3",
+ "emoji": "🛡️",
+ "next": null,
+ "finalReview": [
+  "DHCP ו-ARP כעמודי התווך",
+  "הבעיה ש-DHCP פותר",
+  "תהליך DORA",
+  "חבילת התצורה",
+  "Failover ו-Split-Scope",
+  "הצורך ב-ARP",
+  "בקשה ותשובה",
+  "ARP Cache",
+  "מבנה חבילת ARP",
+  "ARP Spoofing",
+  "פקודות arp",
+  "השוואת DHCP ו-ARP",
+  "פירמידת הרשת"
+ ],
+ "stages": [
+  {
+   "title": "הצד האפל של האמון — ARP Spoofing",
+   "open": {
+    "q": "למה מסוכן שפרוטוקול ARP <strong>\"מאמין\" אוטומטית<\/strong> לכל הודעה שמגיעה, בלי לבדוק אם היא אמיתית?",
+    "model": "כי <strong>כל מכשיר יכול לשקר<\/strong> — להכריז שה-MAC שלו שייך לכתובת IP של מישהו אחר (למשל הנתב), וכך להטות אליו תעבורה."
+   },
+   "explain": [
+    "<p>ARP תוכנן מתוך <strong>אמון מוחלט<\/strong>: כל הודעה \"זה ה-MAC שלי\" מתקבלת בלי בדיקה. זה מאפשר תקיפה:<\/p><ol><li><strong>הרעלת מטמון (Cache Poisoning)<\/strong> — התוקף שולח הודעות ARP מזויפות שמקשרות את ה-MAC <strong>שלו<\/strong> ל-IP של <strong>הנתב<\/strong>.<\/li><li><strong>Man-in-the-Middle<\/strong> — התעבורה של הקורבנות עוברת דרך מחשב התוקף, שיכול לצפות במידע רגיש.<\/li><\/ol>",
+    "<p>🛡️ <strong>הגנה:<\/strong> אמצעי אבטחה ברמת הרשת — למשל <strong>רשומות ARP סטטיות<\/strong> לשרתים ולנתב, וזיהוי חריגות במתגים מנוהלים.<\/p>"
+   ],
+   "example": "כמו זר שמתחזה לדוור ומחלק בשכונה כרטיסים: \"אני הדוור, שלחו את כל המכתבים דרכי\". אף אחד לא בודק — וכולם מתחילים לשלוח לו גם מכתבים רגישים.",
+   "again": "<p>הבעיה היא <strong>לא<\/strong> ש-ARP \"שבור\" — הוא עושה בדיוק מה שתוכנן. הבעיה היא ש<strong>אין בו אימות<\/strong>. כל מנגנון שמאמין בלי לבדוק — פגיע לשקר.<\/p>",
+   "simple": "<p>ARP מאמין לכולם ← תוקף <strong>משקר על ה-MAC<\/strong> ← התעבורה עוברת <strong>דרכו<\/strong>.<\/p>",
+   "check": {
+    "q": "מה המטרה של תוקף בהרעלת ARP Cache?",
+    "options": [
+     {
+      "t": "שהתעבורה המיועדת לנתב תעבור דרך המחשב שלו",
+      "ok": true,
+      "fb": "נכון — זו מתקפת Man-in-the-Middle."
+     },
+     {
+      "t": "לקבל כתובת IP מהר יותר",
+      "ok": false,
+      "fb": "זה לא קשור — DHCP מחלק כתובות."
+     },
+     {
+      "t": "לשבור את כבל הרשת",
+      "ok": false,
+      "fb": "המתקפה לוגית, לא פיזית."
+     }
+    ],
+    "hint": "Man-in-the-...",
+    "why": "הרעלת המטמון גורמת לתעבורה לעבור דרך התוקף (Man-in-the-Middle)."
+   },
+   "summary": [
+    "ARP מבוסס אמון מוחלט — בלי אימות",
+    "Cache Poisoning — הודעות ARP מזויפות",
+    "Man-in-the-Middle — התעבורה עוברת דרך התוקף",
+    "הגנה: רשומות סטטיות לרכיבים קריטיים, ניטור ברשת"
+   ],
+   "homework": [
+    "הסבר מהי הרעלת ARP Cache ולמה היא אפשרית.",
+    "מהו Man-in-the-Middle, ואיך אפשר להתגונן?"
+   ]
+  },
+  {
+   "title": "ארגז הכלים של מנהל הרשת — פקודות arp",
+   "open": {
+    "q": "מנהל רשת חושד שה-MAC של הנתב <strong>זויף<\/strong> בטבלת ה-ARP שלו, ורוצה <strong>למחוק את הרשומה<\/strong> כדי שהמחשב ישאל מחדש. איזו פקודה מתאימה, לדעתך — הצגה, מחיקה או הוספה?",
+    "model": "<strong>מחיקה<\/strong> — <code>arp -d<\/code> עם כתובת ה-IP של הנתב."
+   },
+   "explain": [
+    "<table><tr><th>פקודה<\/th><th>מה עושה<\/th><th>מתי<\/th><\/tr><tr><td><code>arp -a<\/code><\/td><td>מציגה את כל טבלת ה-ARP<\/td><td>לראות אילו מכשירים ידועים ברשת<\/td><\/tr><tr><td><code>arp -d [IP]<\/code><\/td><td>מוחקת רשומה<\/td><td>כשיש חשד לרשומה שגויה או ישנה<\/td><\/tr><tr><td><code>arp -s [IP] [MAC]<\/code><\/td><td>מוסיפה רשומה <strong>סטטית<\/strong><\/td><td>הגנה על מכשירים קריטיים מפני הרעלה<\/td><\/tr><\/table><pre><code>C:\\&gt; arp -a\nC:\\&gt; arp -d 192.168.1.1\nC:\\&gt; arp -s 192.168.1.1 aa-bb-cc-dd-ee-ff<\/code><\/pre>"
+   ],
+   "example": "כמו לנהל אנשי קשר בטלפון: לראות את כל הרשימה (<code>-a<\/code>), למחוק איש קשר ישן (<code>-d<\/code>), או לנעול איש קשר חשוב כך שלא יימחק (<code>-s<\/code>).",
+   "again": "<p>זכור את האותיות: <strong>a<\/strong> = <strong>a<\/strong>ll (הכול), <strong>d<\/strong> = <strong>d<\/strong>elete (מחק), <strong>s<\/strong> = <strong>s<\/strong>tatic (קבוע).<\/p>",
+   "simple": "<p><code>-a<\/code> = הצג. <code>-d<\/code> = מחק. <code>-s<\/code> = קבע לתמיד.<\/p>",
+   "check": {
+    "q": "איזו פקודה מוסיפה רשומה <strong>סטטית<\/strong> לטבלת ARP?",
+    "options": [
+     {
+      "t": "<code>arp -s<\/code>",
+      "ok": true,
+      "fb": "נכון — s = static."
+     },
+     {
+      "t": "<code>arp -a<\/code>",
+      "ok": false,
+      "fb": "-a מציגה את הטבלה."
+     },
+     {
+      "t": "<code>arp -d<\/code>",
+      "ok": false,
+      "fb": "-d מוחקת רשומה."
+     }
+    ],
+    "hint": "Static.",
+    "why": "<code>arp -s [IP] [MAC]<\/code> מוסיפה רשומה סטטית קבועה."
+   },
+   "summary": [
+    "<code>arp -a<\/code> — הצגת הטבלה",
+    "<code>arp -d [IP]<\/code> — מחיקת רשומה",
+    "<code>arp -s [IP] [MAC]<\/code> — רשומה סטטית (הגנה)"
+   ],
+   "homework": [
+    "מה עושה כל אחת משלוש פקודות ה-arp?",
+    "איזו פקודה תעזור להגן על הנתב מפני הרעלת ARP? הסבר."
+   ]
+  },
+  {
+   "title": "מטריצת הרשת — DHCP מול ARP",
+   "open": {
+    "q": "במשפט אחד: למה DHCP ו-ARP פועלים ב<strong>שכבות שונות<\/strong>?",
+    "model": "כי הם עושים עבודה שונה: DHCP <strong>מנהל הגדרות<\/strong> כשירות (שכבת היישום), ו-ARP <strong>מגשר<\/strong> בין כתובת לוגית לכתובת פיזית ברשת המקומית (שכבת הקשר)."
+   },
+   "explain": [
+    "<table><tr><th><\/th><th><strong>DHCP<\/strong><\/th><th><strong>ARP<\/strong><\/th><\/tr><tr><td>מטרה<\/td><td>הקצאת זהות והגדרות<\/td><td>תרגום לוגי (IP) לפיזי (MAC)<\/td><\/tr><tr><td>שכבה<\/td><td>יישום (מעל UDP)<\/td><td>קשר (Data Link)<\/td><\/tr><tr><td>כתובות<\/td><td>מנהל כתובות IP<\/td><td>מגשר בין IP ל-MAC<\/td><\/tr><tr><td>פנייה ראשונה<\/td><td>Broadcast — לחיפוש שרת<\/td><td>Broadcast — לכל הרשת<\/td><\/tr><tr><td>זיכרון<\/td><td>טבלת השכרות (Lease)<\/td><td>Cache מבוסס TTL<\/td><\/tr><\/table>"
+   ],
+   "example": "שני עובדים בקבלה של בניין: אחד (DHCP) מנפיק כרטיס מבקר לכל מי שנכנס, והשני (ARP) מכוון כל מבקר לחדר הנכון כשהוא כבר בפנים. שניהם חיוניים — כל אחד בתפקיד אחר.",
+   "again": "<p>מה <strong>משותף<\/strong>? שניהם מתחילים ב-<strong>Broadcast<\/strong> (כי בהתחלה \"לא יודעים למי לפנות\"), ושניהם <strong>זוכרים<\/strong> לזמן מוגבל (Lease / TTL).<\/p>",
+   "simple": "<p>DHCP = <strong>נותן כתובת<\/strong>. ARP = <strong>מוצא MAC<\/strong>. שניהם מתחילים בשאלה לכולם.<\/p>",
+   "check": {
+    "q": "מה מקביל ב-DHCP ל-TTL של ה-ARP Cache?",
+    "options": [
+     {
+      "t": "זמן ההשכרה (Lease Time)",
+      "ok": true,
+      "fb": "נכון — שניהם מגבילים את תוקף המידע."
+     },
+     {
+      "t": "פורט 67",
+      "ok": false,
+      "fb": "הפורט לא קשור לתוקף."
+     },
+     {
+      "t": "ה-Discover",
+      "ok": false,
+      "fb": "Discover הוא שלב בתהליך, לא תוקף."
+     }
+    ],
+    "hint": "כמה זמן הכתובת \"שלי\"?",
+    "why": "Lease Time ב-DHCP ו-TTL ב-ARP מגבילים את תוקף הרשומות."
+   },
+   "summary": [
+    "DHCP: הקצאת זהות · שכבת היישום · Broadcast לשרת · Lease",
+    "ARP: תרגום IP ← MAC · שכבת הקשר · Broadcast לרשת · Cache עם TTL"
+   ],
+   "homework": [
+    "השווה בין DHCP ל-ARP בחמישה היבטים.",
+    "מה משותף לשני הפרוטוקולים?"
+   ]
+  },
+  {
+   "title": "הפירמידה המקומית — על מה הרשת עומדת",
+   "open": {
+    "q": "מה היה קורה לרשת מקומית שלמה אם <strong>DHCP ו-ARP פשוט לא היו קיימים<\/strong>?",
+    "model": "בלי DHCP — הגדרה ידנית של כל מכשיר, עם טעויות והתנגשויות. בלי ARP — <strong>אי אפשר לשלוח בכלל<\/strong> מסגרות לפי IP ברשת המקומית. הרשת הייתה כמעט משותקת."
+   },
+   "explain": [
+    "<p>אפשר לסכם את חשיבות שני הפרוטוקולים בפירמידה — מהבסיס למעלה:<\/p><table><tr><th>רובד<\/th><th>מה הוא נותן<\/th><\/tr><tr><td>1. <strong>פעולה בסיסית<\/strong><\/td><td>תרגום IP ← MAC; הקצאת כתובות<\/td><\/tr><tr><td>2. <strong>יעילות<\/strong><\/td><td>Cache ו-Lease חוסכים תקשורת מיותרת ועומס Broadcast<\/td><\/tr><tr><td>3. <strong>ניהול ובקרה<\/strong><\/td><td>פקודות לאבחון, שליטה ואבטחה<\/td><\/tr><tr><td>4. <strong>מרכיב תשתיתי<\/strong><\/td><td>אבן יסוד לכל רשת מקומית מודרנית<\/td><\/tr><\/table><p>בלי שני הפרוטוקולים — <strong>שום רשת IP מודרנית<\/strong> לא הייתה מתפקדת.<\/p>"
+   ],
+   "example": "כמו עיר: קודם צריך שאנשים יוכלו להגיע ליעד בכלל (פעולה בסיסית), אחר כך שהתנועה תזרום ביעילות, אחר כך רמזורים ופיקוח (ניהול), ורק אז יש עיר שלמה שעובדת. כל רובד נשען על זה שמתחתיו.",
+   "again": "<p>חשוב על <strong>DHCP ו-ARP כחשמל ומים<\/strong> של הבית: אף אחד לא חושב עליהם, אבל בלעדיהם שום דבר אחר בבית לא עובד.<\/p>",
+   "simple": "<p>DHCP + ARP = <strong>היסודות<\/strong> של כל רשת מקומית. בלעדיהם — אין רשת.<\/p>",
+   "check": {
+    "q": "מה היה קורה ברשת מקומית <strong>בלי ARP<\/strong>?",
+    "options": [
+     {
+      "t": "מכשירים לא היו יכולים למצוא את ה-MAC של היעד, ולא היו מצליחים לשלוח מסגרות",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "המכשירים לא היו מקבלים כתובות IP",
+      "ok": false,
+      "fb": "זה התפקיד של DHCP."
+     },
+     {
+      "t": "שום דבר — ARP הוא רק לאבטחה",
+      "ok": false,
+      "fb": "ARP הוא חלק בסיסי מכל שליחה ברשת המקומית."
+     }
+    ],
+    "hint": "מה ARP מתרגם?",
+    "why": "בלי ARP אין דרך לתרגם IP ל-MAC, ולכן אי אפשר לשלוח מסגרות ליעד."
+   },
+   "summary": [
+    "פירמידה: פעולה בסיסית ← יעילות ← ניהול ובקרה ← מרכיב תשתיתי",
+    "DHCP ו-ARP — אבני היסוד של כל רשת IP מקומית"
+   ],
+   "homework": [
+    "תאר את ארבעת רובדי הפירמידה.",
+    "מה היה קורה בבית הספר שלך ביום אחד בלי DHCP? ובלי ARP?"
+   ]
+  }
+ ],
+ "unitTitle": "פרוטוקול ARP ופרוטוקול DHCP",
+ "id": "y11-10-3"
+};
+</script>
+<script src="madrich-engine.js"></script>
+</body>
+</html>

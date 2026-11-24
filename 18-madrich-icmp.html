@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פרוטוקול ICMP — ערכת הכלים הבלשית — מדריך לימוד · תקשוב יישומי כיתה יא׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="madrich-engine.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="crumbs">
+      <a href="https://moti-lerner-proyektim.github.io/" id="mdCrHub">לומדים בעצמי</a> ‹
+      <a href="./" id="mdCrCourse">תקשוב יישומי</a> ‹
+      <a href="18-icmp.html" id="mdCrUnit">פרוטוקול ICMP</a> ‹ <span id="mdCrHere">פרוטוקול ICMP — ערכת הכלים הבלשית</span>
+    </div>
+    <div class="site-name" id="mdSite">תקשוב יישומי · כיתה יא׳</div>
+  </div>
+
+  <main class="md-shell">
+    <header class="md-hero">
+      <div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg></div>
+      <div>
+        <div class="num" id="mdNum">מדריך יחיד · מדריך לימוד אינטראקטיבי</div>
+        <h1 id="mdTitle">פרוטוקול ICMP — ערכת הכלים הבלשית</h1>
+        <p id="mdDesc">מהו ICMP, מיקומו בשכבות, Ping, Traceroute ו-TTL, ארבעה תרחישי אבחון, וטבלת אבחון מסכמת.</p>
+      </div>
+    </header>
+
+    <div class="md-progress" id="mdProgress" aria-hidden="true"></div>
+    <div class="md-progress-label"><span id="mdProgressText"></span><span class="md-tts-wrap"><span id="mdTtsBox" class="md-tts-wrap"></span><button id="mdRestart" type="button">להתחיל מחדש</button></span></div>
+
+    <div class="md-log" id="mdLog" aria-live="polite"></div>
+
+    <div class="md-cmds" id="mdCmds" aria-label="פקודות"></div>
+    <div class="md-input">
+      <textarea id="mdText" rows="1" placeholder="כתוב כאן תשובה או פקודה… (Enter לשליחה)" aria-label="תשובה או פקודה"></textarea>
+      <button id="mdSend" type="button">שליחה</button>
+    </div>
+    <div class="md-note" id="mdNote">ההתקדמות נשמרת רק בדפדפן שלך · לא נאסף שום מידע</div>
+  </main>
+
+<script>
+window.MADRICH = {
+ "title": "פרוטוקול ICMP — ערכת הכלים הבלשית",
+ "persona": "טל, צוות התמיכה הטכנית (NOC)",
+ "story": "אני בצוות התמיכה של ספקית אינטרנט. כל היום מתקשרים אליי: \"האינטרנט לא עובד!\". אני לא רואה את הרשת שלהם — אבל יש לי ערכת כלים בלשית שמגלה בדיוק איפה בדרך המידע נעצר. בוא אלמד אותך להשתמש בה.",
+ "desc": "מהו ICMP, מיקומו בשכבות, Ping, Traceroute ו-TTL, ארבעה תרחישי אבחון, וטבלת אבחון מסכמת.",
+ "num": "מדריך יחיד",
+ "emoji": "🕵️",
+ "next": null,
+ "finalReview": [
+  "מהו ICMP",
+  "מיקום בשכבת הרשת",
+  "Ping",
+  "Traceroute ו-TTL",
+  "ארבעה תרחישי תקלה",
+  "טבלת אבחון",
+  "שלושת עקרונות המפתח"
+ ],
+ "stages": [
+  {
+   "title": "מהו ICMP — פרוטוקול אבחון עצמאי",
+   "open": {
+    "q": "ICMP לא משתמש ב-TCP או ב-UDP. למה חשוב שכלי אבחון יפעל <strong>בלי תלות<\/strong> בפרוטוקולים האחרים?",
+    "model": "כי בדיוק <strong>כשמשהו שבור<\/strong> צריך לאבחן. אם כלי האבחון היה תלוי בשכבות שאולי הן התקולות, הוא לא היה יכול לדווח על הבעיה."
+   },
+   "explain": [
+    "<p><strong>ICMP<\/strong> (Internet Control Message Protocol) — פרוטוקול של <strong>שכבת הרשת<\/strong>. הוא לא נשען על TCP או UDP — ההודעות שלו נישאות <strong>ישירות בתוך מנת IP<\/strong>.<\/p><table><tr><th><\/th><th><\/th><\/tr><tr><td>🚨 <strong>דיווח שגיאות<\/strong><\/td><td>נתבים ומכשירים מדווחים כשמשהו לא הגיע<\/td><\/tr><tr><td>🩺 <strong>אבחון<\/strong><\/td><td>בדיקת קישוריות ותקלות פיזיות ולוגיות<\/td><\/tr><tr><td>🛠️ <strong>כלי הדגל<\/strong><\/td><td><code>ping<\/code> (זמינות) ו-<code>tracert<\/code> (מסלול)<\/td><\/tr><\/table>"
+   ],
+   "example": "ברשת שהיא כמו מערכת דואר, ICMP הוא \"אישור המסירה\" או ההודעה \"הכתובת לא קיימת\" — כך יודעים מה קרה, בלי לראות את כל המסלול.",
+   "again": "<p>ICMP לא <strong>מוביל<\/strong> מידע של משתמשים (אתרים, קבצים) — הוא רק <strong>מדווח<\/strong> על מצב הרשת. הוא \"מערכת ההודעות הפנימית\" של IP.<\/p>",
+   "simple": "<p>ICMP = <strong>הודעות שגיאה ובדיקה<\/strong> של הרשת. הכלים: <strong>ping<\/strong> ו-<strong>tracert<\/strong>.<\/p>",
+   "check": {
+    "q": "מה התפקיד העיקרי של ICMP?",
+    "options": [
+     {
+      "t": "דיווח שגיאות ואבחון קישוריות ברשת",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "העברת דפי אינטרנט",
+      "ok": false,
+      "fb": "זה התפקיד של HTTP."
+     },
+     {
+      "t": "הקצאת כתובות IP",
+      "ok": false,
+      "fb": "זה התפקיד של DHCP."
+     }
+    ],
+    "hint": "Control Message.",
+    "why": "ICMP נועד לדיווח שגיאות ולאבחון."
+   },
+   "summary": [
+    "ICMP — שכבת הרשת; לא TCP ולא UDP — נישא ישירות ב-IP",
+    "דיווח שגיאות ואבחון קישוריות",
+    "כלים: ping, tracert"
+   ],
+   "homework": [
+    "מה תפקיד ICMP, ולמה הוא פועל בלי TCP/UDP?",
+    "תן דוגמה מהחיים ל\"הודעת שגיאה\" שעוזרת להבין מה השתבש."
+   ]
+  },
+  {
+   "title": "מיקומו של ICMP במודל השכבות",
+   "open": {
+    "q": "ICMP נמצא באותה שכבה כמו IP. מה זה אומר על היכולת שלו לעבוד כשיש <strong>תקלה ב-TCP/UDP<\/strong> שמעליו?",
+    "model": "הוא <strong>ממשיך לעבוד<\/strong> — הוא לא צריך את שכבת התעבורה. לכן Ping יכול להצליח גם כשאפליקציה מסוימת לא עובדת, וזה עוזר לבודד איפה הבעיה."
+   },
+   "explain": [
+    "<table><tr><th>שכבה<\/th><th>פרוטוקולים<\/th><\/tr><tr><td>יישום<\/td><td>HTTP, FTP, DNS, SMTP<\/td><\/tr><tr><td>תעבורה<\/td><td>TCP, UDP<\/td><\/tr><tr><td><strong>רשת<\/strong><\/td><td><strong>IP, ICMP<\/strong>, IGMP<\/td><\/tr><tr><td>קשר<\/td><td>Ethernet, Wi-Fi, PPP<\/td><\/tr><\/table><p>המיקום הזה מאפשר ל-ICMP לדווח על בעיות <strong>בלי תלות באפליקציה או בשכבת התעבורה<\/strong>.<\/p>"
+   ],
+   "example": "כמו מערכת אזעקה שמחוברת ישירות למבנה הבניין, ולא לחשמל של כל דירה — היא ממשיכה להתריע גם כשמשהו בקומות העליונות לא עובד.",
+   "again": "<p>תרחיש: <code>ping<\/code> לשרת <strong>מצליח<\/strong>, אבל האתר <strong>לא נטען<\/strong>. מה למדנו? שכבת הרשת תקינה — הבעיה <strong>למעלה<\/strong> (שרת האינטרנט, פורט, חומת אש).<\/p>",
+   "simple": "<p>ICMP גר <strong>בשכבת הרשת<\/strong>, ליד IP. לא צריך את מה שמעליו.<\/p>",
+   "check": {
+    "q": "Ping לשרת מצליח, אבל האתר לא נטען. מה סביר?",
+    "options": [
+     {
+      "t": "הבעיה בשכבה גבוהה יותר — למשל שירות האינטרנט בשרת",
+      "ok": true,
+      "fb": "נכון — שכבת הרשת תקינה."
+     },
+     {
+      "t": "הכבל מנותק",
+      "ok": false,
+      "fb": "אם הכבל היה מנותק, גם ה-Ping היה נכשל."
+     },
+     {
+      "t": "לשרת אין כתובת IP",
+      "ok": false,
+      "fb": "Ping הצליח — יש לו כתובת."
+     }
+    ],
+    "hint": "מה Ping כן הוכיח?",
+    "why": "Ping מוכיח ששכבת הרשת עובדת; לכן התקלה מעליה."
+   },
+   "summary": [
+    "ICMP — שכבת הרשת, עם IP ו-IGMP",
+    "מעליו: תעבורה (TCP/UDP) ויישום; מתחתיו: קשר",
+    "לא תלוי בשכבות העליונות — מאפשר לבודד תקלות"
+   ],
+   "homework": [
+    "צייר את מודל השכבות וסמן היכן נמצא ICMP.",
+    "Ping עובד אבל המייל לא — מה אפשר להסיק?"
+   ]
+  },
+  {
+   "title": "Ping — בדיקת זמינות וזמן תגובה",
+   "open": {
+    "q": "הרצת <code>ping -n 25<\/code> וכל 25 התשובות הגיעו — אבל בזמני תגובה <strong>מעל 150ms<\/strong>. הרשת מנותקת, או שיש בעיה אחרת?",
+    "model": "היא <strong>לא מנותקת<\/strong> — התשובות מגיעות. הבעיה היא <strong>איטיות<\/strong>: עומס או צוואר בקבוק בדרך."
+   },
+   "explain": [
+    "<p><strong>Ping<\/strong> שולח <strong>ICMP Echo Request<\/strong> ומחכה ל-<strong>ICMP Echo Reply<\/strong>:<\/p><ul><li>תשובה התקבלה ← היעד <strong>זמין<\/strong>, ורואים את זמן התגובה<\/li><li><code>Request timed out<\/code> ← היעד <strong>לא הגיב<\/strong> (מסיבה כלשהי)<\/li><\/ul><table><tr><th>פקודה<\/th><th>מה עושה<\/th><\/tr><tr><td><code>ping -n 25 server_ip<\/code><\/td><td>25 בקשות — בדיקת יציבות זמני התגובה<\/td><\/tr><tr><td><code>ping -t server_ip<\/code><\/td><td>רציף עד עצירה (Ctrl+C) — בדיקת אובדן מנות לאורך זמן<\/td><\/tr><\/table>"
+   ],
+   "example": "Ping הוא כמו לצלצל בפעמון: פתחו — מישהו בבית. אין תשובה — אף אחד לא בבית, או שהצלצול לא נשמע.",
+   "again": "<p>שלוש שאלות ש-Ping עונה עליהן: <strong>האם עונים?<\/strong> (זמינות) · <strong>כמה מהר?<\/strong> (ms) · <strong>כמה הלכו לאיבוד?<\/strong> (אחוז אובדן בסטטיסטיקה).<\/p>",
+   "simple": "<p>Ping = <strong>\"אתה שם?\"<\/strong>. Reply = כן. Timed out = אין תשובה.<\/p>",
+   "check": {
+    "q": "איזו פקודה מתאימה לבדוק אובדן מנות <strong>לאורך זמן<\/strong>?",
+    "options": [
+     {
+      "t": "<code>ping -t<\/code>",
+      "ok": true,
+      "fb": "נכון — רציף עד שעוצרים."
+     },
+     {
+      "t": "<code>ping -n 4<\/code>",
+      "ok": false,
+      "fb": "4 בקשות בלבד — קצר מדי."
+     },
+     {
+      "t": "<code>tracert<\/code>",
+      "ok": false,
+      "fb": "tracert ממפה מסלול, לא מודד אובדן לאורך זמן."
+     }
+    ],
+    "hint": "בלי הפסקה.",
+    "why": "ping -t רץ ברציפות ומראה אובדן מנות לאורך זמן."
+   },
+   "summary": [
+    "Ping — Echo Request ← Echo Reply",
+    "Request timed out — אין תשובה",
+    "ping -n 25 — יציבות · ping -t — רציף, אובדן מנות"
+   ],
+   "homework": [
+    "מה ההבדל בין ping -n 25 ל-ping -t?",
+    "הרץ ping לאתר מוכר ורשום את זמני התגובה והאובדן."
+   ]
+  },
+  {
+   "title": "Traceroute ומנגנון ה-TTL",
+   "open": {
+    "q": "למה Traceroute שולח חבילות עם <strong>TTL עולה<\/strong> (1, ואז 2, ואז 3...) ולא פעם אחת עם TTL גבוה?",
+    "model": "כי כל TTL \"נגמר\" <strong>בנתב אחר<\/strong> בדרך, והנתב הזה מדווח על עצמו. כך מקבלים תשובה <strong>מכל תחנה בנפרד<\/strong> — ומקבלים מפה. עם TTL גבוה אחד היינו שומעים רק מהיעד."
+   },
+   "explain": [
+    "<p><strong>Traceroute<\/strong> (ב-Windows: <code>tracert<\/code>) — מגלה את <strong>כל הנתבים<\/strong> בדרך ליעד.<\/p><pre><code>C:\\&gt; tracert -d -h 30 -w 4000 -4 target_ip<\/code><\/pre><table><tr><th>דגל<\/th><th>משמעות<\/th><\/tr><tr><td><code>-d<\/code><\/td><td>בלי תרגום שמות — מהיר יותר<\/td><\/tr><tr><td><code>-h 30<\/code><\/td><td>מקסימום 30 קפיצות (hops)<\/td><\/tr><tr><td><code>-w 4000<\/code><\/td><td>המתנה של 4000ms לכל תשובה<\/td><\/tr><tr><td><code>-4<\/code> / <code>-6<\/code><\/td><td>רק IPv4 / רק IPv6<\/td><\/tr><\/table>",
+    "<p><strong>איך זה עובד — TTL:<\/strong> כל נתב מוריד את ה-TTL ב-1. כשהוא מגיע ל-0 — הנתב זורק את המנה ושולח <strong>ICMP Time Exceeded<\/strong> לשולח.<\/p><div class=\"md-flow\"><b>TTL=1 ← נתב 1 עונה<\/b><i>←<\/i><b>TTL=2 ← נתב 2 עונה<\/b><i>←<\/i><b>TTL=3 ← ...<\/b><i>←<\/i><b>היעד: Echo Reply<\/b><\/div>"
+   ],
+   "example": "שולחים כמה נוסעים, כל אחד עם דלק לתחנה אחת יותר מהקודם. כל אחד נעצר במקום אחר ומדווח איפה הוא — וכך מציירים את כל הדרך.",
+   "again": "<p>ה\"טריק\": TTL נועד <strong>למנוע<\/strong> ממנות להסתובב לנצח. Traceroute <strong>מנצל<\/strong> אותו בכוונה, כדי לגרום לכל נתב \"להזדהות\".<\/p>",
+   "simple": "<p>tracert שולח עם <strong>TTL 1, 2, 3...<\/strong> — כל נתב שבו זה נגמר <strong>מדווח<\/strong>. ככה רואים את כל הדרך.<\/p>",
+   "check": {
+    "q": "איזו הודעה שולח נתב כשה-TTL של מנה מגיע ל-0?",
+    "options": [
+     {
+      "t": "ICMP Time Exceeded",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "ICMP Echo Reply",
+      "ok": false,
+      "fb": "Echo Reply נשלח רק מהיעד הסופי."
+     },
+     {
+      "t": "ARP Reply",
+      "ok": false,
+      "fb": "ARP לא קשור ל-TTL."
+     }
+    ],
+    "hint": "הזמן \"נגמר\"...",
+    "why": "נתב שה-TTL הגיע אצלו ל-0 שולח ICMP Time Exceeded."
+   },
+   "summary": [
+    "tracert — מיפוי הנתבים בדרך",
+    "דגלים: -d, -h, -w, -4/-6",
+    "TTL יורד ב-1 בכל נתב; 0 ← Time Exceeded",
+    "TTL עולה 1,2,3... ← כל נתב מזדהה; היעד ← Echo Reply"
+   ],
+   "homework": [
+    "הסבר איך tracert משתמש ב-TTL.",
+    "הרץ tracert לאתר מוכר. כמה קפיצות יש בדרך?"
+   ]
+  },
+  {
+   "title": "ארבעה תרחישי אבחון נפוצים",
+   "open": {
+    "q": "tracert מציג <strong>הרבה יותר קפיצות<\/strong> מהצפוי, אבל החבילה <strong>כן מגיעה<\/strong> ליעד. איזו בעיה זו לדעתך?",
+    "model": "<strong>בעיית ניתוב<\/strong> — יש קישוריות, אבל הנתיב לא יעיל. צריך לבדוק את טבלאות הניתוב בדרך."
+   },
+   "explain": [
+    "<table><tr><th>תרחיש<\/th><th>תסמין<\/th><th>בדיקה<\/th><th>פתרון<\/th><\/tr><tr><td>1. <strong>אין תשובה<\/strong><\/td><td>אין גישה לשרת או לאתר<\/td><td><code>ping<\/code> ← Request timed out<\/td><td>חיבור פיזי, חומת אש; <code>tracert<\/code> לאיתור הנקודה<\/td><\/tr><tr><td>2. <strong>איטיות<\/strong><\/td><td>מגיב, אבל לאט<\/td><td><code>ping -n 25<\/code> ← מעל 150ms<\/td><td><code>tracert<\/code> לצוואר בקבוק; בדיקת עומסים<\/td><\/tr><tr><td>3. <strong>אובדן מנות<\/strong><\/td><td>ניתוקים, חוסר יציבות<\/td><td><code>ping -t<\/code> ← timeout לסירוגין (למשל 30%)<\/td><td>כבלים, ציוד תקול, הפרעות Wi-Fi<\/td><\/tr><tr><td>4. <strong>ניתוב<\/strong><\/td><td>עובד, אבל בנתיב עקום<\/td><td><code>tracert<\/code> ← יותר מדי קפיצות<\/td><td>בדיקת נתבים ועדכון טבלאות ניתוב<\/td><\/tr><\/table>"
+   ],
+   "example": "כמו רופא שבודק לפי תסמינים: \"כאב חד\" — בדיקה אחת; \"עייפות מתמשכת\" — בדיקה אחרת. כל תסמין ברשת מוביל לבדיקה ולפתרון משלו.",
+   "again": "<p>שאל: <strong>מגיע בכלל?<\/strong> (לא ← תרחיש 1) · <strong>מגיע תמיד?<\/strong> (לא ← 3) · <strong>מגיע מהר?<\/strong> (לא ← 2) · <strong>בדרך הקצרה?<\/strong> (לא ← 4).<\/p>",
+   "simple": "<p>אין תשובה · איטי · מתנתק · מסלול עקום — <strong>לכל אחד בדיקה משלו<\/strong>.<\/p>",
+   "check": {
+    "q": "ping -t מציג Request timed out <strong>לסירוגין<\/strong>. איזה תרחיש?",
+    "options": [
+     {
+      "t": "אובדן מנות",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "אין תשובה מהשרת",
+      "ok": false,
+      "fb": "שם ה-timeout קבוע, לא לסירוגין."
+     },
+     {
+      "t": "בעיית ניתוב",
+      "ok": false,
+      "fb": "בעיית ניתוב נראית ב-tracert כהרבה קפיצות."
+     }
+    ],
+    "hint": "חלק מגיעות, חלק לא.",
+    "why": "Timeout לסירוגין = חלק מהמנות הולכות לאיבוד."
+   },
+   "summary": [
+    "אין תשובה — ping timeout קבוע ← פיזי/חומת אש + tracert",
+    "איטיות — ping -n 25 מעל 150ms ← צוואר בקבוק",
+    "אובדן מנות — ping -t לסירוגין ← כבלים/ציוד/Wi-Fi",
+    "ניתוב — tracert עם הרבה קפיצות ← טבלאות ניתוב"
+   ],
+   "homework": [
+    "תאר את ארבעת התרחישים: תסמין, בדיקה ופתרון.",
+    "משתמש אומר \"האתר עולה, אבל לוקח נצח\" — איך תאבחן?"
+   ]
+  },
+  {
+   "title": "טבלת אבחון: מתסמין לפתרון",
+   "open": {
+    "q": "משתמש מדווח שהחיבור <strong>מתנתק ומתחבר לסירוגין<\/strong> — לא מנותק לגמרי, ולא איטי. לאיזו שורה בטבלה זה מתאים?",
+    "model": "ל<strong>\"חוסר יציבות\"<\/strong> — בודקים עם <code>ping -t<\/code> ומחפשים אובדן מנות."
+   },
+   "explain": [
+    "<table><tr><th>תסמין<\/th><th>פקודה<\/th><th>פלט צפוי<\/th><th>כיוון פתרון<\/th><\/tr><tr><td>התנתקות מוחלטת<\/td><td><code>ping<\/code><\/td><td>Request timed out קבוע<\/td><td>בדיקה פיזית, חומת אש, <code>tracert<\/code><\/td><\/tr><tr><td>איטיות חריגה<\/td><td><code>ping -n 25<\/code><\/td><td>זמנים מעל 150ms<\/td><td>צווארי בקבוק ועומסים<\/td><\/tr><tr><td>חוסר יציבות<\/td><td><code>ping -t<\/code><\/td><td>Timed out לסירוגין<\/td><td>הפרעות Wi-Fi, החלפת כבלים/ציוד<\/td><\/tr><tr><td>נתיב מסורבל<\/td><td><code>tracert<\/code><\/td><td>כמות חריגה של hops<\/td><td>טבלאות הניתוב בדרך<\/td><\/tr><\/table>"
+   ],
+   "example": "כמו טבלת \"תקלות ופתרונות\" במדריך של מכשיר חשמלי — תסמין, בדיקה ופתרון בשורה אחת, בלי לנחש.",
+   "again": "<p>הטבלה היא <strong>\"אם... אז...\"<\/strong>: אם התסמין X — הרץ פקודה Y — חפש פלט Z — טפל ב-W. שנן את העמודה הראשונה, והשאר נגזר ממנה.<\/p>",
+   "simple": "<p>תסמין ← פקודה ← מה רואים ← מה עושים.<\/p>",
+   "check": {
+    "q": "איזו פקודה מתאימה לתסמין \"איטיות חריגה\"?",
+    "options": [
+     {
+      "t": "<code>ping -n 25<\/code>",
+      "ok": true,
+      "fb": "נכון — מודדים זמני תגובה."
+     },
+     {
+      "t": "<code>ping -t<\/code>",
+      "ok": false,
+      "fb": "ping -t מתאים לחוסר יציבות."
+     },
+     {
+      "t": "<code>ipconfig<\/code>",
+      "ok": false,
+      "fb": "ipconfig מציג הגדרות, לא זמני תגובה."
+     }
+    ],
+    "hint": "צריך כמה מדידות של זמן.",
+    "why": "ping -n 25 מראה אם זמני התגובה גבוהים באופן עקבי."
+   },
+   "summary": [
+    "התנתקות — ping — timeout קבוע",
+    "איטיות — ping -n 25 — מעל 150ms",
+    "חוסר יציבות — ping -t — timeout לסירוגין",
+    "נתיב מסורבל — tracert — הרבה hops"
+   ],
+   "homework": [
+    "כתוב את טבלת האבחון מהזיכרון.",
+    "הוסף לטבלה שורה משלך: תסמין, פקודה, פלט ופתרון."
+   ]
+  },
+  {
+   "title": "שלושת עקרונות המפתח",
+   "open": {
+    "q": "למה טכנאים מתחילים כמעט תמיד ב-<strong>Ping<\/strong>, ורק אחר כך <strong>Traceroute<\/strong> — ולא להפך?",
+    "model": "כי Ping <strong>מהיר<\/strong> ועונה על השאלה הבסיסית: \"יש בעיה בכלל?\". רק אם יש — צריך Traceroute כדי למצוא <strong>איפה<\/strong>."
+   },
+   "explain": [
+    "<ol><li><strong>האבחון עצמאי<\/strong> — פועל בשכבת הרשת, ולא צריך אפליקציה שעובדת כדי לאתר תקלות.<\/li><li><strong>TTL הוא הסוד ההנדסי<\/strong> — בזכותו Traceroute ממפה רשתות שאין לנו גישה אליהן ולא תיעוד שלהן.<\/li><li><strong>Ping + Traceroute<\/strong> — השילוב מבודד כמעט כל כשל פיזי או לוגי.<\/li><\/ol>"
+   ],
+   "visual": "<div class=\"md-flow\"><b>Ping: יש בעיה?<\/b><i>←<\/i><b>כן ← Traceroute: איפה?<\/b><i>←<\/i><b>טיפול בנקודה<\/b><\/div>",
+   "example": "בלש עם שני כלים: שאלה פשוטה (\"יש כאן מישהו?\" — Ping) ומעקב עקבות (\"מאיפה בא ולאן הלך?\" — Traceroute). יחד הם פותרים כמעט כל תעלומה.",
+   "again": "<p>מ<strong>כללי לספציפי<\/strong>: Ping אומר \"<strong>אם<\/strong>\", Traceroute אומר \"<strong>איפה<\/strong>\". אין טעם לחפש איפה לפני שיודעים שיש בעיה.<\/p>",
+   "simple": "<p>קודם <strong>Ping<\/strong> (יש בעיה?), אחר כך <strong>Traceroute<\/strong> (איפה?).<\/p>",
+   "check": {
+    "q": "מה מאפשר ל-Traceroute למפות רשת שאין לנו גישה אליה?",
+    "options": [
+     {
+      "t": "מנגנון ה-TTL ותשובות ICMP Time Exceeded מהנתבים",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "סיסמת מנהל לכל נתב",
+      "ok": false,
+      "fb": "Traceroute לא דורש גישה לנתבים."
+     },
+     {
+      "t": "טבלת ה-ARP",
+      "ok": false,
+      "fb": "ARP פועל רק ברשת המקומית."
+     }
+    ],
+    "hint": "העיקרון השני.",
+    "why": "TTL גורם לכל נתב בדרך לשלוח Time Exceeded ולחשוף את עצמו."
+   },
+   "summary": [
+    "1. אבחון עצמאי בשכבת הרשת",
+    "2. TTL — הסוד שמאפשר מיפוי",
+    "3. Ping + Traceroute — מבודדים כמעט כל כשל",
+    "סדר: Ping (אם) ← Traceroute (איפה)"
+   ],
+   "homework": [
+    "כתוב את שלושת עקרונות המפתח במילים שלך.",
+    "תאר תהליך אבחון מלא ל\"האינטרנט לא עובד\" בעזרת ping ו-tracert."
+   ]
+  }
+ ],
+ "unitTitle": "פרוטוקול ICMP",
+ "id": "y11-18-1"
+};
+</script>
+<script src="madrich-engine.js"></script>
+</body>
+</html>
