@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>סיבים אופטיים ומדידת ביצועים — מדריך לימוד · תקשוב יישומי כיתה יא׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="madrich-engine.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="crumbs">
+      <a href="https://moti-lerner-proyektim.github.io/" id="mdCrHub">לומדים בעצמי</a> ‹
+      <a href="./" id="mdCrCourse">תקשוב יישומי</a> ‹
+      <a href="08-hashichva-hafizit.html" id="mdCrUnit">השכבה הפיזית</a> ‹ <span id="mdCrHere">סיבים אופטיים ומדידת ביצועים</span>
+    </div>
+    <div class="site-name" id="mdSite">תקשוב יישומי · כיתה יא׳</div>
+  </div>
+
+  <main class="md-shell">
+    <header class="md-hero">
+      <div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4L12 2z"/></svg></div>
+      <div>
+        <div class="num" id="mdNum">מדריך 2 מתוך 3 · מדריך לימוד אינטראקטיבי</div>
+        <h1 id="mdTitle">סיבים אופטיים ומדידת ביצועים</h1>
+        <p id="mdDesc">איך סיב אופטי עובד, Multimode מול Singlemode, יתרונות ומחברים, נחושת מול סיב, ורוחב פס.</p>
+      </div>
+    </header>
+
+    <div class="md-progress" id="mdProgress" aria-hidden="true"></div>
+    <div class="md-progress-label"><span id="mdProgressText"></span><span class="md-tts-wrap"><span id="mdTtsBox" class="md-tts-wrap"></span><button id="mdRestart" type="button">להתחיל מחדש</button></span></div>
+
+    <div class="md-log" id="mdLog" aria-live="polite"></div>
+
+    <div class="md-cmds" id="mdCmds" aria-label="פקודות"></div>
+    <div class="md-input">
+      <textarea id="mdText" rows="1" placeholder="כתוב כאן תשובה או פקודה… (Enter לשליחה)" aria-label="תשובה או פקודה"></textarea>
+      <button id="mdSend" type="button">שליחה</button>
+    </div>
+    <div class="md-note" id="mdNote">ההתקדמות נשמרת רק בדפדפן שלך · לא נאסף שום מידע</div>
+  </main>
+
+<script>
+window.MADRICH = {
+ "title": "סיבים אופטיים ומדידת ביצועים",
+ "persona": "מאיה, מהנדסת רשת ב\"לינקאפ\"",
+ "story": "אחרי שהתקנו את כבלי הנחושת במשרד, אנחנו בחדר השרתים — שם נדרשת מהירות עצומה בין הבניינים. כאן נכנס שחקן חדש לגמרי: סיב שמעביר מידע באור.",
+ "desc": "איך סיב אופטי עובד, Multimode מול Singlemode, יתרונות ומחברים, נחושת מול סיב, ורוחב פס.",
+ "num": "מדריך 2 מתוך 3",
+ "emoji": "💡",
+ "next": {
+  "href": "08-madrich-3-alchuti.html",
+  "title": "מדריך 3: המדיום האלחוטי וטופולוגיה בפועל",
+  "teaser": "גלי רדיו ו-CSMA/CA, תקני Wi-Fi, Bluetooth ו-Zigbee, ואיך הכול מתחבר."
+ },
+ "stages": [
+  {
+   "title": "סיבים אופטיים — תקשורת באור",
+   "open": {
+    "q": "סיב אופטי לא מעביר חשמל בכלל — רק אור. למה זה הופך אותו ל<strong>חסין לגמרי<\/strong> להפרעות אלקטרומגנטיות?",
+    "model": "כי הפרעות אלקטרומגנטיות משפיעות על <strong>אותות חשמליים<\/strong>. בסיב המידע עובר כ<strong>אור<\/strong>, ולכן אין להן על מה להשפיע."
+   },
+   "explain": [
+    "<p>סיב אופטי משדר <strong>פולסים של אור<\/strong>, ומנצל את תופעת <strong>החזרה הפנימית המלאה<\/strong> (Total Internal Reflection) — האור לא \"בורח\" מהסיב.<\/p><table><tr><th>חלק<\/th><th>תפקיד<\/th><\/tr><tr><td><strong>ליבה<\/strong> (Core)<\/td><td>במרכז — שם עוברת קרן האור<\/td><\/tr><tr><td><strong>מעטפת<\/strong> (Cladding)<\/td><td>מקיפה את הליבה ומחזירה את האור פנימה<\/td><\/tr><\/table><p><strong>יתרון מרכזי:<\/strong> חסינות של 100% ל-EMI, כי המידע לא עובר כחשמל.<\/p>"
+   ],
+   "example": "דמיין מנהרת מראות: קרן האור \"מקפצת\" בין הדפנות שוב ושוב ולא יוצאת, גם כשהמנהרה מתעקלת. כך האור נשאר כלוא בסיב עד היעד.",
+   "again": "<p>חשוב על <strong>מגלשת מים סגורה<\/strong>: לא משנה כמה היא מתפתלת, המים (האור) נשארים בפנים ומגיעים לבריכה בסוף. המעטפת היא הדפנות של המגלשה.<\/p>",
+   "simple": "<p>סיב = <strong>אור<\/strong> בתוך צינור זכוכית דק. האור לא יוצא, וחשמל לא יכול להפריע לו.<\/p>",
+   "check": {
+    "q": "מה תפקיד המעטפת (Cladding) בסיב אופטי?",
+    "options": [
+     {
+      "t": "להחזיר את האור פנימה לליבה",
+      "ok": true,
+      "fb": "נכון — כך האור לא בורח."
+     },
+     {
+      "t": "להוביל זרם חשמלי לצד האור",
+      "ok": false,
+      "fb": "בסיב אופטי אין זרם חשמלי."
+     },
+     {
+      "t": "לייצר את קרן האור",
+      "ok": false,
+      "fb": "את האור מייצר מקור — LED או לייזר — בקצה הסיב."
+     }
+    ],
+    "hint": "מה מונע מהאור לברוח?",
+    "why": "המעטפת מחזירה את האור לליבה (Total Internal Reflection)."
+   },
+   "summary": [
+    "סיב אופטי משדר פולסים של אור",
+    "Total Internal Reflection — האור לא בורח",
+    "ליבה (Core) — האור עובר · מעטפת (Cladding) — מחזירה פנימה",
+    "חסינות מלאה ל-EMI"
+   ],
+   "homework": [
+    "ממה בנוי סיב אופטי ומה תפקיד כל חלק?",
+    "למה סיב אופטי חסין להפרעות אלקטרומגנטיות?"
+   ]
+  },
+  {
+   "title": "סוגי סיבים — Multimode מול Singlemode",
+   "open": {
+    "q": "חברה אחת צריכה לחבר <strong>שתי ערים<\/strong> במרחק מאות קילומטרים; חברה אחרת — רק <strong>קומות באותו בניין<\/strong>. איזה סוג סיב מתאים לכל אחת, לדעתך?",
+    "model": "בין ערים — <strong>Singlemode<\/strong> (לייזר, טווחים ארוכים). בתוך בניין — <strong>Multimode<\/strong> (LED, משתלם לטווחים קצרים)."
+   },
+   "explain": [
+    "<table><tr><th><\/th><th><strong>Singlemode<\/strong> — חד-אופן<\/th><th><strong>Multimode<\/strong> — רב-אופן<\/th><\/tr><tr><td>מקור אור<\/td><td>לייזר<\/td><td>LED<\/td><\/tr><tr><td>טווח<\/td><td>ארוך מאוד — עשרות עד 100+ ק\"מ<\/td><td>קצר — בניין או קמפוס<\/td><\/tr><tr><td>עלות<\/td><td>יקר יותר<\/td><td>משתלם למרחקים קצרים<\/td><\/tr><tr><td>מהירות<\/td><td>גבוהה מאוד<\/td><td>עד 100 Gbps<\/td><\/tr><\/table>"
+   ],
+   "example": "כמו קרן לייזר מול אלומת פנס: הלייזר (Singlemode) נוסע מרחק עצום בקו ישר, והפנס (Multimode) מתפזר יותר — אבל מספיק לגמרי כדי להאיר חדר קרוב.",
+   "again": "<p><strong>Single<\/strong> = מסלול אחד ישר לאור ← מגיע רחוק. <strong>Multi<\/strong> = הרבה מסלולים שהאור מקפץ בהם ← מתפזר, ולכן מתאים לקרוב.<\/p>",
+   "simple": "<p>רחוק ← <strong>Singlemode<\/strong> (לייזר). קרוב ← <strong>Multimode<\/strong> (LED).<\/p>",
+   "check": {
+    "q": "איזה מקור אור משמש בסיב Singlemode?",
+    "options": [
+     {
+      "t": "לייזר",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "LED",
+      "ok": false,
+      "fb": "LED משמש בסיב Multimode."
+     },
+     {
+      "t": "נורת ליבון",
+      "ok": false,
+      "fb": "נורה רגילה לא משמשת בתקשורת אופטית."
+     }
+    ],
+    "hint": "קרן ממוקדת מאוד.",
+    "why": "Singlemode משתמש בלייזר, ולכן מגיע לטווחים ארוכים."
+   },
+   "summary": [
+    "Singlemode — לייזר, טווח ארוך מאוד, יקר",
+    "Multimode — LED, טווח קצר (בניין/קמפוס), משתלם"
+   ],
+   "homework": [
+    "השווה בין Singlemode ל-Multimode.",
+    "איזה סיב תבחר לחיבור בין שני בניינים בקמפוס של בית ספר? הסבר."
+   ]
+  },
+  {
+   "title": "יתרונות ומחברים אופטיים",
+   "open": {
+    "q": "למה קשה כל כך <strong>להאזין בסתר<\/strong> לתקשורת בסיב אופטי, בהשוואה לכבל נחושת?",
+    "model": "כי האור <strong>כלוא בתוך הסיב<\/strong> — כדי \"לגנוב\" אותו צריך לפגוע פיזית בסיב, וזה משבש את האות ומתגלה. כבל נחושת \"מקרין\" שדה חשמלי שאפשר לקלוט מבחוץ."
+   },
+   "explain": [
+    "<p><strong>ארבעה יתרונות:<\/strong><\/p><ul><li>🚀 <strong>רוחב פס אדיר<\/strong> — 100 Gbps ויותר<\/li><li>📏 <strong>מרחק עצום<\/strong> — עשרות ק\"מ בלי הגברה<\/li><li>🔒 <strong>אבטחה מקסימלית<\/strong> — קשה מאוד להאזין בלי שיתגלה<\/li><li>🛡️ <strong>חסינות מלאה<\/strong> ל-EMI ו-RFI<\/li><\/ul><table><tr><th>מחבר<\/th><th>צורה<\/th><\/tr><tr><td><strong>ST<\/strong><\/td><td>עגול, עם מנגנון נעילה<\/td><\/tr><tr><td><strong>SC<\/strong><\/td><td>מרובע, \"דחוף-משוך\" — חיבור מהיר ופשוט<\/td><\/tr><\/table>"
+   ],
+   "example": "כמו קרן פנס שמכוונת ישר לתוך צינור סגור — קשה מאוד \"לגנוב\" את האור בלי לגעת בצינור ולשבש את הקרן, ולכן ניסיון האזנה מתגלה.",
+   "again": "<p>זכור את <strong>ארבעת ה-מ׳<\/strong>: <strong>מ<\/strong>היר, <strong>מ<\/strong>רחיק, <strong>מ<\/strong>אובטח, <strong>מ<\/strong>חוסן. ומחברים: S<strong>T<\/strong> = <strong>T<\/strong>wist (סיבוב, עגול), S<strong>C<\/strong> = <strong>C<\/strong>lick (נכנס בלחיצה, מרובע).<\/p>",
+   "simple": "<p>סיב = מהיר, רחוק, בטוח, לא מושפע מהפרעות. מחברים: <strong>ST<\/strong> עגול, <strong>SC<\/strong> מרובע.<\/p>",
+   "check": {
+    "q": "איזה מחבר אופטי הוא מרובע ופועל בשיטת \"דחוף-משוך\"?",
+    "options": [
+     {
+      "t": "SC",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "ST",
+      "ok": false,
+      "fb": "ST הוא עגול עם נעילה."
+     },
+     {
+      "t": "RJ-45",
+      "ok": false,
+      "fb": "RJ-45 הוא מחבר לכבלי נחושת."
+     },
+     {
+      "t": "BNC",
+      "ok": false,
+      "fb": "BNC הוא מחבר לכבל קואקסיאלי."
+     }
+    ],
+    "hint": "C — כמו Click.",
+    "why": "מחבר SC מרובע ומתחבר בדחיפה פשוטה."
+   },
+   "summary": [
+    "יתרונות: רוחב פס אדיר · מרחק עצום · אבטחה · חסינות ל-EMI/RFI",
+    "מחברים: ST (עגול, נעילה) · SC (מרובע, דחוף-משוך)"
+   ],
+   "homework": [
+    "מנה ארבעה יתרונות של סיב אופטי.",
+    "למה קשה להאזין לתקשורת בסיב אופטי?"
+   ]
+  },
+  {
+   "title": "נחושת מול סיב אופטי — מטריצת ההחלטה",
+   "open": {
+    "q": "חברה צריכה לחבר <strong>שני מחשבים סמוכים באותו חדר<\/strong>. כדאי להשקיע בסיב אופטי, או שנחושת רגילה תספיק? למה?",
+    "model": "<strong>נחושת תספיק<\/strong> — המרחק קצר, ונחושת זולה וקלה להתקנה. היתרונות של הסיב לא נחוצים כאן."
+   },
+   "explain": [
+    "<table><tr><th><\/th><th>🟠 <strong>נחושת<\/strong><\/th><th>💡 <strong>סיב אופטי<\/strong><\/th><\/tr><tr><td>מרחק<\/td><td>עד 100 מ׳<\/td><td>עד 100+ ק\"מ<\/td><\/tr><tr><td>רוחב פס<\/td><td>עד 10 Gbps<\/td><td>100+ Gbps<\/td><\/tr><tr><td>EMI<\/td><td>מוגבלת, דורשת סיכוך<\/td><td>חסינות מלאה<\/td><\/tr><tr><td>עלות והתקנה<\/td><td>זולה וקלה<\/td><td>יקרה, דורשת ציוד ומומחיות<\/td><\/tr><tr><td>אבטחה<\/td><td>קל יחסית להאזין<\/td><td>מאובטח מאוד<\/td><\/tr><\/table>"
+   ],
+   "example": "כמו הבחירה בין אופניים למטוס: אופניים זולים ופשוטים אבל למרחקים קצרים; מטוס יקר ודורש תשתית, אבל חוצה מרחקים עצומים. לכל אחד המקום שלו.",
+   "again": "<p>השאלה המנחה: <strong>\"כמה רחוק, וכמה חשוב?\"<\/strong> — קרוב ורגיל ← נחושת. רחוק, מהיר מאוד, רועש או רגיש ← סיב.<\/p>",
+   "simple": "<p><strong>נחושת<\/strong> = זול, קרוב. <strong>סיב<\/strong> = יקר, רחוק, מהיר ובטוח.<\/p>",
+   "check": {
+    "q": "צריך לחבר שני בניינים במרחק <strong>2 ק\"מ<\/strong>. מה מתאים?",
+    "options": [
+     {
+      "t": "סיב אופטי",
+      "ok": true,
+      "fb": "נכון — נחושת מוגבלת ל-100 מטר."
+     },
+     {
+      "t": "כבל Cat 6a",
+      "ok": false,
+      "fb": "נחושת מוגבלת ל-100 מטר — הרבה פחות מ-2 ק\"מ."
+     },
+     {
+      "t": "כבל קואקסיאלי RG-59",
+      "ok": false,
+      "fb": "קואקס לא מתאים לתשתית רשת בין בניינים."
+     }
+    ],
+    "hint": "מה המרחק המקסימלי של נחושת?",
+    "why": "למרחק של קילומטרים צריך סיב אופטי; נחושת מגיעה רק ל-100 מטר."
+   },
+   "summary": [
+    "נחושת: עד 100 מ׳, עד 10 Gbps, רגישה ל-EMI, זולה, קלה להאזנה",
+    "סיב: 100+ ק\"מ, 100+ Gbps, חסין, יקר, מאובטח",
+    "בוחרים לפי מרחק, מהירות, סביבה, עלות ואבטחה"
+   ],
+   "homework": [
+    "השווה בין נחושת לסיב אופטי בחמישה היבטים.",
+    "תן דוגמה למקום שבו עדיף נחושת, ודוגמה למקום שבו עדיף סיב."
+   ]
+  },
+  {
+   "title": "מדידת קיבולת — רוחב פס (Bandwidth)",
+   "open": {
+    "q": "חבילת האינטרנט שלך מפורסמת כ<strong>\"100 מגה\"<\/strong>. לאיזו יחידה זה מתייחס, וכמה ביטים לשנייה זה בערך?",
+    "model": "<strong>100 Mbps<\/strong> — מגה-ביט לשנייה, כלומר <strong>100 מיליון ביטים לשנייה<\/strong> (100 × 10⁶)."
+   },
+   "explain": [
+    "<p><strong>רוחב פס<\/strong> מודד כמה נתונים אפשר להעביר בזמן נתון — ה\"קיבולת\" של הצינור, ב<strong>ביטים לשנייה (bps)<\/strong>. כל יחידה גדולה <strong>פי 1,000<\/strong> מהקודמת:<\/p><table><tr><th>יחידה<\/th><th>ערך<\/th><\/tr><tr><td>bps<\/td><td>ביט לשנייה — הבסיס<\/td><\/tr><tr><td>Kbps<\/td><td>10³ bps — אלף<\/td><\/tr><tr><td>Mbps<\/td><td>10⁶ bps — מיליון<\/td><\/tr><tr><td>Gbps<\/td><td>10⁹ bps — מיליארד<\/td><\/tr><tr><td>Tbps<\/td><td>10¹² bps — טריליון<\/td><\/tr><\/table>"
+   ],
+   "example": "רוחב פס הוא כמו רוחב כביש: כביש עם נתיב אחד (Kbps) מעביר פחות מכוניות בדקה מכביש עם עשרה נתיבים (Gbps).",
+   "again": "<p>הסולם הוא בדיוק כמו <strong>גרם → קילוגרם → טון<\/strong>: כל קפיצה היא פי אלף. K-M-G-T = קילו, מגה, גיגה, טרה.<\/p>",
+   "simple": "<p>רוחב פס = <strong>כמה ביטים בשנייה<\/strong>. K = אלף, M = מיליון, G = מיליארד, T = טריליון.<\/p>",
+   "check": {
+    "q": "כמה Mbps יש ב-1 Gbps?",
+    "options": [
+     {
+      "t": "1,000",
+      "ok": true,
+      "fb": "נכון — כל יחידה גדולה פי אלף."
+     },
+     {
+      "t": "100",
+      "ok": false,
+      "fb": "הקפיצה בין יחידות היא פי 1,000, לא פי 100."
+     },
+     {
+      "t": "1,000,000",
+      "ok": false,
+      "fb": "זה ההבדל בין Gbps ל-Kbps."
+     }
+    ],
+    "hint": "כל קפיצה בסולם — פי ...",
+    "why": "גיגה גדול פי אלף ממגה, ולכן 1 Gbps = 1,000 Mbps."
+   },
+   "summary": [
+    "רוחב פס = כמות נתונים לזמן, ב-bps",
+    "Kbps (10³) · Mbps (10⁶) · Gbps (10⁹) · Tbps (10¹²)",
+    "כל יחידה גדולה פי 1,000 מקודמתה"
+   ],
+   "homework": [
+    "מהו רוחב פס, ובאיזו יחידה מודדים אותו?",
+    "המר: 2.5 Gbps = כמה Mbps? ו-500 Kbps = כמה Mbps?"
+   ]
+  }
+ ],
+ "unitTitle": "השכבה הפיזית",
+ "id": "y11-08-2"
+};
+</script>
+<script src="madrich-engine.js"></script>
+</body>
+</html>

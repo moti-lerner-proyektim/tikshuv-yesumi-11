@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>קיצורים, זהות, אבטחה וזיכרון — מדריך לימוד · תקשוב יישומי כיתה יא׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="madrich-engine.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="crumbs">
+      <a href="https://moti-lerner-proyektim.github.io/" id="mdCrHub">לומדים בעצמי</a> ‹
+      <a href="./" id="mdCrCourse">תקשוב יישומי</a> ‹
+      <a href="06-marechot-hafala-metag-natav.html" id="mdCrUnit">מערכות הפעלה של מתג / נתב</a> ‹ <span id="mdCrHere">קיצורים, זהות, אבטחה וזיכרון</span>
+    </div>
+    <div class="site-name" id="mdSite">תקשוב יישומי · כיתה יא׳</div>
+  </div>
+
+  <main class="md-shell">
+    <header class="md-hero">
+      <div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <div>
+        <div class="num" id="mdNum">מדריך 2 מתוך 3 · מדריך לימוד אינטראקטיבי</div>
+        <h1 id="mdTitle">קיצורים, זהות, אבטחה וזיכרון</h1>
+        <p id="mdDesc">קיצורי מקלדת, Hostname, סיסמאות והצפנה, Banner, ו-RAM מול NVRAM.</p>
+      </div>
+    </header>
+
+    <div class="md-progress" id="mdProgress" aria-hidden="true"></div>
+    <div class="md-progress-label"><span id="mdProgressText"></span><span class="md-tts-wrap"><span id="mdTtsBox" class="md-tts-wrap"></span><button id="mdRestart" type="button">להתחיל מחדש</button></span></div>
+
+    <div class="md-log" id="mdLog" aria-live="polite"></div>
+
+    <div class="md-cmds" id="mdCmds" aria-label="פקודות"></div>
+    <div class="md-input">
+      <textarea id="mdText" rows="1" placeholder="כתוב כאן תשובה או פקודה… (Enter לשליחה)" aria-label="תשובה או פקודה"></textarea>
+      <button id="mdSend" type="button">שליחה</button>
+    </div>
+    <div class="md-note" id="mdNote">ההתקדמות נשמרת רק בדפדפן שלך · לא נאסף שום מידע</div>
+  </main>
+
+<script>
+window.MADRICH = {
+ "title": "קיצורים, זהות, אבטחה וזיכרון",
+ "persona": "מאיה, מהנדסת תקשורת",
+ "story": "למדנו להתחבר למתג ולנווט בין הרמות. עכשיו \"נלביש\" את המתג הראשון של \"לינקאפ\": נעבוד מהר יותר עם קיצורים, ניתן לו שם, נגן עליו בסיסמאות, ונבין איך הוא שומר — או לא שומר — את ההגדרות.",
+ "desc": "קיצורי מקלדת, Hostname, סיסמאות והצפנה, Banner, ו-RAM מול NVRAM.",
+ "num": "מדריך 2 מתוך 3",
+ "emoji": "👩‍💻",
+ "next": {
+  "href": "06-madrich-3-ktovot-svi.html",
+  "title": "מדריך 3: כתובות רשת, ממשק ניהול ואימות",
+  "teaser": "ניתן למתג כתובת רשת, נגדיר ממשק ניהול, ונוודא שהכול עובד עם Ping."
+ },
+ "stages": [
+  {
+   "title": "קיצורי מקלדת חיוניים",
+   "open": {
+    "q": "אם נתקעת בתהליך שלוקח יותר מדי זמן (למשל טעינה שלא נגמרת) — איזה כלי הכי חשוב לך שיהיה כדי <strong>לעצור אותו מיד<\/strong>?",
+    "model": "<strong>קיצור עצירה<\/strong> — ב-IOS זה <code>Ctrl+Shift+6<\/code>, שעוצר תהליכים תקועים כמו ping או traceroute אינסופיים."
+   },
+   "explain": [
+    "<table><tr><th>קיצור<\/th><th>מה עושה<\/th><\/tr><tr><td><code>Tab<\/code><\/td><td>משלים שם פקודה חלקי (<code>conf<\/code> + Tab ← <code>configure<\/code>)<\/td><\/tr><tr><td><code>Ctrl+C<\/code><\/td><td>מבטל את הפקודה הנוכחית ויוצא ממצב ההגדרה<\/td><\/tr><tr><td><code>Ctrl+Z<\/code><\/td><td>קופץ מכל תת-מצב הגדרה ישר ל-Privileged EXEC<\/td><\/tr><tr><td><code>Ctrl+Shift+6<\/code><\/td><td><strong>עצירת חירום<\/strong> — לתהליכים תקועים (DNS שגוי, ping/traceroute אינסופי)<\/td><\/tr><\/table>"
+   ],
+   "example": "Tab בשורת הפקודה עובד בדיוק כמו השלמה אוטומטית בטלפון — מזהה מה התכוונת לכתוב וחוסך הקלדה.",
+   "again": "<p>זכור לפי מצב: <strong>חסר לך המשך המילה<\/strong> — Tab. <strong>רוצה לבטל<\/strong> — Ctrl+C. <strong>רוצה לצאת מהר מההגדרות<\/strong> — Ctrl+Z. <strong>משהו נתקע<\/strong> — Ctrl+Shift+6.<\/p>",
+   "simple": "<p>Tab = <strong>משלים<\/strong>. Ctrl+C = <strong>מבטל<\/strong>. Ctrl+Z = <strong>יוצא<\/strong> מההגדרות. Ctrl+Shift+6 = <strong>עוצר<\/strong> משהו תקוע.<\/p>",
+   "check": {
+    "q": "הרצת traceroute לכתובת שגויה והוא לא נגמר. מה תלחץ?",
+    "options": [
+     {
+      "t": "<code>Ctrl+Shift+6<\/code>",
+      "ok": true,
+      "fb": "נכון — רצף עצירת החירום לתהליכים תקועים."
+     },
+     {
+      "t": "<code>Tab<\/code>",
+      "ok": false,
+      "fb": "Tab משלים פקודות, לא עוצר תהליכים."
+     },
+     {
+      "t": "<code>Ctrl+Z<\/code>",
+      "ok": false,
+      "fb": "Ctrl+Z יוצא ממצב הגדרה, לא עוצר תהליך שרץ."
+     }
+    ],
+    "hint": "מדובר ב\"עצירת חירום\".",
+    "why": "Ctrl+Shift+6 עוצר תהליכים תקועים כמו ping או traceroute אינסופיים."
+   },
+   "summary": [
+    "<code>Tab<\/code> — השלמה אוטומטית",
+    "<code>Ctrl+C<\/code> — ביטול",
+    "<code>Ctrl+Z<\/code> — קפיצה ל-Privileged EXEC",
+    "<code>Ctrl+Shift+6<\/code> — עצירת חירום"
+   ],
+   "homework": [
+    "מנה את ארבעת קיצורי המקלדת ומה כל אחד עושה.",
+    "מתי תשתמש ב-Ctrl+Shift+6? תן דוגמה."
+   ]
+  },
+  {
+   "title": "זהות (Hostname), אבטחת סיסמאות ו-Banner",
+   "open": {
+    "q": "אתה אחראי על <strong>50 מתגים<\/strong> בבניין, וכולם עדיין נקראים \"Switch\". איך תדע איזה מתג אתה מנהל כרגע?",
+    "model": "אי אפשר לדעת בקלות — ולכן נותנים לכל מתג <strong>שם ייחודי<\/strong> (Hostname), למשל לפי קומה ותפקיד. כך מזהים מיד ונמנעים מטעויות."
+   },
+   "explain": [
+    "<p><strong>Hostname<\/strong> — כברירת מחדל כל ההתקנים נקראים Router או Switch. שם ייחודי מונע כפילויות וטעויות (מ-Global Configuration):<\/p><pre><code>Switch(config)# hostname Sw-Floor-1\nSw-Floor-1(config)#<\/code><\/pre><p><strong>סיסמה לקונסול<\/strong> — גם חיבור פיזי צריך הגנה. חובה <code>login<\/code> כדי שהסיסמה תופעל:<\/p><pre><code>Sw-Floor-1(config)# line console 0\nSw-Floor-1(config-line)# password cisco\nSw-Floor-1(config-line)# login<\/code><\/pre>",
+    "<p><strong>גישה מרחוק והצפנה<\/strong> — תחת <code>line vty 0 15<\/code> מגדירים גם <code>password<\/code> ו-<code>login<\/code>. כברירת מחדל הסיסמאות מוצגות <strong>בטקסט גלוי<\/strong> בתצורה, ולכן:<\/p><pre><code>Sw-Floor-1(config)# service password-encryption<\/code><\/pre><p>עכשיו הן יופיעו מוצפנות (למשל <code>password 7 094F471A1A0A<\/code>).<\/p><p><strong>enable secret<\/strong> — מגן על הכניסה ל-Privileged EXEC, ונשמר מוצפן כברירת מחדל: <code>enable secret class<\/code><\/p><p><strong>Banner MOTD<\/strong> — אזהרה שמופיעה לפני ההתחברות. התו <code>#<\/code> מסמן התחלה וסוף:<\/p><pre><code>Sw-Floor-1(config)# banner motd # AUTHORIZED ACCESS ONLY! #<\/code><\/pre>"
+   ],
+   "example": "שם למתג הוא כמו מספר חדר במלון — בלי מספר ברור אף אחד לא יודע איזה חדר לנקות. ה-Banner הוא כמו שלט \"כניסה למורשים בלבד\" על הדלת — מזהיר עוד לפני שנכנסים.",
+   "again": "<p>ארבעה צעדים \"להלביש\" מתג: <strong>שם<\/strong> (hostname) · <strong>מנעול על הדלת הפיזית<\/strong> (סיסמת console) · <strong>מנעול על הדלתות המרוחקות<\/strong> (vty) + הצפנה · <strong>מנעול על חדר ההנהלה<\/strong> (enable secret) · <strong>שלט אזהרה<\/strong> (banner).<\/p>",
+   "simple": "<p><code>hostname<\/code> = שם. <code>password<\/code> + <code>login<\/code> = סיסמה. <code>service password-encryption<\/code> = מסתיר סיסמאות. <code>enable secret<\/code> = מגן על מצב #. <code>banner motd<\/code> = שלט אזהרה.<\/p>",
+   "check": {
+    "q": "הגדרת <code>password cisco<\/code> תחת <code>line console 0<\/code>, אבל המתג לא מבקש סיסמה בהתחברות. מה שכחת?",
+    "options": [
+     {
+      "t": "<code>login<\/code>",
+      "ok": true,
+      "fb": "נכון — בלי login הסיסמה לא מופעלת בפועל."
+     },
+     {
+      "t": "<code>service password-encryption<\/code>",
+      "ok": false,
+      "fb": "זה מצפין סיסמאות בתצורה, אבל לא מפעיל את בקשת הסיסמה."
+     },
+     {
+      "t": "<code>enable secret<\/code>",
+      "ok": false,
+      "fb": "זה מגן על Privileged EXEC, לא על קו הקונסול."
+     },
+     {
+      "t": "<code>banner motd<\/code>",
+      "ok": false,
+      "fb": "זו הודעת אזהרה, לא הפעלת סיסמה."
+     }
+    ],
+    "hint": "יש פקודה אחת שחייבת לבוא אחרי password בקו.",
+    "why": "הפקודה login מפעילה את בדיקת הסיסמה בקו; בלעדיה הסיסמה מוגדרת אך לא נבדקת."
+   },
+   "summary": [
+    "<code>hostname<\/code> — שם ייחודי להתקן",
+    "קונסול: <code>line console 0<\/code>, <code>password<\/code>, <code>login<\/code>",
+    "מרחוק: <code>line vty 0 15<\/code>; <code>service password-encryption<\/code> מצפין סיסמאות בתצורה",
+    "<code>enable secret<\/code> — מגן על Privileged EXEC, מוצפן",
+    "<code>banner motd #...#<\/code> — אזהרה לפני התחברות"
+   ],
+   "homework": [
+    "כתוב את הפקודות לשינוי שם מתג ל-Sw-Lab-2 ולהגדרת סיסמת קונסול.",
+    "למה צריך <code>service password-encryption<\/code>? מה היה קורה בלעדיה?"
+   ]
+  },
+  {
+   "title": "זיכרון RAM מול NVRAM וניהול תצורה",
+   "open": {
+    "q": "ערכת שינוי חשוב בהגדרות המתג, אבל מישהו ניתק את החשמל <strong>לפני ששמרת<\/strong>. מה יקרה לשינוי?",
+    "model": "השינוי <strong>ילך לאיבוד<\/strong>. הוא היה רק ב-<strong>running-config<\/strong> ב-RAM (נדיף). בהדלקה המתג יטען את ה-<strong>startup-config<\/strong> מה-NVRAM — בלי השינוי."
+   },
+   "explain": [
+    "<table><tr><th><\/th><th><strong>Running-Config<\/strong><\/th><th><strong>Startup-Config<\/strong><\/th><\/tr><tr><td>איפה<\/td><td>RAM — נדיף<\/td><td>NVRAM — לא נדיף<\/td><\/tr><tr><td>מה<\/td><td>ההגדרות הפעילות עכשיו<\/td><td>מה שייטען בהדלקה הבאה<\/td><\/tr><tr><td>בכיבוי<\/td><td>נמחקת<\/td><td>נשמרת<\/td><\/tr><tr><td>צפייה<\/td><td><code>show running-config<\/code><\/td><td><code>show startup-config<\/code><\/td><\/tr><\/table>",
+    "<p><strong>שמירה<\/strong> — אחרי כל שינוי מוצלח, חובה:<\/p><pre><code>Sw-Floor-1# copy running-config startup-config<\/code><\/pre><p><strong>איפוס להגדרות יצרן:<\/strong><\/p><pre><code>Sw-Floor-1# erase startup-config\nSw-Floor-1# reload<\/code><\/pre><p><strong>גיבוי חיצוני<\/strong> — מפעילים רישום (Log) בתוכנת הטרמינל, מריצים <code>show running-config<\/code> ושומרים כקובץ טקסט.<\/p>"
+   ],
+   "visual": "<div class=\"md-flow\"><b>שינוי הגדרות<\/b><i>←<\/i><b>running-config (RAM)<\/b><i>←<\/i><b>copy run start<\/b><i>←<\/i><b>startup-config (NVRAM)<\/b><\/div>",
+   "example": "RAM הוא כמו מסמך שאתה עורך בלי לשמור — רואים כל שינוי מיד, אבל אם המחשב קורס הכול נעלם. NVRAM הוא המסמך אחרי \"שמור\" — נשאר גם אחרי כיבוי.",
+   "again": "<p>זכור משפט אחד: <strong>\"עבדתי — שמרתי.\"<\/strong> כל מה שעשית חי ב-running (זמני) עד שאתה מריץ <code>copy running-config startup-config<\/code>. רק אז הוא עובר ל-startup (קבוע).<\/p>",
+   "simple": "<p><strong>running<\/strong> = עכשיו, נמחק בכיבוי. <strong>startup<\/strong> = שמור לתמיד. <code>copy running-config startup-config<\/code> = <strong>שמור<\/strong>.<\/p>",
+   "check": {
+    "q": "מה עושה הפקודה <code>copy running-config startup-config<\/code>?",
+    "options": [
+     {
+      "t": "מעתיקה את ההגדרות הפעילות מה-RAM ל-NVRAM, כך שיישמרו גם אחרי אתחול",
+      "ok": true,
+      "fb": "נכון — זו פקודת השמירה."
+     },
+     {
+      "t": "מוחקת את ההגדרות ומחזירה להגדרות יצרן",
+      "ok": false,
+      "fb": "את זה עושים <code>erase startup-config<\/code> ו-<code>reload<\/code>."
+     },
+     {
+      "t": "טוענת את ההגדרות השמורות לזיכרון ה-RAM",
+      "ok": false,
+      "fb": "הכיוון הפוך — מ-RAM אל NVRAM."
+     }
+    ],
+    "hint": "מאיפה לאן? running ← startup.",
+    "why": "הפקודה שומרת את running-config (RAM) ל-startup-config (NVRAM)."
+   },
+   "summary": [
+    "running-config — RAM, פעילה, נמחקת בכיבוי (<code>show running-config<\/code>)",
+    "startup-config — NVRAM, נטענת בהדלקה (<code>show startup-config<\/code>)",
+    "שמירה: <code>copy running-config startup-config<\/code>",
+    "איפוס: <code>erase startup-config<\/code> + <code>reload<\/code>; גיבוי חיצוני דרך Log"
+   ],
+   "homework": [
+    "השווה בין running-config ל-startup-config.",
+    "הסבר מה יקרה אם תשנה הגדרות, לא תשמור, ותכבה את המתג."
+   ]
+  }
+ ],
+ "unitTitle": "מערכות הפעלה של מתג / נתב",
+ "id": "y11-06-2"
+};
+</script>
+<script src="madrich-engine.js"></script>
+</body>
+</html>

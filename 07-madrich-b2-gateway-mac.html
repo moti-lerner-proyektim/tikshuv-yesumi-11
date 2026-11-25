@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>שער ברירת מחדל, כתובת MAC וניהול תנועה — מדריך לימוד · תקשוב יישומי כיתה יא׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="madrich-engine.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="crumbs">
+      <a href="https://moti-lerner-proyektim.github.io/" id="mdCrHub">לומדים בעצמי</a> ‹
+      <a href="./" id="mdCrCourse">תקשוב יישומי</a> ‹
+      <a href="07-protocolim-vemodelim.html" id="mdCrUnit">פרוטוקולים ומודלים</a> ‹ <span id="mdCrHere">שער ברירת מחדל, כתובת MAC וניהול תנועה</span>
+    </div>
+    <div class="site-name" id="mdSite">תקשוב יישומי · כיתה יא׳</div>
+  </div>
+
+  <main class="md-shell">
+    <header class="md-hero">
+      <div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5L6.5 17M12 11.5l5.5 5.5"/></svg></div>
+      <div>
+        <div class="num" id="mdNum">חלק ב׳ · מדריך 2 מתוך 3 · מדריך לימוד אינטראקטיבי</div>
+        <h1 id="mdTitle">שער ברירת מחדל, כתובת MAC וניהול תנועה</h1>
+        <p id="mdDesc">Default Gateway, מבנה כתובת MAC, השוואת IP ו-MAC, ו-Hub מול Switch.</p>
+      </div>
+    </header>
+
+    <div class="md-progress" id="mdProgress" aria-hidden="true"></div>
+    <div class="md-progress-label"><span id="mdProgressText"></span><span class="md-tts-wrap"><span id="mdTtsBox" class="md-tts-wrap"></span><button id="mdRestart" type="button">להתחיל מחדש</button></span></div>
+
+    <div class="md-log" id="mdLog" aria-live="polite"></div>
+
+    <div class="md-cmds" id="mdCmds" aria-label="פקודות"></div>
+    <div class="md-input">
+      <textarea id="mdText" rows="1" placeholder="כתוב כאן תשובה או פקודה… (Enter לשליחה)" aria-label="תשובה או פקודה"></textarea>
+      <button id="mdSend" type="button">שליחה</button>
+    </div>
+    <div class="md-note" id="mdNote">ההתקדמות נשמרת רק בדפדפן שלך · לא נאסף שום מידע</div>
+  </main>
+
+<script>
+window.MADRICH = {
+ "title": "שער ברירת מחדל, כתובת MAC וניהול תנועה",
+ "persona": "מאיה, מהנדסת תקשורת",
+ "story": "הבנו את הזהות הכפולה ואת מבנה ה-IP. עכשיו נבין איך מכשיר \"יוצא\" מהרשת המקומית לעולם, איך בנויה כתובת ה-MAC, ואיך רכיבי הרשת של \"לינקאפ\" מנהלים את התנועה.",
+ "desc": "Default Gateway, מבנה כתובת MAC, השוואת IP ו-MAC, ו-Hub מול Switch.",
+ "num": "חלק ב׳ · מדריך 2 מתוך 3",
+ "emoji": "👩‍💻",
+ "next": {
+  "href": "07-madrich-b3-broadcast-ivchun.html",
+  "title": "מדריך 3: Broadcast, כלי אבחון וסיכום מסלול הנתונים",
+  "teaser": "Broadcast בחומרה, כלי האבחון בשורת הפקודה, והמסלול המלא של חבילת נתונים."
+ },
+ "stages": [
+  {
+   "title": "שער ברירת מחדל (Default Gateway)",
+   "open": {
+    "q": "מחשב בבית רוצה לגלוש לאתר בחו\"ל. דרך איזה <strong>\"שער\"<\/strong> המידע חייב לצאת קודם מהרשת הביתית?",
+    "model": "דרך <strong>הנתב<\/strong> הביתי — כתובת ה-IP שלו ברשת המקומית היא <strong>שער ברירת המחדל<\/strong> (Default Gateway)."
+   },
+   "explain": [
+    "<p><strong>Default Gateway<\/strong> הוא כתובת ה-IP של <strong>הנתב<\/strong> ברשת המקומית — <strong>\"דלת היציאה\"<\/strong> מהרשת.<\/p><ul><li>אם מכשיר רוצה לדבר עם מחשב <strong>מחוץ לרשת שלו<\/strong> — הוא שולח קודם אל השער.<\/li><li><strong>חוק ברזל:<\/strong> כתובת המחשב וכתובת השער חייבות להיות <strong>באותה רשת<\/strong> (אותו Network ID) — אחרת המחשב לא יגיע לשער בכלל.<\/li><\/ul><table><tr><th><\/th><th>כתובת<\/th><th>רשת<\/th><\/tr><tr><td>מחשב<\/td><td><code>192.168.1.20<\/code><\/td><td><code>192.168.1<\/code><\/td><\/tr><tr><td>שער<\/td><td><code>192.168.1.1<\/code><\/td><td><code>192.168.1<\/code> ✓<\/td><\/tr><\/table>"
+   ],
+   "example": "השער הוא כמו דלת הכניסה הראשית של השכונה — כדי לצאת לעולם (לאינטרנט) חייבים לעבור דרכה קודם.",
+   "again": "<p>חשוב על <strong>מרכזייה במשרד<\/strong>: כדי להתקשר לשלוחה באותו משרד — מחייגים ישר. כדי להתקשר החוצה — מחייגים 9 (השער). ואם השלוחה שלך לא מחוברת לאותה מרכזייה — אין לך איך לצאת.<\/p>",
+   "simple": "<p>Default Gateway = <strong>הנתב<\/strong> = הדלת החוצה. הוא חייב להיות <strong>באותה רשת<\/strong> כמו המחשב.<\/p>",
+   "check": {
+    "q": "מחשב עם IP <code>192.168.1.20<\/code> (מסכה <code>255.255.255.0<\/code>) הוגדר עם שער <code>192.168.2.1<\/code>. מה יקרה?",
+    "options": [
+     {
+      "t": "המחשב לא יצליח לצאת מהרשת — השער ברשת אחרת",
+      "ok": true,
+      "fb": "נכון — השער חייב להיות באותו Network ID."
+     },
+     {
+      "t": "הכול יעבוד כרגיל",
+      "ok": false,
+      "fb": "192.168.2 אינה אותה רשת כמו 192.168.1 — המחשב לא יגיע לשער."
+     },
+     {
+      "t": "המחשב יקבל אוטומטית IP ברשת 192.168.2",
+      "ok": false,
+      "fb": "הגדרת שער לא משנה את כתובת המחשב."
+     }
+    ],
+    "hint": "בדוק את שלוש האוקטטות הראשונות של שתי הכתובות.",
+    "why": "השער חייב להיות באותה רשת כמו המחשב; כאן הוא ברשת אחרת, ולכן אין יציאה."
+   },
+   "summary": [
+    "Default Gateway — כתובת ה-IP של הנתב; דלת היציאה מהרשת",
+    "תעבורה לרשת אחרת נשלחת קודם לשער",
+    "חוק ברזל: מחשב ושער באותו Network ID"
+   ],
+   "homework": [
+    "מהו Default Gateway ומה תפקידו?",
+    "למה השער חייב להיות באותה רשת כמו המחשב?"
+   ]
+  },
+  {
+   "title": "הכתובת הפיזית — MAC",
+   "open": {
+    "q": "כתובת ה-MAC נחרטת על כרטיס הרשת במפעל. האם היא יכולה <strong>להשתנות<\/strong> מאוחר יותר, כשהמכשיר עובר לרשת אחרת?",
+    "model": "<strong>לא<\/strong> — היא <strong>צרובה בחומרה<\/strong> (BIA) ונשארת קבועה, בלי קשר לרשת שהמכשיר מחובר אליה."
+   },
+   "explain": [
+    "<p><strong>מבנה:<\/strong> 6 בתים = <strong>48 סיביות<\/strong>, בכתיב <strong>הקסדצימלי<\/strong> (ספרות 0–9 ואותיות A–F).<\/p><p><strong>BIA<\/strong> (Burned-in Address) — חרוטה פיזית על החומרה בזמן הייצור.<\/p><table><tr><th>חלק<\/th><th>מה מזהה<\/th><th>בדוגמה <code>F4-D4-98-BB-E2-01<\/code><\/th><\/tr><tr><td><strong>OUI<\/strong><\/td><td>היצרן<\/td><td><code>F4-D4-98<\/code><\/td><\/tr><tr><td>מזהה סדרתי<\/td><td>הכרטיס הספציפי<\/td><td><code>BB-E2-01<\/code><\/td><\/tr><\/table>"
+   ],
+   "example": "כתובת MAC היא כמו מספר סידורי שחרוט על מכונית במפעל — קבוע לכל חייה, לא משנה לאן תיסע.",
+   "again": "<p>חשוב על <strong>ברקוד של מוצר<\/strong>: החלק הראשון אומר מי היצרן (OUI), והחלק השני מזהה את הפריט הספציפי. אותו ברקוד בכל חנות שהמוצר יגיע אליה.<\/p>",
+   "simple": "<p>MAC = <strong>12 תווים<\/strong> (0–9, A–F). חצי ראשון = <strong>יצרן<\/strong>, חצי שני = <strong>הכרטיס<\/strong>. לא משתנה.<\/p>",
+   "check": {
+    "q": "מה מזהה החלק הראשון (OUI) בכתובת MAC?",
+    "options": [
+     {
+      "t": "את היצרן של כרטיס הרשת",
+      "ok": true,
+      "fb": "נכון — Organizationally Unique Identifier."
+     },
+     {
+      "t": "את הרשת שהמכשיר מחובר אליה",
+      "ok": false,
+      "fb": "MAC לא תלויה ברשת — זה תפקיד ה-IP."
+     },
+     {
+      "t": "את המדינה שבה המכשיר נמצא",
+      "ok": false,
+      "fb": "MAC לא מכילה מידע על מיקום."
+     }
+    ],
+    "hint": "O = Organization.",
+    "why": "ה-OUI מזהה את יצרן הכרטיס; שאר הכתובת היא מזהה סדרתי."
+   },
+   "summary": [
+    "MAC: 6 בתים = 48 סיביות, הקסדצימלי (0–9, A–F)",
+    "BIA — צרובה במפעל, קבועה",
+    "OUI (יצרן) + מזהה סדרתי (הכרטיס)"
+   ],
+   "homework": [
+    "ממה בנויה כתובת MAC? מה פירוש BIA ו-OUI?",
+    "בכתובת <code>00-1A-2B-3C-4D-5E<\/code> — איזה חלק הוא ה-OUI?"
+   ]
+  },
+  {
+   "title": "השוואה: IP לעומת MAC",
+   "open": {
+    "q": "אם היית צריך להסביר <strong>במשפט אחד<\/strong> את ההבדל העיקרי בין IP ל-MAC — מה היית אומר?",
+    "model": "למשל: \"<strong>MAC<\/strong> היא תעודת זהות קבועה לתקשורת בתוך הרשת, ו-<strong>IP<\/strong> היא כתובת משתנה לניתוב בין רשתות.\""
+   },
+   "explain": [
+    "<table><tr><th><\/th><th><strong>IP<\/strong><\/th><th><strong>MAC<\/strong><\/th><\/tr><tr><td>פורמט<\/td><td>עשרוני (Decimal), 32-bit<\/td><td>הקסדצימלי (Hex), 48-bit<\/td><\/tr><tr><td>שינוי<\/td><td>דינמית — משתנה בין רשתות<\/td><td>קבועה — צרובה בחומרה<\/td><\/tr><tr><td>טווח<\/td><td>ניתוב גלובלי<\/td><td>תקשורת מקומית בלבד<\/td><\/tr><tr><td>שכבה<\/td><td>רשת (Network) — 3<\/td><td>עורק נתונים (Data Link) — 2<\/td><\/tr><\/table>"
+   ],
+   "example": "בדיוק כמו ההבדל בין תעודת הזהות הקבועה שלך (MAC) לבין הכתובת שמשתנה כשעוברים דירה (IP) — שניהם מזהים אותך, בהקשרים שונים.",
+   "again": "<p>מבחן ארבע השאלות: <strong>איך נראית?<\/strong> (מספרים עשרוניים / אותיות ומספרים). <strong>משתנה?<\/strong> (כן / לא). <strong>עד לאן מגיעה?<\/strong> (כל העולם / הרשת המקומית). <strong>באיזו קומה?<\/strong> (3 / 2).<\/p>",
+   "simple": "<p>IP = <strong>32 ביט, משתנה, לעולם, שכבה 3<\/strong>. MAC = <strong>48 ביט, קבועה, מקומית, שכבה 2<\/strong>.<\/p>",
+   "check": {
+    "q": "איזה משפט נכון?",
+    "options": [
+     {
+      "t": "IP פועלת בשכבה 3, MAC בשכבה 2",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "MAC משמשת לניתוב גלובלי באינטרנט",
+      "ok": false,
+      "fb": "MAC מוגבלת לתקשורת מקומית; IP מנותבת גלובלית."
+     },
+     {
+      "t": "IP קבועה ו-MAC משתנה",
+      "ok": false,
+      "fb": "הפוך."
+     },
+     {
+      "t": "שתיהן באורך 32 סיביות",
+      "ok": false,
+      "fb": "IP היא 32 ביט, MAC היא 48 ביט."
+     }
+    ],
+    "hint": "Network = 3, Data Link = 2.",
+    "why": "IP שייכת לשכבת הרשת (3), MAC לשכבת עורק הנתונים (2)."
+   },
+   "summary": [
+    "IP: עשרוני 32-bit · דינמית · ניתוב גלובלי · שכבה 3",
+    "MAC: Hex 48-bit · קבועה · מקומית · שכבה 2"
+   ],
+   "homework": [
+    "צור טבלת השוואה בין IP ל-MAC בארבעה היבטים.",
+    "כתוב במשפט אחד את ההבדל העיקרי בין IP ל-MAC."
+   ]
+  },
+  {
+   "title": "ניהול תנועה מקומית — Hub מול Switch",
+   "open": {
+    "q": "8 מחשבים מחוברים לאותה <strong>רכזת (Hub)<\/strong>, ושניים שולחים מידע <strong>בדיוק באותו רגע<\/strong>. מה עלול לקרות?",
+    "model": "<strong>התנגשות (Collision)<\/strong> — האותות מתערבבים, המידע נהרס, וצריך לשלוח אותו מחדש. ב-Hub כל המחשבים חולקים מתחם התנגשויות אחד."
+   },
+   "explain": [
+    "<table><tr><th><\/th><th>📢 <strong>Hub<\/strong> — כאוס<\/th><th>🔀 <strong>Switch<\/strong> — סדר<\/th><\/tr><tr><td>שליחה<\/td><td>כל הודעה לכל החיבורים<\/td><td>רק ליעד הספציפי<\/td><\/tr><tr><td>למידה<\/td><td>לא לומד כלום<\/td><td>לומד כתובות MAC ושומר ב<strong>טבלת MAC<\/strong><\/td><\/tr><tr><td>התנגשויות<\/td><td>מתחם התנגשויות (Collision Domain) <strong>אחד גדול<\/strong><\/td><td>נתיב פרטי — <strong>מונע התנגשויות<\/strong><\/td><\/tr><\/table>"
+   ],
+   "example": "Hub הוא כמו חדר שכולם צועקים בו בו-זמנית — קשה לשמוע מישהו. Switch הוא כמו מרכזנית שמחברת רק את שני האנשים שרוצים לדבר, בקו פרטי.",
+   "again": "<p>ה-Switch הוא כמו <strong>דוור שמכיר את השכונה<\/strong>: אחרי כמה ימים הוא יודע מי גר איפה (טבלת MAC), ומביא כל מכתב ישר לתיבה הנכונה. ה-Hub הוא דוור שמשאיר עותק של כל מכתב בכל תיבה.<\/p>",
+   "simple": "<p><strong>Hub<\/strong> = שולח לכולם, התנגשויות. <strong>Switch<\/strong> = לומד MAC, שולח רק ליעד, בלי התנגשויות.<\/p>",
+   "check": {
+    "q": "איך ה-Switch יודע לאיזו יציאה לשלוח מסגרת?",
+    "options": [
+     {
+      "t": "לפי טבלת MAC שהוא בונה מהכתובות של המכשירים המחוברים",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "לפי כתובת ה-IP של היעד",
+      "ok": false,
+      "fb": "Switch רגיל עובד בשכבה 2 — לפי MAC, לא IP."
+     },
+     {
+      "t": "הוא שולח לכל היציאות",
+      "ok": false,
+      "fb": "זו ההתנהגות של Hub."
+     }
+    ],
+    "hint": "Switch עובד בשכבה 2.",
+    "why": "ה-Switch לומד כתובות MAC, שומר אותן בטבלה ושולח רק ליציאה הנכונה."
+   },
+   "summary": [
+    "Hub — שולח לכולם; Collision Domain אחד גדול; התנגשויות",
+    "Switch — לומד MAC לטבלה; נתיב פרטי ליעד; מונע התנגשויות"
+   ],
+   "homework": [
+    "השווה בין Hub ל-Switch בשלושה היבטים.",
+    "מהי התנגשות (Collision), ולמה היא נפוצה ב-Hub?"
+   ]
+  }
+ ],
+ "unitTitle": "פרוטוקולים ומודלים",
+ "id": "y11-07-5"
+};
+</script>
+<script src="madrich-engine.js"></script>
+</body>
+</html>

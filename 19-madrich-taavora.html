@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>שכבת התעבורה — TCP, UDP ו-Socket — מדריך לימוד · תקשוב יישומי כיתה יא׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="madrich-engine.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="crumbs">
+      <a href="https://moti-lerner-proyektim.github.io/" id="mdCrHub">לומדים בעצמי</a> ‹
+      <a href="./" id="mdCrCourse">תקשוב יישומי</a> ‹
+      <a href="19-shichvat-taavora.html" id="mdCrUnit">שכבת התעבורה</a> ‹ <span id="mdCrHere">שכבת התעבורה — TCP, UDP ו-Socket</span>
+    </div>
+    <div class="site-name" id="mdSite">תקשוב יישומי · כיתה יא׳</div>
+  </div>
+
+  <main class="md-shell">
+    <header class="md-hero">
+      <div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg></div>
+      <div>
+        <div class="num" id="mdNum">מדריך יחיד · מדריך לימוד אינטראקטיבי</div>
+        <h1 id="mdTitle">שכבת התעבורה — TCP, UDP ו-Socket</h1>
+        <p id="mdDesc">תפקיד שכבה 4, TCP ו-Three-Way Handshake, UDP, בחירה בין השניים, Socket ופורטים, ומסע חבילה.</p>
+      </div>
+    </header>
+
+    <div class="md-progress" id="mdProgress" aria-hidden="true"></div>
+    <div class="md-progress-label"><span id="mdProgressText"></span><span class="md-tts-wrap"><span id="mdTtsBox" class="md-tts-wrap"></span><button id="mdRestart" type="button">להתחיל מחדש</button></span></div>
+
+    <div class="md-log" id="mdLog" aria-live="polite"></div>
+
+    <div class="md-cmds" id="mdCmds" aria-label="פקודות"></div>
+    <div class="md-input">
+      <textarea id="mdText" rows="1" placeholder="כתוב כאן תשובה או פקודה… (Enter לשליחה)" aria-label="תשובה או פקודה"></textarea>
+      <button id="mdSend" type="button">שליחה</button>
+    </div>
+    <div class="md-note" id="mdNote">ההתקדמות נשמרת רק בדפדפן שלך · לא נאסף שום מידע</div>
+  </main>
+
+<script>
+window.MADRICH = {
+ "title": "שכבת התעבורה — TCP, UDP ו-Socket",
+ "persona": "נועה, מנהלת מחלקת המשלוחים",
+ "story": "אני מנהלת מחלקת משלוחים בחברת לוגיסטיקה. כל יום אני מחליטה על כל חבילה: דואר רשום עם אישור מסירה, או משלוח מהיר בלי מעקב? אראה לך שבדיוק אותן החלטות קורות כל שנייה באינטרנט.",
+ "desc": "תפקיד שכבה 4, TCP ו-Three-Way Handshake, UDP, בחירה בין השניים, Socket ופורטים, ומסע חבילה.",
+ "num": "מדריך יחיד",
+ "emoji": "📦",
+ "next": null,
+ "finalReview": [
+  "תפקיד שכבה 4",
+  "TCP",
+  "Three-Way Handshake",
+  "UDP",
+  "TCP מול UDP",
+  "Socket, פורטים ו-Multiplexing",
+  "מסע החבילה"
+ ],
+ "stages": [
+  {
+   "title": "תפקיד שכבת התעבורה (שכבה 4)",
+   "open": {
+    "q": "שכבת התעבורה מפרקת הודעות למקטעים ומרכיבה אותן מחדש. למה חשוב כל כך שהם יורכבו <strong>בסדר הנכון<\/strong>?",
+    "model": "כי אחרת המידע <strong>משתבש<\/strong> — דף אינטרנט, קובץ או הודעה היו מגיעים מבולגנים ולא שמישים."
+   },
+   "explain": [
+    "<p>שכבת התעבורה היא <strong>שכבה 4<\/strong> — בין שכבת הרשת (למטה) לשכבות העליונות (למעלה). שלושה תפקידים:<\/p><table><tr><th>תפקיד<\/th><th>מה עושה<\/th><\/tr><tr><td>🔗 <strong>העברה קצה-לקצה<\/strong><\/td><td>מקשרת בין יישומים — למשל הדפדפן שלך ושרת האתר<\/td><\/tr><tr><td>🧩 <strong>פירוק והרכבה<\/strong><\/td><td>מחלקת למקטעים (Segments) ומרכיבה בסדר הנכון<\/td><\/tr><tr><td>🚰 <strong>בקרת זרימה<\/strong><\/td><td>מווסתת קצב לפי יכולת המקבל, כדי לא להציף אותו<\/td><\/tr><\/table>"
+   ],
+   "example": "מחלקת משלוחים לא שולחת מוצר ענק בבת אחת: מפרקת לחבילות ממוספרות, דואגת שכל אחת תגיע, ולא מציפה לקוח שלא יכול לקלוט הכול.",
+   "again": "<p>שכבה 3 דואגת שהמידע יגיע <strong>למחשב<\/strong>. שכבה 4 דואגת שהוא יגיע <strong>לתוכנה הנכונה, שלם ובסדר<\/strong>.<\/p>",
+   "simple": "<p>שכבה 4: <strong>מפרקת, ממספרת, מעבירה לתוכנה הנכונה, ולא מציפה<\/strong>.<\/p>",
+   "check": {
+    "q": "איך נקראת יחידת הנתונים של שכבת התעבורה?",
+    "options": [
+     {
+      "t": "מקטע (Segment)",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "מנה (Packet)",
+      "ok": false,
+      "fb": "Packet היא יחידה של שכבת הרשת."
+     },
+     {
+      "t": "מסגרת (Frame)",
+      "ok": false,
+      "fb": "Frame היא יחידה של שכבת הקו."
+     }
+    ],
+    "hint": "ראינו ב-Encapsulation: Data ← ? ← Packet.",
+    "why": "בשכבה 4 הנתונים מחולקים למקטעים (Segments)."
+   },
+   "summary": [
+    "שכבה 4 — בין הרשת לשכבות העליונות",
+    "העברה קצה-לקצה בין יישומים",
+    "פירוק למקטעים והרכבה בסדר",
+    "בקרת זרימה"
+   ],
+   "homework": [
+    "מנה את שלושת תפקידי שכבת התעבורה.",
+    "מה ההבדל בין מה ששכבה 3 מבטיחה למה ששכבה 4 מבטיחה?"
+   ]
+  },
+  {
+   "title": "TCP — מכוון-חיבור ואמין",
+   "open": {
+    "q": "TCP שולח מחדש כל מה שאבד. מה <strong>המחיר<\/strong> של זה במהירות, לעומת פרוטוקול שלא בודק בכלל?",
+    "model": "TCP <strong>איטי יותר<\/strong> — הוא מחכה לאישורים ושולח מחדש. האמינות עולה בזמן."
+   },
+   "explain": [
+    "<p><strong>TCP<\/strong> (Transmission Control Protocol) — <strong>מכוון-חיבור<\/strong> (Connection-Oriented): יוצר חיבור יציב לפני שמעבירים מידע.<\/p><table><tr><th>מאפיין<\/th><th>מה זה<\/th><\/tr><tr><td>✅ אמינות ובקרת שגיאות<\/td><td>כל המידע מגיע בלי שגיאות<\/td><\/tr><tr><td>🔢 סדר מובטח<\/td><td>מקטעים ממוספרים ומורכבים לפי הסדר<\/td><\/tr><tr><td>🔁 שליחה חוזרת<\/td><td>מה שאבד נשלח שוב אוטומטית<\/td><\/tr><tr><td>🚦 בקרת זרימה וגודש<\/td><td>מווסת קצב לפי המקבל ולפי עומס הרשת<\/td><\/tr><\/table><p><strong>שימושים:<\/strong> דואר (SMTP/IMAP), גלישה (HTTP/HTTPS), קבצים (FTP/SFTP).<\/p>"
+   ],
+   "example": "כמו מייל חשוב עם אישור קריאה: חייב להגיע שלם ובסדר — אי אפשר לקבל חצי חוזה — גם אם זה לוקח קצת יותר זמן.",
+   "again": "<p>שאלה מנחה: <strong>\"האם חסר ביט אחד יהרוס את התוצאה?\"<\/strong> קובץ, אתר, תשלום — כן. לכן TCP.<\/p>",
+   "simple": "<p>TCP = <strong>בטוח ומסודר<\/strong>. בודק, ממספר, שולח שוב. קצת יותר איטי.<\/p>",
+   "check": {
+    "q": "איזה יישום משתמש בדרך כלל ב-TCP?",
+    "options": [
+     {
+      "t": "הורדת קובץ ב-FTP",
+      "ok": true,
+      "fb": "נכון — כל ביט חייב להגיע."
+     },
+     {
+      "t": "שיחת קול ב-VoIP",
+      "ok": false,
+      "fb": "שיחות חיות משתמשות לרוב ב-UDP."
+     },
+     {
+      "t": "משחק רשת בזמן אמת",
+      "ok": false,
+      "fb": "משחקים בזמן אמת משתמשים לרוב ב-UDP."
+     }
+    ],
+    "hint": "איפה אסור לאבד אף חלק?",
+    "why": "העברת קבצים דורשת אמינות מלאה — TCP."
+   },
+   "summary": [
+    "TCP — מכוון-חיבור",
+    "אמינות · סדר מובטח · שליחה חוזרת · בקרת זרימה וגודש",
+    "מייל, גלישה, קבצים",
+    "אמין — אבל איטי יותר"
+   ],
+   "homework": [
+    "מנה ארבעה מאפיינים של TCP.",
+    "למה TCP איטי יותר מפרוטוקול שלא בודק?"
+   ]
+  },
+  {
+   "title": "Three-Way Handshake — הקמת החיבור",
+   "open": {
+    "q": "למה צריך <strong>שלוש<\/strong> הודעות כדי להקים חיבור TCP? מה חסר אם עוצרים אחרי השנייה?",
+    "model": "אחרי השנייה <strong>השרת עדיין לא יודע<\/strong> שהלקוח קיבל את התשובה שלו. ההודעה השלישית מאשרת שגם הכיוון החוזר עובד — רק אז <strong>שני הצדדים<\/strong> בטוחים."
+   },
+   "explain": [
+    "<p>לפני העברת מידע, TCP מבצע <strong>לחיצת יד משולשת<\/strong> — לסנכרון, לאבטחה, ולקביעת <strong>מספרי רצף התחלתיים (ISN)<\/strong>.<\/p><table><tr><th>שלב<\/th><th>מי<\/th><th>תוכן<\/th><\/tr><tr><td>1. <strong>SYN<\/strong><\/td><td>לקוח ← שרת<\/td><td>בקשת חיבור, <code>seq=x<\/code> (אקראי)<\/td><\/tr><tr><td>2. <strong>SYN-ACK<\/strong><\/td><td>שרת ← לקוח<\/td><td><code>seq=y, ack=x+1<\/code> — \"קיבלתי את x\"<\/td><\/tr><tr><td>3. <strong>ACK<\/strong><\/td><td>לקוח ← שרת<\/td><td><code>ack=y+1<\/code> — \"קיבלתי את y\"; החיבור מוקם<\/td><\/tr><\/table>"
+   ],
+   "visual": "<div class=\"md-flow\"><b>SYN<\/b><i>←<\/i><b>SYN-ACK<\/b><i>←<\/i><b>ACK<\/b><i>←<\/i><b>מידע זורם<\/b><\/div>",
+   "example": "לחיצת יד לפני עסקה: \"שלום, אני כאן\" (SYN) — \"שלום, קיבלתי אותך, גם אני כאן\" (SYN-ACK) — \"מעולה, מתחילים\" (ACK).",
+   "again": "<p>שים לב ל-<strong>+1<\/strong>: <code>ack=x+1<\/code> אומר \"קיבלתי עד x, אני מחכה ל-x+1\". כך כל צד מוכיח שבאמת קיבל את מספר הרצף של השני.<\/p>",
+   "simple": "<p><strong>SYN<\/strong> ← <strong>SYN-ACK<\/strong> ← <strong>ACK<\/strong>. אחרי זה — מדברים.<\/p>",
+   "check": {
+    "q": "הלקוח שלח <code>seq=100<\/code>. מה יהיה ה-ack בתשובת ה-SYN-ACK של השרת?",
+    "options": [
+     {
+      "t": "<code>ack=101<\/code>",
+      "ok": true,
+      "fb": "נכון — x+1."
+     },
+     {
+      "t": "<code>ack=100<\/code>",
+      "ok": false,
+      "fb": "ה-ack הוא המספר הבא שמצפים לו: x+1."
+     },
+     {
+      "t": "<code>ack=y<\/code>",
+      "ok": false,
+      "fb": "y הוא מספר הרצף של השרת, לא האישור."
+     }
+    ],
+    "hint": "x + 1.",
+    "why": "השרת מאשר עם ack=x+1, כלומר 101."
+   },
+   "summary": [
+    "Three-Way Handshake — סנכרון, אבטחה, ISN",
+    "SYN (seq=x) ← SYN-ACK (seq=y, ack=x+1) ← ACK (ack=y+1)",
+    "שלוש הודעות = שני הצדדים מאשרים את שני הכיוונים"
+   ],
+   "homework": [
+    "תאר את שלושת שלבי ה-Handshake כולל מספרי הרצף.",
+    "למה שתי הודעות לא מספיקות?"
+   ]
+  },
+  {
+   "title": "UDP — חסר-חיבור ומהיר",
+   "open": {
+    "q": "כותרת UDP היא רק <strong>8 בייטים<\/strong>. למה זה תורם למהירות?",
+    "model": "פחות כותרת = <strong>פחות מידע לשלוח ולעבד<\/strong> בכל חבילה. ובלי חיבור מקדים ובלי אישורים — אין המתנה."
+   },
+   "explain": [
+    "<p><strong>UDP<\/strong> (User Datagram Protocol) — <strong>חסר-חיבור<\/strong> (Connectionless): שולח מייד, בלי סנכרון.<\/p><table><tr><th>שדה בכותרת<\/th><th>גודל<\/th><\/tr><tr><td>פורט מקור<\/td><td>2 בייטים<\/td><\/tr><tr><td>פורט יעד<\/td><td>2 בייטים<\/td><\/tr><tr><td>אורך<\/td><td>2 בייטים<\/td><\/tr><tr><td>סכום ביקורת (Checksum)<\/td><td>2 בייטים<\/td><\/tr><\/table><p>סה\"כ <strong>8 בייטים<\/strong> (בכותרת TCP — 20 לפחות).<\/p><ul><li>⚡ <strong>יתרון:<\/strong> מהירות שיא<\/li><li>⚠️ <strong>חיסרון:<\/strong> אין אמינות — חבילות יכולות להגיע לא בסדר, כפולות, או ללכת לאיבוד, ואין שליחה חוזרת<\/li><\/ul><p><strong>שימושים:<\/strong> משחקים בזמן אמת, סטרימינג, VoIP, DNS.<\/p>"
+   ],
+   "example": "במשחק רשת חי עדיף לאבד פריים אחד מאשר לעצור את כל המשחק ולחכות לו — הפריים הבא כבר בדרך, והישן לא רלוונטי.",
+   "again": "<p>UDP הוא כמו <strong>גלויה<\/strong>: כותבים כתובת ושולחים. בלי מעטפה, בלי חתימה, בלי לדעת אם הגיעה — אבל מהר וזול.<\/p>",
+   "simple": "<p>UDP = <strong>שולח ומקווה<\/strong>. מהיר, פשוט, בלי בדיקות.<\/p>",
+   "check": {
+    "q": "מה קורה ב-UDP כשחבילה הולכת לאיבוד?",
+    "options": [
+     {
+      "t": "כלום — אין מנגנון לשליחה חוזרת",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "היא נשלחת שוב אוטומטית",
+      "ok": false,
+      "fb": "זו התנהגות של TCP."
+     },
+     {
+      "t": "כל החיבור מתנתק",
+      "ok": false,
+      "fb": "ב-UDP אין חיבור שיתנתק."
+     }
+    ],
+    "hint": "Connectionless...",
+    "why": "UDP לא מבטיח הגעה ואין בו שליחה חוזרת."
+   },
+   "summary": [
+    "UDP — חסר-חיבור, בלי סנכרון",
+    "כותרת 8 בייטים: פורט מקור, פורט יעד, אורך, Checksum",
+    "מהיר; בלי אמינות, סדר או שליחה חוזרת",
+    "משחקים, סטרימינג, VoIP, DNS"
+   ],
+   "homework": [
+    "ממה בנויה כותרת UDP?",
+    "למה DNS משתמש בדרך כלל ב-UDP?"
+   ]
+  },
+  {
+   "title": "TCP מול UDP — מתי לבחור מה",
+   "open": {
+    "q": "שיחת וידאו חיה, כמו זום — TCP או UDP? למה?",
+    "model": "<strong>UDP<\/strong> — בשיחה חיה <strong>עיכוב<\/strong> הורס את החוויה יותר מאובדן קטן. עדיף לדלג על רגע מאשר לעצור את השיחה."
+   },
+   "explain": [
+    "<p><strong>עץ ההחלטות:<\/strong><\/p><ol><li><strong>האם אמינות קריטית?<\/strong> אי אפשר לוותר על אף פיסה (תשלומים, קבצים, אתרים) ← <strong>TCP<\/strong>.<\/li><li>אפשר לוותר — <strong>האם זמן אמת הכי חשוב?<\/strong> עיכוב (Latency) יהרוס את החוויה (וידאו חי, משחקים) ← <strong>UDP<\/strong>.<\/li><\/ol>",
+    "<table><tr><th><\/th><th><strong>TCP<\/strong><\/th><th><strong>UDP<\/strong><\/th><\/tr><tr><td>חיבור<\/td><td>מבוסס, מוקם מראש<\/td><td>בלי חיבור מקדים<\/td><\/tr><tr><td>שגיאות<\/td><td>בדיקה מדוקדקת<\/td><td>אין הבטחה<\/td><\/tr><tr><td>סדר<\/td><td>מובטח<\/td><td>לא מובטח<\/td><\/tr><tr><td>מהירות<\/td><td>איטי יותר<\/td><td>פשוט ומהיר<\/td><\/tr><tr><td>שימושים<\/td><td>מייל, קבצים, אתרים<\/td><td>משחקים, סטרימינג חי<\/td><\/tr><\/table>"
+   ],
+   "visual": "<div class=\"md-flow\"><b>אמינות קריטית? כן ← TCP<\/b><i>←<\/i><b>לא ← זמן אמת? כן ← UDP<\/b><\/div>",
+   "example": "מסמך חשוב בדואר רשום עם חתימה (TCP — לוקח זמן, אבל בטוח) מול הודעת וואטסאפ מהירה בשיחה חיה (UDP — אם אחת נעלמת, זה פחות קריטי).",
+   "again": "<p>שאל: <strong>\"מה גרוע יותר — לאבד או לחכות?\"<\/strong> לאבד גרוע יותר ← TCP. לחכות גרוע יותר ← UDP.<\/p>",
+   "simple": "<p>חייב להגיע שלם ← <strong>TCP<\/strong>. חייב להגיע עכשיו ← <strong>UDP<\/strong>.<\/p>",
+   "check": {
+    "q": "אפליקציית בנק שמעבירה תשלום — באיזה פרוטוקול?",
+    "options": [
+     {
+      "t": "TCP",
+      "ok": true,
+      "fb": "נכון — אסור לאבד אף ביט."
+     },
+     {
+      "t": "UDP",
+      "ok": false,
+      "fb": "בתשלום אי אפשר לוותר על מידע."
+     },
+     {
+      "t": "לא משנה",
+      "ok": false,
+      "fb": "משנה מאוד — אמינות קריטית כאן."
+     }
+    ],
+    "hint": "מה גרוע יותר — לאבד או לחכות?",
+    "why": "בתשלום אמינות קריטית — TCP."
+   },
+   "summary": [
+    "אמינות קריטית ← TCP",
+    "זמן אמת חשוב יותר ← UDP",
+    "TCP: בטוח, מסודר, איטי · UDP: מהיר, פשוט, בלי הבטחות"
+   ],
+   "homework": [
+    "סווג ל-TCP או UDP: שליחת מייל, צפייה בשידור חי, הורדת תוכנה, משחק יריות אונליין.",
+    "הסבר את עץ ההחלטות בשתי שאלות."
+   ]
+  },
+  {
+   "title": "Socket, פורטים ו-Multiplexing",
+   "open": {
+    "q": "למחשב יש כתובת IP אחת, והוא מריץ דפדפן, מייל ומשחק בו-זמנית. איך הוא יודע לאיזו תוכנה שייכת כל חבילה?",
+    "model": "לפי <strong>מספר הפורט<\/strong>. כל תוכנה מאזינה בפורט משלה, והשילוב <strong>IP + פורט<\/strong> (Socket) מצביע בדיוק על התוכנה."
+   },
+   "explain": [
+    "<p><strong>Socket<\/strong> = <strong>כתובת IP<\/strong> (המחשב) + <strong>פורט<\/strong> (התוכנה). דוגמאות: <code>192.168.1.100:80<\/code> — שרת אינטרנט; <code>10.0.0.5:27015<\/code> — שרת משחק.<\/p><p><strong>Multiplexing<\/strong> — תקשורת של יישומים רבים משתלבת על <strong>אותו חיבור רשת<\/strong>, ובצד המקבל מופרדת שוב לפי פורטים (Demultiplexing).<\/p>",
+    "<table><tr><th>טווח<\/th><th>סוג<\/th><\/tr><tr><td>0–1023<\/td><td>מוכרים (Well-known) — שירותים סטנדרטיים<\/td><\/tr><tr><td>1024–49151<\/td><td>רשומים (Registered)<\/td><\/tr><tr><td>49152–65535<\/td><td>דינמיים — חיבורים זמניים<\/td><\/tr><\/table><table><tr><th>שירות<\/th><th>פורט<\/th><\/tr><tr><td>HTTP / HTTPS<\/td><td>80 / 443<\/td><\/tr><tr><td>DNS<\/td><td>53<\/td><\/tr><tr><td>SMTP / POP3 / IMAP<\/td><td>25 / 110 / 143<\/td><\/tr><tr><td>SSH / Telnet<\/td><td>22 / 23<\/td><\/tr><tr><td>RDP<\/td><td>3389<\/td><\/tr><tr><td>FTP<\/td><td>20, 21<\/td><\/tr><tr><td>DHCP<\/td><td>67, 68<\/td><\/tr><tr><td>SNMP<\/td><td>161, 162<\/td><\/tr><\/table>"
+   ],
+   "example": "Socket הוא כתובת דירה מלאה: ה-IP הוא הרחוב והבניין, והפורט הוא מספר הדירה. בלי שניהם — אי אפשר להגיע לדלת הנכונה.",
+   "again": "<p>כשאתה גולש, הדפדפן פותח Socket כמו <code>10.0.0.7:51234<\/code> ← <code>93.184.216.34:443<\/code>. הפורט שלך דינמי (51234), של השרת מוכר (443).<\/p>",
+   "simple": "<p>Socket = <strong>IP:פורט<\/strong>. הפורט אומר <strong>לאיזו תוכנה<\/strong>.<\/p>",
+   "check": {
+    "q": "מה מזהה ה-Socket <code>192.168.1.100:443<\/code>?",
+    "options": [
+     {
+      "t": "שירות HTTPS במחשב 192.168.1.100",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "443 מחשבים ברשת 192.168.1.100",
+      "ok": false,
+      "fb": "המספר אחרי הנקודתיים הוא פורט, לא כמות."
+     },
+     {
+      "t": "כתובת MAC של שרת",
+      "ok": false,
+      "fb": "Socket הוא IP + פורט, לא MAC."
+     }
+    ],
+    "hint": "IP : פורט.",
+    "why": "IP 192.168.1.100, פורט 443 — שירות HTTPS."
+   },
+   "summary": [
+    "Socket = IP + פורט — היעד המדויק",
+    "Multiplexing — יישומים רבים על חיבור אחד; הפרדה לפי פורטים",
+    "פורטים: 0–1023 מוכרים · 1024–49151 רשומים · 49152–65535 דינמיים"
+   ],
+   "homework": [
+    "מהו Socket? תן שתי דוגמאות.",
+    "כתוב מהזיכרון את הפורטים של HTTP, HTTPS, DNS, SSH ו-RDP."
+   ]
+  },
+  {
+   "title": "מסע חבילה דרך שכבת התעבורה — סיכום",
+   "open": {
+    "q": "באיזה שלב במסע נקבע סופית אם ההודעה תישלח ב-TCP או ב-UDP?",
+    "model": "בשלב <strong>ההחלטה<\/strong> — מייד אחרי שהאפליקציה מבקשת לשלוח, לפי סוג האפליקציה (אמינות מול זמן אמת)."
+   },
+   "explain": [
+    "<ol><li><strong>מקור (אפליקציה)<\/strong> — המשתמש לוחץ: שולח הודעה, פותח דף.<\/li><li><strong>החלטה (TCP/UDP)<\/strong> — לפי סוג האפליקציה: אמינות או מהירות.<\/li><li><strong>הקצאת פורט<\/strong> — נוצר Socket מלא עם כתובת ה-IP.<\/li><li><strong>Multiplexing<\/strong> — החבילה משתלבת עם חבילות אחרות על אותו חיבור פיזי, בדרך ליעד.<\/li><\/ol><p>שכבת התעבורה היא <strong>החוליה החכמה<\/strong> בין עולם התוכנה לעולם התשתיות — היא מאפשרת לאינטרנט לעבוד <strong>במקביל ובאמינות<\/strong>.<\/p>"
+   ],
+   "visual": "<div class=\"md-flow\"><b>אפליקציה<\/b><i>←<\/i><b>TCP או UDP<\/b><i>←<\/i><b>פורט ← Socket<\/b><i>←<\/i><b>Multiplexing<\/b><i>←<\/i><b>רשת<\/b><\/div>",
+   "example": "מרכז מיון דואר: כל מכתב נבדק — רשום (TCP) או רגיל (UDP), מקבל מדבקה עם רחוב ודירה (Socket), ועולה עם עשרות מכתבים לאותה משאית (Multiplexing). מיליוני פעמים ביום.",
+   "again": "<p>ארבע שאלות לפי הסדר: <strong>מי שולח?<\/strong> · <strong>איך?<\/strong> (TCP/UDP) · <strong>לאן בדיוק?<\/strong> (Socket) · <strong>באיזה ערוץ?<\/strong> (Multiplexing).<\/p>",
+   "simple": "<p>אפליקציה ← <strong>בוחרים פרוטוקול<\/strong> ← <strong>מקבלים פורט<\/strong> ← <strong>יוצאים לרשת<\/strong> עם כולם.<\/p>",
+   "check": {
+    "q": "באיזה שלב נוצר ה-Socket?",
+    "options": [
+     {
+      "t": "בהקצאת הפורט",
+      "ok": true,
+      "fb": "נכון — IP + פורט."
+     },
+     {
+      "t": "באפליקציה",
+      "ok": false,
+      "fb": "האפליקציה רק יוזמת את השליחה."
+     },
+     {
+      "t": "ב-Multiplexing",
+      "ok": false,
+      "fb": "ב-Multiplexing ה-Socket כבר קיים."
+     }
+    ],
+    "hint": "Socket = IP + ...",
+    "why": "ה-Socket נוצר כשמוצמד פורט לכתובת ה-IP."
+   },
+   "summary": [
+    "1. אפליקציה · 2. החלטה TCP/UDP · 3. פורט ← Socket · 4. Multiplexing",
+    "שכבה 4 — הגשר בין התוכנה לתשתית"
+   ],
+   "homework": [
+    "תאר את ארבעת שלבי מסע החבילה בשכבת התעבורה.",
+    "תאר את המסע של הודעת וואטסאפ קולית — איזה פרוטוקול, ולמה?"
+   ]
+  }
+ ],
+ "unitTitle": "שכבת התעבורה",
+ "id": "y11-19-1"
+};
+</script>
+<script src="madrich-engine.js"></script>
+</body>
+</html>

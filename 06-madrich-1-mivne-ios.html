@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מבנה המערכת, גישה, הרשאות ותחביר פקודות — מדריך לימוד · תקשוב יישומי כיתה יא׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="madrich-engine.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="crumbs">
+      <a href="https://moti-lerner-proyektim.github.io/" id="mdCrHub">לומדים בעצמי</a> ‹
+      <a href="./" id="mdCrCourse">תקשוב יישומי</a> ‹
+      <a href="06-marechot-hafala-metag-natav.html" id="mdCrUnit">מערכות הפעלה של מתג / נתב</a> ‹ <span id="mdCrHere">מבנה המערכת, גישה, הרשאות ותחביר פקודות</span>
+    </div>
+    <div class="site-name" id="mdSite">תקשוב יישומי · כיתה יא׳</div>
+  </div>
+
+  <main class="md-shell">
+    <header class="md-hero">
+      <div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M12 15h5"/></svg></div>
+      <div>
+        <div class="num" id="mdNum">מדריך 1 מתוך 3 · מדריך לימוד אינטראקטיבי</div>
+        <h1 id="mdTitle">מבנה המערכת, גישה, הרשאות ותחביר פקודות</h1>
+        <p id="mdDesc">מבנה Cisco IOS, שיטות גישה ותוכנות טרמינל, רמות הרשאה, ומבנה הפקודה ועזרה.</p>
+      </div>
+    </header>
+
+    <div class="md-progress" id="mdProgress" aria-hidden="true"></div>
+    <div class="md-progress-label"><span id="mdProgressText"></span><span class="md-tts-wrap"><span id="mdTtsBox" class="md-tts-wrap"></span><button id="mdRestart" type="button">להתחיל מחדש</button></span></div>
+
+    <div class="md-log" id="mdLog" aria-live="polite"></div>
+
+    <div class="md-cmds" id="mdCmds" aria-label="פקודות"></div>
+    <div class="md-input">
+      <textarea id="mdText" rows="1" placeholder="כתוב כאן תשובה או פקודה… (Enter לשליחה)" aria-label="תשובה או פקודה"></textarea>
+      <button id="mdSend" type="button">שליחה</button>
+    </div>
+    <div class="md-note" id="mdNote">ההתקדמות נשמרת רק בדפדפן שלך · לא נאסף שום מידע</div>
+  </main>
+
+<script>
+window.MADRICH = {
+ "title": "מבנה המערכת, גישה, הרשאות ותחביר פקודות",
+ "persona": "מאיה, מהנדסת תקשורת",
+ "story": "תכננו יחד את הרשת של \"לינקאפ\" והבנו כתובות ופרוטוקולים. עכשיו מתחילים באמת: מתחברים למתגים ולנתבים של סיסקו ומגדירים אותם משורת הפקודה — בדיוק כמו טכנאי רשת ביום הראשון בעבודה.",
+ "desc": "מבנה Cisco IOS, שיטות גישה ותוכנות טרמינל, רמות הרשאה, ומבנה הפקודה ועזרה.",
+ "num": "מדריך 1 מתוך 3",
+ "emoji": "👩‍💻",
+ "next": {
+  "href": "06-madrich-2-zehut-avtacha.html",
+  "title": "מדריך 2: קיצורים, זהות, אבטחה וזיכרון",
+  "teaser": "קיצורי מקלדת, שם וסיסמאות למתג, ו-RAM מול NVRAM."
+ },
+ "stages": [
+  {
+   "title": "מבנה מערכת ההפעלה Cisco IOS",
+   "open": {
+    "q": "כשאתה פותח אפליקציה בטלפון — אתה \"מדבר\" <strong>ישירות<\/strong> עם השבבים בתוך הטלפון, או שיש משהו <strong>שמתווך<\/strong> ביניכם?",
+    "model": "יש <strong>מתווך<\/strong> — מערכת ההפעלה. אתה עובד מול ממשק, והוא מעביר את הבקשות לליבה, שמדברת עם החומרה."
+   },
+   "explain": [
+    "<p>כל מתג ונתב של סיסקו מנוהל על ידי <strong>Cisco IOS<\/strong>, שבנויה מ<strong>שכבות<\/strong> — כמו טבעות זו בתוך זו:<\/p><table><tr><th>שכבה<\/th><th>מה היא<\/th><\/tr><tr><td>🔩 <strong>חומרה (Hardware)<\/strong><\/td><td>השבבים, היציאות (Ports) והזיכרון הפיזי<\/td><\/tr><tr><td>❤️ <strong>ליבה (Kernel)<\/strong><\/td><td>הלב של המערכת — מדברת ישירות עם החומרה ומנהלת משאבים<\/td><\/tr><tr><td>🐚 <strong>מעטפת (Shell)<\/strong><\/td><td>ממשק המשתמש; בסיסקו בעיקר <strong>CLI<\/strong> (שורת פקודה), לא GUI<\/td><\/tr><tr><td>🧑 <strong>משתמש<\/strong><\/td><td>השכבה החיצונית — האדם שמקליד פקודות<\/td><\/tr><\/table>"
+   ],
+   "visual": "<div class=\"md-flow\"><b>משתמש<\/b><i>←<\/i><b>מעטפת (CLI)<\/b><i>←<\/i><b>ליבה<\/b><i>←<\/i><b>חומרה<\/b><\/div>",
+   "example": "כמו מכונית: הנהג (משתמש) לא נוגע במנוע (חומרה) — הוא מפעיל דרך ההגה והדוושות (מעטפת), שמעבירים את הפקודה למחשב הרכב (ליבה), שמפעיל את החלקים.",
+   "again": "<p>חשוב על <strong>מסעדה<\/strong>: אתה (משתמש) מדבר עם המלצר (מעטפת), המלצר מעביר לשף (ליבה), והשף עובד עם התנורים והמחבתות (חומרה). אף פעם לא נכנסים בעצמך למטבח.<\/p>",
+   "simple": "<p>IOS = מערכת ההפעלה של סיסקו. אתה מקליד ב-<strong>CLI<\/strong> ← ה<strong>ליבה<\/strong> מבצעת ← ה<strong>חומרה<\/strong> עובדת.<\/p>",
+   "check": {
+    "q": "איזו שכבה ב-IOS מתקשרת <strong>ישירות<\/strong> עם החומרה?",
+    "options": [
+     {
+      "t": "הליבה (Kernel)",
+      "ok": true,
+      "fb": "נכון — היא הלב שמנהל את משאבי החומרה."
+     },
+     {
+      "t": "המעטפת (Shell)",
+      "ok": false,
+      "fb": "המעטפת היא ממשק המשתמש; היא מעבירה בקשות לליבה."
+     },
+     {
+      "t": "המשתמש",
+      "ok": false,
+      "fb": "המשתמש הוא השכבה החיצונית ביותר."
+     }
+    ],
+    "hint": "זו \"הלב\" של המערכת.",
+    "why": "הליבה מתקשרת ישירות עם החומרה ומנהלת את משאביה."
+   },
+   "summary": [
+    "Cisco IOS בנויה בשכבות: חומרה · ליבה · מעטפת · משתמש",
+    "ליבה — מדברת עם החומרה; מעטפת — ממשק (בעיקר CLI)"
+   ],
+   "homework": [
+    "תאר את ארבע השכבות של Cisco IOS ומה תפקיד כל אחת.",
+    "למה ציוד סיסקו מנוהל בעיקר ב-CLI ולא ב-GUI?"
+   ]
+  },
+  {
+   "title": "שיטות גישה לניהול ההתקן ותוכנות טרמינל",
+   "open": {
+    "q": "התקנת מתג חדש לגמרי בארון תקשורת. עוד <strong>אין לו כתובת IP<\/strong> והוא לא מוגדר. איך תוכל בכלל להתחבר אליו כדי להתחיל להגדיר אותו?",
+    "model": "דרך <strong>כבל קונסול<\/strong> — חיבור פיזי ישיר מהמחשב למתג. הוא לא צריך רשת או כתובת IP, ולכן משמש להגדרה ראשונית."
+   },
+   "explain": [
+    "<p>ארבע שיטות גישה, שנבדלות ב<strong>מקומי/מרוחק<\/strong> וב<strong>מאובטח/לא מאובטח<\/strong>:<\/p><table><tr><th>שיטה<\/th><th>סוג<\/th><th>הערה<\/th><\/tr><tr><td>🔌 <strong>Console<\/strong><\/td><td>מקומי + מאובטח (Out-of-band)<\/td><td>חובה להגדרה ראשונית; עובד גם בלי רשת<\/td><\/tr><tr><td>🔐 <strong>SSH<\/strong><\/td><td>מרוחק + מאובטח (מוצפן)<\/td><td>השיטה המקובלת היום לניהול מרחוק<\/td><\/tr><tr><td>☎️ <strong>AUX<\/strong><\/td><td>מקומי/מרוחק דרך מודם<\/td><td>נדיר היום<\/td><\/tr><tr><td>⚠️ <strong>Telnet<\/strong><\/td><td>מרוחק, <strong>לא מאובטח<\/strong><\/td><td>סיסמאות עוברות בטקסט גלוי; רק במעבדות<\/td><\/tr><\/table>",
+    "<p><strong>תוכנות טרמינל<\/strong> ליצירת החיבורים:<\/p><ul><li><strong>SecureCRT<\/strong> — מסחרית ומתקדמת, לחיבורים מרובים בארגונים<\/li><li><strong>Tera Term<\/strong> — קוד פתוח, תומכת בסקריפטים (מאקרו)<\/li><li><strong>PuTTY<\/strong> — חינמית ונפוצה מאוד ל-SSH, Console ו-Telnet<\/li><\/ul>"
+   ],
+   "example": "Console הוא כמו לדבר פנים אל פנים עם מישהו לידך — עובד גם אם \"הטלפונים\" (הרשת) מקולקלים. SSH הוא כמו שיחת וידאו מוצפנת מרחוק — נוח ומאובטח, אבל רק אם הרשת כבר עובדת.",
+   "again": "<p>שתי שאלות: <strong>\"אני ליד ההתקן?\"<\/strong> — אם כן, Console. אם לא — צריך גישה מרוחקת. <strong>\"זה מוצפן?\"<\/strong> — SSH כן, Telnet לא. לכן: התחלה — Console; עבודה שוטפת — SSH; Telnet — רק במעבדה.<\/p>",
+   "simple": "<p><strong>Console<\/strong> = כבל ישיר, לפני שיש רשת. <strong>SSH<\/strong> = מרחוק ובטוח. <strong>Telnet<\/strong> = מרחוק ולא בטוח. <strong>PuTTY<\/strong> = תוכנה להתחבר.<\/p>",
+   "check": {
+    "q": "למה לא משתמשים ב-Telnet ברשתות אמיתיות?",
+    "options": [
+     {
+      "t": "כי כל המידע, כולל סיסמאות, עובר בטקסט גלוי ואפשר ליירט אותו",
+      "ok": true,
+      "fb": "נכון — לכן משתמשים ב-SSH המוצפן."
+     },
+     {
+      "t": "כי הוא עובד רק עם כבל קונסול",
+      "ok": false,
+      "fb": "Telnet הוא חיבור מרוחק דרך הרשת, לא דרך קונסול."
+     },
+     {
+      "t": "כי הוא איטי מדי",
+      "ok": false,
+      "fb": "הבעיה היא אבטחה, לא מהירות."
+     }
+    ],
+    "hint": "מה ההבדל בין Telnet ל-SSH?",
+    "why": "Telnet אינו מוצפן — סיסמאות ומידע עוברים בטקסט גלוי."
+   },
+   "summary": [
+    "<strong>Console<\/strong> — מקומי, מאובטח, להגדרה ראשונית, בלי רשת",
+    "<strong>SSH<\/strong> — מרוחק ומוצפן; הסטנדרט",
+    "<strong>AUX<\/strong> — דרך מודם, נדיר",
+    "<strong>Telnet<\/strong> — מרוחק ולא מאובטח; רק במעבדות",
+    "תוכנות: SecureCRT, Tera Term, PuTTY"
+   ],
+   "homework": [
+    "השווה בין ארבע שיטות הגישה (מקומי/מרוחק, מאובטח/לא).",
+    "למה מתחברים למתג חדש דרך Console ולא דרך SSH?"
+   ]
+  },
+  {
+   "title": "רמות הרשאה ומעבר בין מצבים",
+   "open": {
+    "q": "אתה מנהל IT. אתה רוצה שרק מורשים יוכלו לשנות הגדרות קריטיות, אבל שכל טכנאי יוכל לפחות לבדוק סטטוס. היית נותן לכולם <strong>אותה רמת גישה<\/strong>?",
+    "model": "<strong>לא<\/strong>. נותנים <strong>רמות הרשאה שונות<\/strong>: רמה בסיסית לצפייה ובדיקה, ורמות גבוהות יותר (מוגנות בסיסמה) לשינויים."
+   },
+   "explain": [
+    "<p>ב-IOS יש שלוש רמות עיקריות — כמו קומות בבניין:<\/p><table><tr><th>קומה<\/th><th>מצב<\/th><th>השורה נראית כך<\/th><th>מה מותר<\/th><\/tr><tr><td>קרקע<\/td><td><strong>User EXEC<\/strong><\/td><td><code>Switch&gt;<\/code><\/td><td>צפייה ובדיקות בסיסיות בלבד<\/td><\/tr><tr><td>1<\/td><td><strong>Privileged EXEC<\/strong><\/td><td><code>Switch#<\/code><\/td><td>כל הפקודות, ניהול ושמירת תצורה<\/td><\/tr><tr><td>2<\/td><td><strong>Global Configuration<\/strong><\/td><td><code>Switch(config)#<\/code><\/td><td>שינויים בכל ההתקן, כניסה לתתי-מצבים<\/td><\/tr><\/table>",
+    "<p><strong>פקודות מעבר:<\/strong><\/p><table><tr><th>פקודה<\/th><th>מה עושה<\/th><\/tr><tr><td><code>enable<\/code><\/td><td>עלייה ל-Privileged EXEC<\/td><\/tr><tr><td><code>configure terminal<\/code><\/td><td>עלייה ל-Global Configuration<\/td><\/tr><tr><td><code>exit<\/code><\/td><td>ירידה מצב אחד אחורה<\/td><\/tr><tr><td><code>end<\/code><\/td><td>קפיצה ישירה ל-Privileged EXEC מכל תת-מצב<\/td><\/tr><tr><td><code>disable<\/code><\/td><td>חזרה ל-User EXEC<\/td><\/tr><\/table><pre><code>Switch&gt; enable\nSwitch# configure terminal\nSwitch(config)# exit\nSwitch#<\/code><\/pre>"
+   ],
+   "example": "כמו בניין משרדים: כל אחד נכנס ללובי (User EXEC), רק עובדים עולים לקומות המשרדים (Privileged EXEC), ורק מנהלים נכנסים לחדר השרתים ומשנים שם דברים (Global Configuration).",
+   "again": "<p>הסימן בסוף השורה מגלה איפה אתה: <strong>&gt;<\/strong> — הכי נמוך, רק להסתכל. <strong>#<\/strong> — מורשה. <strong>(config)#<\/strong> — אפשר לשנות הגדרות. עולים עם <code>enable<\/code> ו-<code>configure terminal<\/code>, יורדים עם <code>exit<\/code>, <code>end<\/code> ו-<code>disable<\/code>.<\/p>",
+   "simple": "<p><code>&gt;<\/code> = רק לראות. <code>#<\/code> = מנהל. <code>(config)#<\/code> = משנים הגדרות. <code>enable<\/code> = לעלות, <code>exit<\/code> = לרדת.<\/p>",
+   "check": {
+    "q": "השורה מציגה <code>Switch(config)#<\/code>. איזו פקודה תחזיר אותך ישר ל-Privileged EXEC?",
+    "options": [
+     {
+      "t": "<code>end<\/code>",
+      "ok": true,
+      "fb": "נכון — end קופצת ישירות ל-Privileged EXEC (וגם exit ממצב זה תחזיר צעד אחד אליו)."
+     },
+     {
+      "t": "<code>enable<\/code>",
+      "ok": false,
+      "fb": "enable מעלה מ-User EXEC ל-Privileged EXEC — לא מוריד."
+     },
+     {
+      "t": "<code>configure terminal<\/code>",
+      "ok": false,
+      "fb": "היא מכניסה ל-Global Configuration — אתה כבר שם."
+     },
+     {
+      "t": "<code>disable<\/code>",
+      "ok": false,
+      "fb": "disable מחזירה ל-User EXEC, נמוך יותר ממה שרצית."
+     }
+    ],
+    "hint": "איזו פקודה \"מסיימת\" את מצב ההגדרה?",
+    "why": "end מחזירה ישירות ל-Privileged EXEC מכל מצב הגדרה."
+   },
+   "summary": [
+    "User EXEC <code>&gt;<\/code> — צפייה בלבד",
+    "Privileged EXEC <code>#<\/code> — כל הפקודות, שמירה",
+    "Global Configuration <code>(config)#<\/code> — שינויים בהתקן",
+    "מעבר: <code>enable<\/code>, <code>configure terminal<\/code>, <code>exit<\/code>, <code>end<\/code>, <code>disable<\/code>"
+   ],
+   "homework": [
+    "תאר את שלוש רמות ההרשאה ב-IOS ואיך נראית שורת הפקודה בכל אחת.",
+    "כתוב את רצף הפקודות מ-<code>Switch&gt;<\/code> ועד <code>Switch(config)#<\/code>, ובחזרה."
+   ]
+  },
+  {
+   "title": "מבנה הפקודה, עזרה בהקלדה ובודק התחביר",
+   "open": {
+    "q": "הקלדת פקודה וקיבלת שגיאה. מה יעזור לך לתקן מהר יותר: הודעה כללית ש\"יש בעיה\", או משהו <strong>שמצביע בדיוק<\/strong> על המקום שבו הטעות התחילה?",
+    "model": "משהו שמצביע <strong>בדיוק על המקום<\/strong> — ו-IOS עושה את זה: היא מסמנת ב-<code>^<\/code> את הנקודה שבה ההקלדה הפסיקה להיות חוקית."
+   },
+   "explain": [
+    "<p><strong>מבנה הפקודה:<\/strong> שורת פקודה (Prompt) ← <strong>פקודה<\/strong> ← רווח ← <strong>ארגומנט<\/strong> (ערך או מילת מפתח) ← Enter.<\/p><pre><code>Switch&gt; ping 192.168.10.5<\/code><\/pre><p>כאן <code>ping<\/code> היא הפקודה ו-<code>192.168.10.5<\/code> הוא הארגומנט. תמיד מפרידים ברווח ומסיימים ב-Enter.<\/p>",
+    "<p><strong>עזרה בהקלדה (Context-Sensitive Help):<\/strong><\/p><table><tr><th>מקלידים<\/th><th>מקבלים<\/th><\/tr><tr><td><code>?<\/code><\/td><td>כל הפקודות הזמינות במצב הנוכחי<\/td><\/tr><tr><td><code>in?<\/code> (בלי רווח)<\/td><td>הפקודות שמתחילות ב-in<\/td><\/tr><tr><td><code>interface ?<\/code> (עם רווח)<\/td><td>האפשרויות לארגומנט הבא<\/td><\/tr><\/table><p><strong>בודק התחביר:<\/strong> בפקודה שגויה מופיעה הודעה, ו-<code>^<\/code> מסמן בדיוק איפה הטעות:<\/p><pre><code>Switch# confgure terminal\n          ^\n% Invalid input detected at '^' marker.<\/code><\/pre>"
+   ],
+   "example": "סימן השאלה בסיסקו הוא כמו לשאול \"מה אני יכול לעשות כאן?\" — תפריט שמציג רק את האפשרויות הרלוונטיות למצב הנוכחי.",
+   "again": "<p>שלושה כלים: <strong>מבנה<\/strong> — פקודה, רווח, ארגומנט. <strong>?<\/strong> — \"מה אפשר עכשיו?\". <strong>^<\/strong> — \"כאן טעית\". עם שלושתם כמעט אי אפשר להיתקע.<\/p>",
+   "simple": "<p>פקודה + רווח + ערך + Enter. לא יודע מה להקליד? <code>?<\/code>. טעית? ה-<code>^<\/code> מראה איפה.<\/p>",
+   "check": {
+    "q": "מה תקבל אם תקליד <code>show ?<\/code> (עם רווח לפני סימן השאלה)?",
+    "options": [
+     {
+      "t": "את האפשרויות לארגומנט הבא של הפקודה show",
+      "ok": true,
+      "fb": "נכון — רווח ואז ? מציג מה אפשר לכתוב אחרי הפקודה."
+     },
+     {
+      "t": "את כל הפקודות שמתחילות באותיות show",
+      "ok": false,
+      "fb": "זה מה שמתקבל בלי רווח — <code>show?<\/code>."
+     },
+     {
+      "t": "הודעת שגיאה",
+      "ok": false,
+      "fb": "? היא בקשת עזרה, לא שגיאה."
+     }
+    ],
+    "hint": "יש הבדל בין ? צמוד לבין רווח ואז ?.",
+    "why": "פקודה, רווח ואז ? מציגים את האפשרויות לארגומנט הבא."
+   },
+   "summary": [
+    "מבנה: פקודה ← רווח ← ארגומנט ← Enter (למשל <code>ping 192.168.10.5<\/code>)",
+    "<code>?<\/code> — כל הפקודות; <code>in?<\/code> — השלמה; <code>interface ?<\/code> — הארגומנט הבא",
+    "בודק תחביר: <code>^<\/code> מסמן איפה הטעות"
+   ],
+   "homework": [
+    "פרק את הפקודה <code>ping 192.168.10.5<\/code> לחלקיה והסבר כל חלק.",
+    "מה ההבדל בין <code>in?<\/code> לבין <code>interface ?<\/code>?"
+   ]
+  }
+ ],
+ "unitTitle": "מערכות הפעלה של מתג / נתב",
+ "id": "y11-06-1"
+};
+</script>
+<script src="madrich-engine.js"></script>
+</body>
+</html>

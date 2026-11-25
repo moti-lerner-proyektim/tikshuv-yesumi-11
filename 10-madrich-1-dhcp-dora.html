@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פרוטוקול DHCP — יסודות ותהליך DORA — מדריך לימוד · תקשוב יישומי כיתה יא׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="madrich-engine.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="crumbs">
+      <a href="https://moti-lerner-proyektim.github.io/" id="mdCrHub">לומדים בעצמי</a> ‹
+      <a href="./" id="mdCrCourse">תקשוב יישומי</a> ‹
+      <a href="10-arp-dhcp.html" id="mdCrUnit">פרוטוקול ARP ופרוטוקול DHCP</a> ‹ <span id="mdCrHere">פרוטוקול DHCP — יסודות ותהליך DORA</span>
+    </div>
+    <div class="site-name" id="mdSite">תקשוב יישומי · כיתה יא׳</div>
+  </div>
+
+  <main class="md-shell">
+    <header class="md-hero">
+      <div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5L6.5 17M12 11.5l5.5 5.5"/></svg></div>
+      <div>
+        <div class="num" id="mdNum">מדריך 1 מתוך 3 · מדריך לימוד אינטראקטיבי</div>
+        <h1 id="mdTitle">פרוטוקול DHCP — יסודות ותהליך DORA</h1>
+        <p id="mdDesc">DHCP ו-ARP כעמודי התווך של ה-LAN, הבעיה ש-DHCP פותר, תהליך DORA, חבילת התצורה, ושרידות.</p>
+      </div>
+    </header>
+
+    <div class="md-progress" id="mdProgress" aria-hidden="true"></div>
+    <div class="md-progress-label"><span id="mdProgressText"></span><span class="md-tts-wrap"><span id="mdTtsBox" class="md-tts-wrap"></span><button id="mdRestart" type="button">להתחיל מחדש</button></span></div>
+
+    <div class="md-log" id="mdLog" aria-live="polite"></div>
+
+    <div class="md-cmds" id="mdCmds" aria-label="פקודות"></div>
+    <div class="md-input">
+      <textarea id="mdText" rows="1" placeholder="כתוב כאן תשובה או פקודה… (Enter לשליחה)" aria-label="תשובה או פקודה"></textarea>
+      <button id="mdSend" type="button">שליחה</button>
+    </div>
+    <div class="md-note" id="mdNote">ההתקדמות נשמרת רק בדפדפן שלך · לא נאסף שום מידע</div>
+  </main>
+
+<script>
+window.MADRICH = {
+ "title": "פרוטוקול DHCP — יסודות ותהליך DORA",
+ "persona": "מאיה, מהנדסת רשת ב\"לינקאפ\"",
+ "story": "עובד חדש מגיע למשרד ב\"לינקאפ\" ומחבר מחשב נייד לרשת. תוך שניות המחשב \"מקבל זהות\" — בלי שאף אחד הגדיר לו כלום. בוא נראה איך זה קורה.",
+ "desc": "DHCP ו-ARP כעמודי התווך של ה-LAN, הבעיה ש-DHCP פותר, תהליך DORA, חבילת התצורה, ושרידות.",
+ "num": "מדריך 1 מתוך 3",
+ "emoji": "🎫",
+ "next": {
+  "href": "10-madrich-2-arp.html",
+  "title": "מדריך 2: פרוטוקול ARP — מנגנון הפעולה",
+  "teaser": "איך IP מתורגם ל-MAC: בקשה ותשובה, ARP Cache ומבנה חבילת ARP."
+ },
+ "stages": [
+  {
+   "title": "שני עמודי התווך של רשת מקומית",
+   "open": {
+    "q": "אם למכשיר יש רק כתובת IP, <strong>בלי שום דרך לתרגם אותה לכתובת פיזית<\/strong> — האם הוא יוכל לשלוח ולקבל מידע ברשת?",
+    "model": "<strong>לא<\/strong>. ברשת המקומית המסגרות נשלחות לפי <strong>כתובת MAC<\/strong>. בלי לדעת את ה-MAC של היעד, המחשב לא יודע לאיזה כרטיס רשת לשלוח."
+   },
+   "explain": [
+    "<p>רשת מקומית (LAN) עומדת על <strong>שני פרוטוקולים משלימים<\/strong>:<\/p><table><tr><th>פרוטוקול<\/th><th>תפקיד<\/th><th>שכבה<\/th><\/tr><tr><td><strong>DHCP<\/strong><\/td><td>נותן למכשיר <strong>זהות<\/strong> (כתובת IP) והגדרות<\/td><td>יישום (מעל UDP)<\/td><\/tr><tr><td><strong>ARP<\/strong><\/td><td><strong>מתרגם<\/strong> IP לכתובת MAC פיזית<\/td><td>קשר (2), מגשר לשכבה 3<\/td><\/tr><\/table><p>יחד הם מובילים את המכשיר <strong>מזהות לוגית — לשליחה פיזית<\/strong>.<\/p>"
+   ],
+   "visual": "<div class=\"md-flow\"><b>DHCP: מקבלים IP<\/b><i>←<\/i><b>ARP: IP ← MAC<\/b><i>←<\/i><b>שולחים מסגרת<\/b><\/div>",
+   "example": "DHCP הוא כמו תעודת הזהות שמקבלים — המספר הרשמי שמזהה אותך. ARP הוא מי שמברר איפה בדיוק אתה נמצא פיזית, כדי שאפשר יהיה להגיע אליך.",
+   "again": "<p>DHCP עונה על <strong>\"מי אני?\"<\/strong> (איזו כתובת יש לי). ARP עונה על <strong>\"איפה השכן?\"<\/strong> (איזה כרטיס רשת שייך לכתובת שאני רוצה).<\/p>",
+   "simple": "<p><strong>DHCP<\/strong> = נותן כתובת IP. <strong>ARP<\/strong> = מוצא את ה-MAC של כתובת IP.<\/p>",
+   "check": {
+    "q": "איזה פרוטוקול מתרגם כתובת IP לכתובת MAC?",
+    "options": [
+     {
+      "t": "ARP",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "DHCP",
+      "ok": false,
+      "fb": "DHCP מקצה כתובות IP — לא מתרגם אותן ל-MAC."
+     },
+     {
+      "t": "DNS",
+      "ok": false,
+      "fb": "DNS מתרגם שמות לכתובות IP."
+     }
+    ],
+    "hint": "Address Resolution Protocol.",
+    "why": "ARP מתרגם IP ל-MAC; DHCP מקצה IP."
+   },
+   "summary": [
+    "DHCP — מקצה זהות (IP) והגדרות",
+    "ARP — מתרגם IP ל-MAC",
+    "יחד: מזהות לוגית לשליחה פיזית"
+   ],
+   "homework": [
+    "מה תפקיד DHCP ומה תפקיד ARP?",
+    "למה כתובת IP לבדה לא מספיקה כדי לשלוח מידע ברשת המקומית?"
+   ]
+  },
+  {
+   "title": "הבעיה ש-DHCP פותר — מעבר לניהול אוטומטי",
+   "open": {
+    "q": "מה עלול לקרות אם שני מחשבים במשרד מקבלים בטעות <strong>בדיוק את אותה כתובת IP<\/strong>?",
+    "model": "<strong>התנגשות IP<\/strong> — הרשת לא יודעת למי לשלוח, ושני המחשבים (או אחד מהם) מאבדים תקשורת."
+   },
+   "explain": [
+    "<p><strong>לפני DHCP<\/strong> — כל מכשיר הוגדר ידנית (IP, מסכה, שער). זה גזל זמן רב וגרם ל<strong>התנגשויות IP<\/strong>.<\/p><p><strong>DHCP<\/strong> (Dynamic Host Configuration Protocol) — <strong>ניהול ריכוזי<\/strong> ו<strong>הקצאה אוטומטית<\/strong> של כתובות:<\/p><ul><li>מודל <strong>לקוח-שרת<\/strong><\/li><li>מבוסס <strong>UDP<\/strong>, פורטים <code>67<\/code> (שרת) ו-<code>68<\/code> (לקוח)<\/li><li>יורש של הפרוטוקול <strong>BOOTP<\/strong> (מוגדר ב-RFC 2131)<\/li><\/ul>"
+   ],
+   "example": "כמו מלון שמחלק חדרים: פעם פקיד קבלה בדק ידנית איזה חדר פנוי — איטי, ולפעמים אותו חדר ניתן לשני אורחים. DHCP הוא מערכת ממוחשבת שמקצה חדרים אוטומטית ולא נותנת אותו חדר פעמיים.",
+   "again": "<p>שלושה יתרונות במילה אחת כל אחד: <strong>מהיר<\/strong> (שניות במקום דקות), <strong>בטוח<\/strong> (בלי כפילויות), <strong>מרוכז<\/strong> (משנים הגדרה במקום אחד ולא בכל מחשב).<\/p>",
+   "simple": "<p>DHCP = <strong>שרת שמחלק כתובות אוטומטית<\/strong>, בלי טעויות ובלי עבודה ידנית.<\/p>",
+   "check": {
+    "q": "על אילו פורטים פועל DHCP?",
+    "options": [
+     {
+      "t": "<code>67<\/code> ו-<code>68<\/code> (UDP)",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "<code>53<\/code> (UDP)",
+      "ok": false,
+      "fb": "53 הוא DNS."
+     },
+     {
+      "t": "<code>80<\/code> (TCP)",
+      "ok": false,
+      "fb": "80 הוא HTTP."
+     },
+     {
+      "t": "<code>25<\/code> (TCP)",
+      "ok": false,
+      "fb": "25 הוא SMTP."
+     }
+    ],
+    "hint": "ראינו אותם בטבלת הפורטים ביחידה 07.",
+    "why": "DHCP פועל מעל UDP: שרת בפורט 67, לקוח בפורט 68."
+   },
+   "summary": [
+    "לפני DHCP: הגדרה ידנית, איטית, התנגשויות IP",
+    "DHCP: הקצאה אוטומטית וניהול ריכוזי",
+    "לקוח-שרת · UDP 67/68 · יורש BOOTP (RFC 2131)"
+   ],
+   "homework": [
+    "אילו בעיות היו בהגדרה ידנית של כתובות IP?",
+    "מהי התנגשות IP, ואיך DHCP מונע אותה?"
+   ]
+  },
+  {
+   "title": "תהליך DORA — הריקוד שמאחורי הכתובת",
+   "open": {
+    "q": "מחשב חדש מתחבר לרשת ועוד אין לו כתובת. <strong>מי לדעתך \"מדבר\" ראשון<\/strong> — המחשב או שרת ה-DHCP? למה?",
+    "model": "<strong>המחשב (הלקוח)<\/strong> — הוא זה שצריך כתובת, והשרת לא יודע שהוא קיים עד שהוא מכריז על עצמו. ההודעה הראשונה היא <strong>Discover<\/strong>."
+   },
+   "explain": [
+    "<table><tr><th>שלב<\/th><th>מי<\/th><th>מה נאמר<\/th><\/tr><tr><td><strong>D<\/strong>iscover — חיפוש<\/td><td>לקוח ← כולם (Broadcast <code>255.255.255.255<\/code>)<\/td><td>\"יש כאן שרת DHCP שיכול לתת לי כתובת?\"<\/td><\/tr><tr><td><strong>O<\/strong>ffer — הצעה<\/td><td>שרת ← לקוח<\/td><td>\"יש לי כתובת פנויה בשבילך, ל<strong>זמן השכרה<\/strong> (Lease Time) כזה\"<\/td><\/tr><tr><td><strong>R<\/strong>equest — בקשה<\/td><td>לקוח ← שרת<\/td><td>\"אני מקבל את ההצעה ומבקש להשתמש בכתובת\"<\/td><\/tr><tr><td><strong>A<\/strong>cknowledge — אישור<\/td><td>שרת ← לקוח<\/td><td>\"מאושר!\" — רושם את ההקצאה; המכשיר מצטרף לרשת<\/td><\/tr><\/table>"
+   ],
+   "visual": "<div class=\"md-flow\"><b>Discover<\/b><i>←<\/i><b>Offer<\/b><i>←<\/i><b>Request<\/b><i>←<\/i><b>Acknowledge<\/b><\/div>",
+   "example": "כמו לבקש שולחן במסעדה עמוסה: \"יש שולחן פנוי?\" (Discover) — \"כן, שולחן 5, לשעה הקרובה\" (Offer) — \"מעולה, אני לוקח\" (Request) — המלצרית רושמת ומאשרת (Acknowledge).",
+   "again": "<p>שים לב ל<strong>תורות<\/strong>: לקוח, שרת, לקוח, שרת. והשאלה הראשונה נשלחת ב-<strong>Broadcast<\/strong> — כי ללקוח עוד אין כתובת והוא לא יודע מי השרת.<\/p>",
+   "simple": "<p><strong>D-O-R-A<\/strong>: מחפש ← מציעים לו ← מבקש ← מאשרים לו.<\/p>",
+   "check": {
+    "q": "באיזה שלב של DORA השרת <strong>מאשר סופית<\/strong> את ההקצאה?",
+    "options": [
+     {
+      "t": "Acknowledge",
+      "ok": true,
+      "fb": "נכון — האישור הסופי."
+     },
+     {
+      "t": "Offer",
+      "ok": false,
+      "fb": "ב-Offer השרת רק מציע כתובת."
+     },
+     {
+      "t": "Request",
+      "ok": false,
+      "fb": "ב-Request הלקוח מבקש את הכתובת שהוצעה."
+     },
+     {
+      "t": "Discover",
+      "ok": false,
+      "fb": "ב-Discover הלקוח מחפש שרת."
+     }
+    ],
+    "hint": "האות האחרונה.",
+    "why": "ב-Acknowledge השרת מאשר ורושם את ההקצאה."
+   },
+   "summary": [
+    "D — Discover: לקוח מחפש שרת ב-Broadcast",
+    "O — Offer: שרת מציע כתובת + זמן השכרה",
+    "R — Request: לקוח מבקש את הכתובת",
+    "A — Acknowledge: שרת מאשר ורושם"
+   ],
+   "homework": [
+    "תאר את ארבעת שלבי DORA — מי שולח ומה.",
+    "למה ה-Discover נשלח ב-Broadcast?"
+   ]
+  },
+  {
+   "title": "חבילת ההצטרפות המלאה לרשת",
+   "open": {
+    "q": "מחשב קיבל כתובת IP, אבל <strong>בלי Default Gateway<\/strong>. האם הוא יוכל לגלוש לאתרים באינטרנט?",
+    "model": "<strong>לא<\/strong> — הוא יוכל לדבר רק עם מכשירים ברשת המקומית. בלי שער ברירת מחדל אין לו \"דלת יציאה\" לרשתות אחרות."
+   },
+   "explain": [
+    "<p>DHCP שולח <strong>חבילה שלמה<\/strong> של הגדרות, לא רק כתובת:<\/p><table><tr><th>פרט<\/th><th>תפקיד<\/th><\/tr><tr><td><strong>IP Address<\/strong><\/td><td>הזהות של המכשיר ברשת — דינמית, או קבועה לפי MAC<\/td><\/tr><tr><td><strong>Subnet Mask<\/strong><\/td><td>מגדירה מה גודל הרשת המקומית<\/td><\/tr><tr><td><strong>Default Gateway<\/strong><\/td><td>כתובת הנתב — היציאה לרשתות חיצוניות<\/td><\/tr><tr><td><strong>DNS Server<\/strong><\/td><td>מתרגם שמות (google.com) לכתובות IP<\/td><\/tr><\/table>"
+   ],
+   "example": "כמו חבילת קליטה לעובד חדש ביום הראשון: כרטיס עובד (IP), מפת המשרד (Subnet Mask), הוראות איך יוצאים מהבניין (Default Gateway) וספר טלפונים פנימי (DNS) — הכול בבת אחת.",
+   "again": "<p>ארבע שאלות שהמכשיר צריך לדעת: <strong>מי אני?<\/strong> (IP) · <strong>מי השכנים שלי?<\/strong> (Mask) · <strong>איך יוצאים?<\/strong> (Gateway) · <strong>איך מוצאים אתר לפי שם?<\/strong> (DNS).<\/p>",
+   "simple": "<p>DHCP נותן <strong>4 דברים<\/strong>: IP, מסכה, שער, DNS.<\/p>",
+   "check": {
+    "q": "למחשב יש IP, מסכה ושער, <strong>אבל אין DNS<\/strong>. מה יקרה?",
+    "options": [
+     {
+      "t": "הוא יגיע לאתרים לפי כתובת IP, אבל לא לפי שם",
+      "ok": true,
+      "fb": "נכון — אין מי שיתרגם שמות לכתובות."
+     },
+     {
+      "t": "אין לו שום חיבור לאינטרנט",
+      "ok": false,
+      "fb": "השער קיים, כך שחיבור לפי IP אפשרי."
+     },
+     {
+      "t": "הכול יעבוד כרגיל",
+      "ok": false,
+      "fb": "בלי DNS הדפדפן לא יכול להפוך google.com לכתובת."
+     }
+    ],
+    "hint": "מה DNS עושה?",
+    "why": "בלי DNS אי אפשר לתרגם שמות לכתובות, אבל גישה ישירה לפי IP עדיין עובדת."
+   },
+   "summary": [
+    "DHCP נותן חבילה מלאה:",
+    "IP — זהות · Subnet Mask — גודל הרשת",
+    "Default Gateway — יציאה החוצה · DNS — שמות ← IP"
+   ],
+   "homework": [
+    "מנה את ארבעת הפרטים שמכשיר מקבל מ-DHCP ואת תפקיד כל אחד.",
+    "מה יקרה למחשב שקיבל הכול חוץ מ-Default Gateway?"
+   ]
+  },
+  {
+   "title": "יציבות ארגונית — Split-Scope ו-Failover",
+   "open": {
+    "q": "בארגון יש <strong>שרת DHCP אחד בלבד<\/strong>, והוא קורס באמצע יום העבודה. מה יקרה למחשבים <strong>חדשים<\/strong> שמנסים להתחבר?",
+    "model": "הם <strong>לא יקבלו כתובת IP<\/strong> ולא יוכלו להתחבר לרשת. (מחשבים שכבר מחוברים ימשיכו לעבוד עד שזמן ההשכרה שלהם יסתיים.)"
+   },
+   "explain": [
+    "<p>בארגונים גדולים DHCP צריך להיות <strong>יציב ומנוהל<\/strong>:<\/p><ul><li>🖥️ <strong>ניהול מרוכז<\/strong> — אלפי מכשירים מנקודה אחת<\/li><li>📌 <strong>רשומות קבועות (Reservations)<\/strong> — מדפסות ושרתים מקבלים תמיד אותה כתובת, לפי ה-MAC שלהם<\/li><\/ul><p><strong>שרידות גבוהה (High Availability):<\/strong><\/p><table><tr><th>תצורה<\/th><th>איך עובדת<\/th><\/tr><tr><td><strong>Failover<\/strong><\/td><td>Active/Standby — שרת גיבוי נכנס לפעולה אוטומטית אם הראשי נופל<\/td><\/tr><tr><td><strong>Split-Scope<\/strong><\/td><td>מחלקים את טווח הכתובות בין שני שרתים — כל אחד מחלק חלק<\/td><\/tr><\/table>"
+   ],
+   "example": "כמו גנרטור חירום בבניין: אם החשמל הראשי נופל, הגנרטור (שרת הגיבוי ב-Failover) נכנס לפעולה תוך שניות, ואף אחד לא שם לב להפסקה.",
+   "again": "<p><strong>Failover<\/strong> = שחקן ספסל שנכנס כשהשחקן הראשי נפצע. <strong>Split-Scope<\/strong> = שתי קופות בסופר — כל אחת מטפלת בחלק מהתור, ואם אחת נסגרת, השנייה עדיין עובדת.<\/p>",
+   "simple": "<p>שרת אחד = <strong>סיכון<\/strong>. שני שרתים (Failover או Split-Scope) = <strong>הרשת ממשיכה לעבוד<\/strong>.<\/p>",
+   "check": {
+    "q": "במה Split-Scope שונה מ-Failover?",
+    "options": [
+     {
+      "t": "ב-Split-Scope שני השרתים מחלקים חלקים שונים של טווח הכתובות במקביל",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "ב-Split-Scope יש רק שרת אחד",
+      "ok": false,
+      "fb": "Split-Scope דורש שני שרתים לפחות."
+     },
+     {
+      "t": "ב-Split-Scope השרת השני תמיד כבוי",
+      "ok": false,
+      "fb": "זה מתאר יותר את Standby ב-Failover."
+     }
+    ],
+    "hint": "Split = לחלק.",
+    "why": "ב-Split-Scope טווח הכתובות מחולק בין שני שרתים פעילים."
+   },
+   "summary": [
+    "ניהול מרוכז ורשומות קבועות למדפסות ושרתים",
+    "Failover — שרת גיבוי נכנס אוטומטית (Active/Standby)",
+    "Split-Scope — טווח הכתובות מחולק בין שני שרתים"
+   ],
+   "homework": [
+    "למה כדאי לתת למדפסת כתובת IP קבועה ב-DHCP?",
+    "השווה בין Failover ל-Split-Scope."
+   ]
+  }
+ ],
+ "unitTitle": "פרוטוקול ARP ופרוטוקול DHCP",
+ "id": "y11-10-1"
+};
+</script>
+<script src="madrich-engine.js"></script>
+</body>
+</html>

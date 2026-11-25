@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>התנגשויות ופרוטוקולי גישה למדיום — מדריך לימוד · תקשוב יישומי כיתה יא׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="madrich-engine.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="crumbs">
+      <a href="https://moti-lerner-proyektim.github.io/" id="mdCrHub">לומדים בעצמי</a> ‹
+      <a href="./" id="mdCrCourse">תקשוב יישומי</a> ‹
+      <a href="11-shichvat-hakav.html" id="mdCrUnit">שכבת הקו</a> ‹ <span id="mdCrHere">התנגשויות ופרוטוקולי גישה למדיום</span>
+    </div>
+    <div class="site-name" id="mdSite">תקשוב יישומי · כיתה יא׳</div>
+  </div>
+
+  <main class="md-shell">
+    <header class="md-hero">
+      <div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5L6.5 17M12 11.5l5.5 5.5"/></svg></div>
+      <div>
+        <div class="num" id="mdNum">מדריך 2 מתוך 3 · מדריך לימוד אינטראקטיבי</div>
+        <h1 id="mdTitle">התנגשויות ופרוטוקולי גישה למדיום</h1>
+        <p id="mdDesc">מהי התנגשות, CSMA/CD ברשת קווית, CSMA/CA ו-RTS/CTS באלחוט, ו-Token Ring מול Ethernet.</p>
+      </div>
+    </header>
+
+    <div class="md-progress" id="mdProgress" aria-hidden="true"></div>
+    <div class="md-progress-label"><span id="mdProgressText"></span><span class="md-tts-wrap"><span id="mdTtsBox" class="md-tts-wrap"></span><button id="mdRestart" type="button">להתחיל מחדש</button></span></div>
+
+    <div class="md-log" id="mdLog" aria-live="polite"></div>
+
+    <div class="md-cmds" id="mdCmds" aria-label="פקודות"></div>
+    <div class="md-input">
+      <textarea id="mdText" rows="1" placeholder="כתוב כאן תשובה או פקודה… (Enter לשליחה)" aria-label="תשובה או פקודה"></textarea>
+      <button id="mdSend" type="button">שליחה</button>
+    </div>
+    <div class="md-note" id="mdNote">ההתקדמות נשמרת רק בדפדפן שלך · לא נאסף שום מידע</div>
+  </main>
+
+<script>
+window.MADRICH = {
+ "title": "התנגשויות ופרוטוקולי גישה למדיום",
+ "persona": "מאיה, מהנדסת רשת ב\"לינקאפ\"",
+ "story": "שמתי לב שכשהרבה מכשירים מנסים \"לדבר\" באותו רגע דרך אותו כבל משותף במשרד, קורות תקלות מוזרות. אסביר לך את \"חוקי התנועה\" שהרשת קבעה כדי למנוע התנגשויות.",
+ "desc": "מהי התנגשות, CSMA/CD ברשת קווית, CSMA/CA ו-RTS/CTS באלחוט, ו-Token Ring מול Ethernet.",
+ "num": "מדריך 2 מתוך 3",
+ "emoji": "🚦",
+ "next": {
+  "href": "11-madrich-3-hetkanim.html",
+  "title": "מדריך 3: אקוסיסטם ההתקנים וסיכום",
+  "teaser": "משפחת IEEE 802, ההתקנים של שכבת הקו, ולמה מתחילים בה את האבחון."
+ },
+ "stages": [
+  {
+   "title": "התנגשויות נתונים (Collisions)",
+   "open": {
+    "q": "שני מחשבים שולחים מידע <strong>בדיוק באותו רגע<\/strong> דרך אותו כבל משותף, בלי \"חוקי תנועה\". מה יקרה למידע של שניהם?",
+    "model": "האותות <strong>יתערבבו<\/strong> וייהרסו — <strong>שני השידורים<\/strong> יאבדו, ואף אחד לא יקבל את ההודעה שלו."
+   },
+   "explain": [
+    "<p><strong>התנגשות (Collision)<\/strong> — כמה מכשירים משדרים על <strong>אותו מדיום משותף<\/strong> באותו זמן. האותות מתערבבים והמידע נהרס.<\/p><p><strong>הפתרון:<\/strong> פרוטוקולים שקובעים \"חוקי תנועה\" ומחלקים <strong>זכות דיבור<\/strong> — כדי <strong>למנוע<\/strong> התנגשויות מראש, או <strong>לזהות ולתקן<\/strong> אותן מהר.<\/p>"
+   ],
+   "example": "כמו שתי מכוניות שנכנסות לאותו נתיב באותו רגע: בלי רמזור — תאונה. פרוטוקולי הרשת הם הרמזור.",
+   "again": "<p>חשוב על <strong>שני אנשים שמדברים יחד<\/strong> בטלפון: אף אחד לא מבין את השני, ושניהם צריכים לחזור על מה שאמרו. ברשת — שני השידורים \"מבוזבזים\".<\/p>",
+   "simple": "<p>שניים משדרים יחד ← <strong>התנגשות<\/strong> ← המידע נהרס. צריך <strong>חוקי תנועה<\/strong>.<\/p>",
+   "check": {
+    "q": "מתי נוצרת התנגשות?",
+    "options": [
+     {
+      "t": "כששני מכשירים או יותר משדרים על אותו מדיום משותף באותו זמן",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "כששני מכשירים מקבלים את אותה כתובת IP",
+      "ok": false,
+      "fb": "זו התנגשות IP — בעיה אחרת לגמרי."
+     },
+     {
+      "t": "כשכבל הרשת ארוך מדי",
+      "ok": false,
+      "fb": "כבל ארוך גורם להחלשת אות, לא להתנגשות."
+     }
+    ],
+    "hint": "מדיום משותף + אותו זמן.",
+    "why": "התנגשות היא שידור בו-זמני של כמה מכשירים על מדיום משותף."
+   },
+   "summary": [
+    "התנגשות — שידור בו-זמני על מדיום משותף; המידע נהרס",
+    "פתרון — פרוטוקולי גישה: מניעה מראש או זיהוי ותיקון"
+   ],
+   "homework": [
+    "מהי התנגשות נתונים ומה התוצאה שלה?",
+    "מה ההבדל בין \"מניעת\" התנגשות ל\"זיהוי\" התנגשות?"
+   ]
+  },
+  {
+   "title": "CSMA/CD — זיהוי התנגשויות ברשת קווית",
+   "open": {
+    "q": "שני מכשירים זיהו שהתרחשה התנגשות. מה לדעתך הם צריכים לעשות <strong>לפני<\/strong> שינסו לשדר שוב?",
+    "model": "להודיע לכולם שהייתה התנגשות (<strong>אות JAM<\/strong>), ואז <strong>לחכות זמן אקראי<\/strong> — כדי לא להתנגש שוב באותו רגע."
+   },
+   "explain": [
+    "<p><strong>CSMA/CD<\/strong> (Carrier Sense Multiple Access with <strong>Collision Detection<\/strong>) — הפרוטוקול המסורתי של Ethernet קווי. חמישה שלבים במעגל:<\/p><ol><li><strong>חישת ערוץ<\/strong> — האם הקו פנוי?<\/li><li><strong>שידור<\/strong> — אם פנוי, משדרים.<\/li><li><strong>גילוי התנגשות<\/strong> — מאזינים תוך כדי השידור.<\/li><li><strong>אות שיבוש (JAM)<\/strong> — אם הייתה התנגשות, משדרים רעש כדי לעצור את כולם.<\/li><li><strong>נסיגה (Backoff)<\/strong> — ממתינים זמן אקראי, וחוזרים לשלב 1.<\/li><\/ol>",
+    "<p><strong>למה מינימום 64 בייטים?<\/strong> כדי לזהות התנגשות, השולח חייב <strong>עדיין לשדר<\/strong> כשהיא מתרחשת: <strong>זמן השידור ≥ פי 2 מזמן ההתפשטות<\/strong> ברשת. מסגרת קצרה מדי הייתה מסתיימת לפני שהשולח \"שומע\" את ההתנגשות.<\/p>"
+   ],
+   "example": "כמו שיחת ועידה: שני אנשים מתחילים לדבר יחד, שמים לב (גילוי), אומרים \"סליחה\" (JAM), וכל אחד מחכה רגע אקראי לפני שמנסה שוב.",
+   "again": "<p><strong>CD = Collision Detection<\/strong> — <strong>מזהים אחרי<\/strong> שקרה. הרעיון: \"שדר, אבל תקשיב תוך כדי. אם שמעת שמישהו עוד מדבר — עצור, צעק, וחכה.\"<\/p>",
+   "simple": "<p>מקשיבים ← משדרים ← אם יש התנגשות: <strong>JAM<\/strong> ← מחכים זמן <strong>אקראי<\/strong> ← מנסים שוב.<\/p>",
+   "check": {
+    "q": "מה תפקיד אות ה-JAM?",
+    "options": [
+     {
+      "t": "להודיע לכל הרשת שהייתה התנגשות, כדי שכולם יעצרו",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "להצפין את המסגרת",
+      "ok": false,
+      "fb": "JAM הוא אות רעש, לא הצפנה."
+     },
+     {
+      "t": "לבקש כתובת IP",
+      "ok": false,
+      "fb": "זה תפקיד DHCP."
+     }
+    ],
+    "hint": "JAM = שיבוש.",
+    "why": "JAM מודיע לכולם על ההתנגשות ועוצר את השידורים."
+   },
+   "summary": [
+    "CSMA/CD — Ethernet קווי; מזהה התנגשות אחרי שקרתה",
+    "חישה ← שידור ← גילוי ← JAM ← Backoff אקראי",
+    "זמן שידור ≥ 2 × זמן התפשטות ← מסגרת מינימלית 64 בייטים"
+   ],
+   "homework": [
+    "תאר את חמשת שלבי CSMA/CD.",
+    "הסבר את הקשר בין CSMA/CD לגודל המסגרת המינימלי."
+   ]
+  },
+  {
+   "title": "CSMA/CA — מניעת התנגשויות ברשת אלחוטית",
+   "open": {
+    "q": "CSMA/CD מזהה התנגשות <strong>תוך כדי<\/strong> שידור, ו-CSMA/CA מנסה <strong>למנוע<\/strong> אותה מראש. למה זה הכרחי דווקא באלחוט?",
+    "model": "כי באלחוט <strong>אי אפשר לשמוע תוך כדי שידור<\/strong> — השידור שלך \"מחריש\" את הקליטה. וגם יש תחנות ש<strong>לא שומעות<\/strong> זו את זו בכלל. לכן חייבים למנוע מראש."
+   },
+   "explain": [
+    "<p><strong>CSMA/CA<\/strong> (Collision <strong>Avoidance<\/strong>) — ב-Wi-Fi (802.11):<\/p><ol><li><strong>חישת ערוץ<\/strong><\/li><li><strong>המתנה אקראית<\/strong> — גם כשהערוץ פנוי, ליתר ביטחון<\/li><li><strong>RTS/CTS<\/strong> (אופציונלי) — בקשה לשדר (RTS) ואישור שהקו \"שמור\" (CTS)<\/li><li><strong>שידור<\/strong><\/li><li><strong>אישור קבלה (ACK)<\/strong> — מחכים לאישור מהיעד<\/li><\/ol>",
+    "<p><strong>בעיית הצומת הנסתר (Hidden Node):<\/strong> שתי תחנות לא שומעות זו את זו, אבל שתיהן שומעות את נקודת הגישה. RTS/CTS פותר את זה — ה-CTS של נקודת הגישה נשמע אצל <strong>כולם<\/strong>.<\/p>"
+   ],
+   "example": "שני אנשים בשני קצוות של אולם גדול לא שומעים זה את זה, אבל שניהם שומעים את המנחה במרכז. RTS/CTS הוא לבקש רשות מהמנחה — והמנחה מכריז לכולם מי מדבר עכשיו.",
+   "again": "<p><strong>CD<\/strong> = מזהים <strong>אחרי<\/strong> (קווי). <strong>CA<\/strong> = נמנעים <strong>לפני<\/strong> (אלחוטי). ואצל CA יש גם <strong>ACK<\/strong> — כי בלי לשמוע תוך כדי, הדרך היחידה לדעת שהגיע היא שיגידו לך.<\/p>",
+   "simple": "<p>באלחוט <strong>מבקשים רשות<\/strong> (RTS/CTS), משדרים, ו<strong>מחכים לאישור<\/strong> (ACK).<\/p>",
+   "check": {
+    "q": "איזו בעיה פותר מנגנון RTS/CTS?",
+    "options": [
+     {
+      "t": "הצומת הנסתר — תחנות שלא שומעות זו את זו",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "התנגשות IP בין שני מחשבים",
+      "ok": false,
+      "fb": "זו בעיה של הקצאת כתובות, לא של גישה למדיום."
+     },
+     {
+      "t": "כבל באורך יותר מ-100 מטר",
+      "ok": false,
+      "fb": "זו מגבלה פיזית של נחושת."
+     }
+    ],
+    "hint": "Hidden ...",
+    "why": "RTS/CTS מאפשר לנקודת הגישה להכריז לכולם שהערוץ תפוס, וכך פותר את בעיית הצומת הנסתר."
+   },
+   "summary": [
+    "CSMA/CA — Wi-Fi; מונע התנגשות מראש",
+    "חישה ← המתנה אקראית ← RTS/CTS ← שידור ← ACK",
+    "Hidden Node — תחנות שלא שומעות זו את זו; RTS/CTS פותר"
+   ],
+   "homework": [
+    "השווה בין CSMA/CD ל-CSMA/CA.",
+    "הסבר את בעיית הצומת הנסתר ואיך RTS/CTS פותר אותה."
+   ]
+  },
+  {
+   "title": "Token Ring מול Ethernet",
+   "open": {
+    "q": "ב-Token Ring כל מכשיר מדבר <strong>בתורו<\/strong>, בלי התנגשויות. למה לדעתך דווקא <strong>Ethernet<\/strong> ניצח?",
+    "model": "כי Ethernet היה <strong>זול בהרבה, פשוט יותר<\/strong> ו<strong>הגיע למהירויות גבוהות בהרבה<\/strong>. ההוגנות התיאורטית של Token Ring לא הצדיקה את המחיר."
+   },
+   "explain": [
+    "<table><tr><th><\/th><th><strong>Ethernet<\/strong> (802.3)<\/th><th><strong>Token Ring<\/strong> (802.5)<\/th><\/tr><tr><td>גישה<\/td><td>CSMA/CD — תחרות על הקו<\/td><td>העברת אסימון (Token) — דיבור בתור<\/td><\/tr><tr><td>אופי<\/td><td>לא-דטרמיניסטי (תלוי עומס)<\/td><td>דטרמיניסטי (אפשר לחזות זמני שידור)<\/td><\/tr><tr><td>טופולוגיה<\/td><td>כוכב עם מתגים (בעבר Bus)<\/td><td>טבעת לוגית (כוכב פיזי)<\/td><\/tr><tr><td>מהירות<\/td><td>10 Mbps עד 400 Gbps ומעלה<\/td><td>4–16 Mbps<\/td><\/tr><tr><td>עלות<\/td><td>זול — הסטנדרט כיום<\/td><td>יקר, מיושן ונדיר<\/td><\/tr><\/table>"
+   ],
+   "example": "Token Ring הוא כמו תור עם מספרים בדלפק — התור מובטח. Ethernet הוא כמו כניסה חופשית — אין הבטחה מדויקת, אבל בפועל זה זול יותר, פשוט יותר ומהיר יותר.",
+   "again": "<p><strong>דטרמיניסטי<\/strong> = אפשר לדעת מראש מתי תשדר (כמו לוח זמנים של רכבת). <strong>לא-דטרמיניסטי<\/strong> = תלוי בעומס (כמו פקק — לפעמים מהיר, לפעמים לא).<\/p>",
+   "simple": "<p>Token Ring = <strong>בתור, הוגן, יקר, איטי<\/strong>. Ethernet = <strong>תחרות, זול, מהיר<\/strong> — וניצח.<\/p>",
+   "check": {
+    "q": "מה פירוש \"דטרמיניסטי\" ב-Token Ring?",
+    "options": [
+     {
+      "t": "אפשר לחזות מראש מתי כל מכשיר ישדר",
+      "ok": true,
+      "fb": "נכון — כל אחד מחכה לאסימון בתורו."
+     },
+     {
+      "t": "הוא מהיר יותר מ-Ethernet",
+      "ok": false,
+      "fb": "Token Ring היה איטי בהרבה."
+     },
+     {
+      "t": "אין בו כתובות MAC",
+      "ok": false,
+      "fb": "גם ב-Token Ring יש כתובות MAC."
+     }
+    ],
+    "hint": "ניתן לקבוע מראש.",
+    "why": "דטרמיניסטי = זמני השידור צפויים, כי הגישה בתור לפי אסימון."
+   },
+   "summary": [
+    "Ethernet — CSMA/CD, לא-דטרמיניסטי, כוכב, עד 400+ Gbps, זול — הסטנדרט",
+    "Token Ring — אסימון, דטרמיניסטי, טבעת לוגית, 4–16 Mbps, יקר ומיושן"
+   ],
+   "homework": [
+    "השווה בין Ethernet ל-Token Ring בחמישה היבטים.",
+    "למה Ethernet ניצח, למרות ש-Token Ring \"הוגן\" יותר?"
+   ]
+  }
+ ],
+ "unitTitle": "שכבת הקו",
+ "id": "y11-11-2"
+};
+</script>
+<script src="madrich-engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>אקוסיסטם ההתקנים וסיכום — מדריך לימוד · תקשוב יישומי כיתה יא׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="madrich-engine.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="crumbs">
+      <a href="https://moti-lerner-proyektim.github.io/" id="mdCrHub">לומדים בעצמי</a> ‹
+      <a href="./" id="mdCrCourse">תקשוב יישומי</a> ‹
+      <a href="11-shichvat-hakav.html" id="mdCrUnit">שכבת הקו</a> ‹ <span id="mdCrHere">אקוסיסטם ההתקנים וסיכום</span>
+    </div>
+    <div class="site-name" id="mdSite">תקשוב יישומי · כיתה יא׳</div>
+  </div>
+
+  <main class="md-shell">
+    <header class="md-hero">
+      <div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8"><rect x="4" y="3" width="16" height="7" rx="1.5"/><rect x="4" y="14" width="16" height="7" rx="1.5"/><path d="M8 6.5h.01M8 17.5h.01"/></svg></div>
+      <div>
+        <div class="num" id="mdNum">מדריך 3 מתוך 3 · מדריך לימוד אינטראקטיבי</div>
+        <h1 id="mdTitle">אקוסיסטם ההתקנים וסיכום</h1>
+        <p id="mdDesc">משפחת IEEE 802, מתג, גשר, כרטיס רשת ונקודת גישה, ולמה שכבת הקו קריטית לאבחון.</p>
+      </div>
+    </header>
+
+    <div class="md-progress" id="mdProgress" aria-hidden="true"></div>
+    <div class="md-progress-label"><span id="mdProgressText"></span><span class="md-tts-wrap"><span id="mdTtsBox" class="md-tts-wrap"></span><button id="mdRestart" type="button">להתחיל מחדש</button></span></div>
+
+    <div class="md-log" id="mdLog" aria-live="polite"></div>
+
+    <div class="md-cmds" id="mdCmds" aria-label="פקודות"></div>
+    <div class="md-input">
+      <textarea id="mdText" rows="1" placeholder="כתוב כאן תשובה או פקודה… (Enter לשליחה)" aria-label="תשובה או פקודה"></textarea>
+      <button id="mdSend" type="button">שליחה</button>
+    </div>
+    <div class="md-note" id="mdNote">ההתקדמות נשמרת רק בדפדפן שלך · לא נאסף שום מידע</div>
+  </main>
+
+<script>
+window.MADRICH = {
+ "title": "אקוסיסטם ההתקנים וסיכום",
+ "persona": "מאיה, מהנדסת רשת ב\"לינקאפ\"",
+ "story": "הבנו איך שכבת הקו עובדת בתיאוריה. עכשיו ניכנס לחדר השרתים ונראה את החומרה האמיתית שמממשת את כל מה שלמדנו — ונסכם למה, כשיש תקלת רשת, כמעט תמיד מתחילים לחפש דווקא בשכבה הזו.",
+ "desc": "משפחת IEEE 802, מתג, גשר, כרטיס רשת ונקודת גישה, ולמה שכבת הקו קריטית לאבחון.",
+ "num": "מדריך 3 מתוך 3",
+ "emoji": "🗄️",
+ "next": null,
+ "finalReview": [
+  "מיקום שכבת הקו",
+  "LLC ו-MAC",
+  "ארבע הפונקציות",
+  "מסגרת Ethernet",
+  "MAC מול IP",
+  "התנגשויות",
+  "CSMA/CD",
+  "CSMA/CA ו-RTS/CTS",
+  "Token Ring מול Ethernet",
+  "משפחת IEEE 802",
+  "התקני שכבת הקו",
+  "אבחון בשכבה 2"
+ ],
+ "stages": [
+  {
+   "title": "משפחת התקנים IEEE 802",
+   "open": {
+    "q": "רוצים לחבר <strong>חיישן קטן על סוללה<\/strong> שיעבוד שנים. איזה תת-תקן ממשפחת IEEE 802 הכי מתאים, לדעתך?",
+    "model": "<strong>802.15<\/strong> (WPAN) — רשתות אישיות לטווח קצר עם צריכת חשמל נמוכה (כמו Zigbee, 802.15.4)."
+   },
+   "explain": [
+    "<p>משפחת <strong>IEEE 802<\/strong> מכסה את שכבות 1 ו-2, ומתפצלת לפי סוג המדיה והשימוש:<\/p><table><tr><th>תקן<\/th><th>שם<\/th><th>שימוש<\/th><\/tr><tr><td><strong>802.3<\/strong><\/td><td>Ethernet<\/td><td>LAN קווי — הסטנדרט, גם במרכזי נתונים<\/td><\/tr><tr><td><strong>802.5<\/strong><\/td><td>Token Ring<\/td><td>רשתות טבעת של IBM — היסטורי<\/td><\/tr><tr><td><strong>802.11<\/strong><\/td><td>Wi-Fi<\/td><td>WLAN אלחוטי, עם CSMA/CA<\/td><\/tr><tr><td><strong>802.15<\/strong><\/td><td>WPAN<\/td><td>טווח קצר: Bluetooth ו-IoT, חשמל נמוך<\/td><\/tr><tr><td><strong>802.1<\/strong><\/td><td>Bridging<\/td><td>ניהול מתקדם: VLAN, Spanning Tree<\/td><\/tr><\/table>"
+   ],
+   "example": "כמו משפחת תקני חשמל: שקע ביתי, תעשייה כבדה, מכשירים על סוללה — כל תקן מותאם לצורך שלו, אבל כולם באותה \"משפחת חשמל\".",
+   "again": "<p>חמישה מספרים לזכור: <strong>.3<\/strong> כבל · <strong>.11<\/strong> Wi-Fi · <strong>.15<\/strong> קרוב וחסכוני · <strong>.5<\/strong> עבר · <strong>.1<\/strong> ניהול.<\/p>",
+   "simple": "<p>802.3 = <strong>Ethernet<\/strong>. 802.11 = <strong>Wi-Fi<\/strong>. 802.15 = <strong>Bluetooth/IoT<\/strong>.<\/p>",
+   "check": {
+    "q": "איזה תקן מגדיר את Wi-Fi?",
+    "options": [
+     {
+      "t": "802.11",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "802.3",
+      "ok": false,
+      "fb": "802.3 הוא Ethernet קווי."
+     },
+     {
+      "t": "802.5",
+      "ok": false,
+      "fb": "802.5 הוא Token Ring."
+     },
+     {
+      "t": "802.1",
+      "ok": false,
+      "fb": "802.1 עוסק בניהול רשת (VLAN, Spanning Tree)."
+     }
+    ],
+    "hint": "ראינו אותו ביחידה 08: 802.11b/g/n/ac/ax.",
+    "why": "Wi-Fi מוגדר בתקן IEEE 802.11."
+   },
+   "summary": [
+    "IEEE 802 — שכבות 1–2",
+    "802.3 Ethernet · 802.5 Token Ring · 802.11 Wi-Fi",
+    "802.15 WPAN (Bluetooth, IoT) · 802.1 Bridging (VLAN, Spanning Tree)"
+   ],
+   "homework": [
+    "רשום את חמשת תקני IEEE 802 שלמדנו ואת השימוש של כל אחד.",
+    "איזה תקן מתאים לאוזניות אלחוטיות, ואיזה לרשת המשרד הקווית?"
+   ]
+  },
+  {
+   "title": "התקני שכבת הקו בשטח",
+   "open": {
+    "q": "מתג יוצר <strong>מקטע התנגשות נפרד לכל פורט<\/strong>. איך זה פותר את בעיית ההתנגשויות, לעומת כבל אחד משותף?",
+    "model": "כל מכשיר מקבל <strong>\"כביש פרטי\"<\/strong> אל המתג — אין עם מי להתנגש. בכבל משותף כולם חלקו \"כביש\" אחד."
+   },
+   "explain": [
+    "<table><tr><th>התקן<\/th><th>מה עושה<\/th><\/tr><tr><td>🔀 <strong>מתג<\/strong> (Switch)<\/td><td>טבלת MAC; מקטע התנגשות נפרד לכל פורט; Full-Duplex<\/td><\/tr><tr><td>🌉 <strong>גשר<\/strong> (Bridge)<\/td><td>מסנן תעבורה בין רשתות LAN לפי כתובות MAC<\/td><\/tr><tr><td>💳 <strong>כרטיס רשת<\/strong> (NIC)<\/td><td>נושא את כתובת ה-MAC; מבצע את הכימוס למסגרות<\/td><\/tr><tr><td>📡 <strong>נקודת גישה<\/strong> (WAP)<\/td><td>מגשרת בין אלחוטי לקווי; אוכפת CSMA/CA ב-802.11<\/td><\/tr><\/table>"
+   ],
+   "example": "במשרד גדול: המתג הוא מרכזנית שמעבירה כל שיחה לשלוחה הנכונה; הגשר הוא שער שמסנן מי עובר בין מחלקות; כרטיס הרשת הוא תג העובד; נקודת הגישה היא דלפק קבלה בין החוץ (אלחוט) לפנים (קווי).",
+   "again": "<p>שים לב: <strong>כולם עובדים עם MAC<\/strong> — ולכן כולם שייכים לשכבה 2. המתג הוא בעצם <strong>גשר עם הרבה פורטים<\/strong>.<\/p>",
+   "simple": "<p>מתג = <strong>מחבר בתוך הרשת<\/strong>. גשר = <strong>מסנן בין רשתות<\/strong>. NIC = <strong>הכרטיס במחשב<\/strong>. WAP = <strong>Wi-Fi<\/strong>.<\/p>",
+   "check": {
+    "q": "איזה התקן מבצע את הכימוס למסגרות ונושא את כתובת ה-MAC?",
+    "options": [
+     {
+      "t": "כרטיס רשת (NIC)",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "מתג (Switch)",
+      "ok": false,
+      "fb": "המתג מעביר מסגרות — הוא לא יוצר אותן עבור המחשב."
+     },
+     {
+      "t": "נקודת גישה (WAP)",
+      "ok": false,
+      "fb": "WAP מגשרת בין אלחוטי לקווי."
+     }
+    ],
+    "hint": "ההתקן שנמצא בתוך המחשב.",
+    "why": "כרטיס הרשת נושא את ה-MAC ובונה את המסגרות."
+   },
+   "summary": [
+    "מתג — טבלת MAC, מקטע התנגשות לכל פורט, Full-Duplex",
+    "גשר — סינון בין LANs לפי MAC",
+    "NIC — כתובת MAC, כימוס",
+    "WAP — אלחוטי ↔ קווי, CSMA/CA"
+   ],
+   "homework": [
+    "תאר את ארבעת התקני שכבת הקו ותפקיד כל אחד.",
+    "איך מתג מבטל התנגשויות?"
+   ]
+  },
+  {
+   "title": "למה שכבת הקו קריטית לאבחון — סיכום הסדרה",
+   "open": {
+    "q": "מחשב לא מצליח להתחבר לרשת <strong>בכלל<\/strong>. למה הגיוני שמנהל הרשת יבדוק קודם את <strong>שכבת הקו<\/strong> (כבל, מתג, MAC), לפני הגדרות ה-IP?",
+    "model": "כי <strong>כל השכבות שמעל נשענות עליה<\/strong>. אם המסגרת לא עוברת בכלל — אין טעם לבדוק IP. מתחילים מלמטה, מהשכבה הקרובה ביותר לחומרה."
+   },
+   "explain": [
+    "<p><strong>שלוש סיבות לחשיבות שכבת הקו:<\/strong><\/p><ol><li><strong>אמינות פיזית<\/strong> — השכבה הראשונה שבודקת שלמות נתונים בסביבה רועשת (FCS/CRC).<\/li><li><strong>שפת תרגום<\/strong> — הופכת בקשות לוגיות (IP) לפעולה של חומרה ספציפית (MAC).<\/li><li><strong>פתרון תקלות<\/strong> — היכרות עם MAC, מתגים ומקטעי התנגשות היא הבסיס לאבחון ולאבטחה.<\/li><\/ol><p>כשהשכבה עושה את עבודתה — המערכת <strong>מוכנה לשכבת הרשת<\/strong> (שכבה 3).<\/p>"
+   ],
+   "example": "שכבת הקו היא כמו הבלשים הראשונים בזירה: לפני שמאשימים את התוכנה, בודקים אם הכבל מחובר, אם המתג עובד ואם כתובות ה-MAC תקינות.",
+   "again": "<p>שיטת אבחון \"<strong>מלמטה למעלה<\/strong>\": נורית בכרטיס הרשת דולקת? (1) ← המתג רואה את ה-MAC? (2) ← יש IP? (3). כל שלב שעובר — פוסל שכבה אחת.<\/p>",
+   "simple": "<p>אין רשת? <strong>מתחילים מלמטה<\/strong> — כבל, מתג, MAC — ורק אחר כך IP.<\/p>",
+   "check": {
+    "q": "איזה מנגנון בשכבת הקו מוודא שלמות נתונים?",
+    "options": [
+     {
+      "t": "FCS/CRC",
+      "ok": true,
+      "fb": "נכון."
+     },
+     {
+      "t": "DHCP",
+      "ok": false,
+      "fb": "DHCP מקצה כתובות IP."
+     },
+     {
+      "t": "DNS",
+      "ok": false,
+      "fb": "DNS מתרגם שמות לכתובות."
+     }
+    ],
+    "hint": "השדה האחרון במסגרת.",
+    "why": "ה-FCS (מבוסס CRC) מוודא שהמסגרת הגיעה שלמה."
+   },
+   "summary": [
+    "אמינות פיזית — FCS/CRC",
+    "שפת תרגום — מ-IP לוגי ל-MAC פיזי",
+    "פתרון תקלות — אבחון מלמטה למעלה, מתחילים בשכבה 2",
+    "בסיום — המסגרת מוכנה לשכבה 3"
+   ],
+   "homework": [
+    "מנה שלוש סיבות לכך ששכבת הקו קריטית.",
+    "תאר סדר אבחון \"מלמטה למעלה\" למחשב שלא מתחבר לרשת."
+   ]
+  }
+ ],
+ "unitTitle": "שכבת הקו",
+ "id": "y11-11-3"
+};
+</script>
+<script src="madrich-engine.js"></script>
+</body>
+</html>
